@@ -1,30 +1,9 @@
 body, html {
     height: 100%;
+    background-color: #1b1b1b;
     color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
 }
 
-h1 {
-    color: white;
-}
-
-.imgContainer {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/max-winkler-UFIZodJgScQ-unsplash.jpg");
-    height: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-.txt {
-    color: white;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.txt h1 {
-    font-size: 4em;
-}
