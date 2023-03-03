@@ -1,7 +1,10 @@
-body {
-    display: grid;
-    justify-content: center;
-    align-items: center;
+
+
+#settingsContainer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .slider {
