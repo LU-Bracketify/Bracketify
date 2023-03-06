@@ -1,6 +1,47 @@
+/*body {
+background-image: url(../public/images/basketball.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+*/
+
+body, html {
+  height: 100%;
+  background-color: white;
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+button {
+  background-color: #0D6EFD;
+  border: none;
+  color: white;
+  width: 120px;
+  height: 45px;
+}
+
+h1 {
+  margin: 500px;
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 #settingsContainer {
+  padding-top: 40px;
   display: grid;
   justify-content: center;
   align-items: center;
@@ -8,7 +49,7 @@
 }
 
 .slider {
-    -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     height: 15px;
     border-radius: 5px;  
@@ -25,7 +66,7 @@
     width: 25px;
     height: 25px;
     border-radius: 50%; 
-    background: #04AA6D;
+    background: #0D6EFD;
     cursor: pointer;
   }
   
@@ -33,6 +74,6 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #04AA6D;
+    background: #0D6EFD;
     cursor: pointer;
   }
