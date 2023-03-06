@@ -47,3 +47,8 @@ body, html {
     margin: 10px;
     padding: 10px;
 }
+
+#nav {
+    opacity: 0.7;
+    background-color: black;
+  }
