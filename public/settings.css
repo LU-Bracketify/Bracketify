@@ -30,13 +30,6 @@ button {
   height: 45px;
 }
 
-h1 {
-  margin: 500px;
-  padding-top: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
 
@@ -46,6 +39,16 @@ h1 {
   justify-content: center;
   align-items: center;
   padding: 10px;
+}
+
+.contentCard {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+
 }
 
 .slider {
