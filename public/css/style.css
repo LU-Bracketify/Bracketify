@@ -58,31 +58,6 @@ body, html {
     background-color: white;
     margin: 10px;
     padding: 10px;
-
-}
-
-.msgContainer {
-    height: 75%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-}
-
-.msgDiv {
-
-
-}
-
-.contentTeamCard {
-    width: 100%;
-    height: 100%;
-    max-width: 400px;
-    background-color: white;
-    margin: 10px;
-    padding: 10px;
 }
 
 #nav {
