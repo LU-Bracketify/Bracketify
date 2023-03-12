@@ -333,6 +333,7 @@ function generatePage() {
         }
     }
     else if (type === "group") {
+        var groupNum = teamNum/4;
         var cardCreation = document.createElement("div")
         cardCreation.classList.add("cardContainer")
         document.getElementsByClassName('mainContainer')[0].appendChild(cardCreation);
@@ -377,6 +378,8 @@ function generatePage() {
                     var cardFormat = document.createElement("div")
                     cardFormat.classList.add("row p-2 m-2")
                     card.appendChild(cardFormat)
+                    var group = document.createElement("h1")
+                    group.innerHTML = `Group ${(i+1)*groupNum}`
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
                         teamCol.classList.add("col m-2")
