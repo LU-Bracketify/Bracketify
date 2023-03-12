@@ -20,6 +20,7 @@ function getRecords() {
         let msgDiv = document.createElement("div");
     
         let msgContainer = document.createElement("div");
+        msg.className = "text-center";
         msgContainer.className = "msgContainer";
 
         msg.textContent = "You don't have any saved brackets";
