@@ -35,9 +35,10 @@ function dbConnect(id, name, size, type, seed, scored, author, desc) {
     // Runs when modified or first instance
     request.onupgradeneeded = function() {
         const db = request.result;
-        const store = db.createObjectStore("brackets", { keyPath: "id" });
-        store.createIndex("brackets_type", ["type"], { unique: false });
-        store.createIndex("brackets_name", ["name"], { unique: false });
+        const bracketStore = db.createObjectStore("brackets", { keyPath: "id" });
+        bracketStore.createIndex("brackets_type", ["type"], { unique: false });
+        bracketStore.createIndex("brackets_name", ["name"], { unique: false });
+        const preferenceStore = db.createObjectStore("preferences", { keyPath: "exists" });
     };
 
     // Runs after onUpgrade

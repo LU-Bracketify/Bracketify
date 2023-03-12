@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="js/storeData.js" defer></script>
+    <script src="js/preferences.js"></script>
     <title>Bracketify | New</title>
 </head>
 <body>
@@ -55,7 +56,16 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="sizeInput">Bracket Size:</label>
-                    <input type="number" class="form-control" name="size" id="sizeInput" min="2" max="128" required>
+                    <select class="form-select" name="size" id="sizeInput" required>
+                        <option></option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                        <option value="64">64</option>
+                        <option value="128">128</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -92,6 +102,8 @@
   
         </div>
     </div>
-
+<script>
+    window.onload = readPreferencesCache();
+</script>
 </body>
 </html>

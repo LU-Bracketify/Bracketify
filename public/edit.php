@@ -20,6 +20,7 @@
         crossorigin="anonymous"></script>
     <script src="js/edit.js" defer></script>
     <script src="js/storeData.js"></script>
+    <script src="js/preferences.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -175,6 +176,10 @@
             </div>
         </div>
     </div>
+
+<script>
+    window.onload = readPreferencesCache();
+</script>
 
 <?php 
 
