@@ -2,7 +2,6 @@
 function generateId() {
     let randomNum = Math.floor(Math.random() * 100);
     let id = Date.now() + randomNum;
-    //console.log(id);
     return id;
 }
 
@@ -15,8 +14,6 @@ function getCurrentDate() {
     let dateStr = month + "/" + day + "/" + year;
 
     return dateStr;
-
-
 }
 
 function dbConnect(id, name, size, type, seed, scored, author, desc) {

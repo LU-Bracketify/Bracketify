@@ -11,13 +11,10 @@
     <link rel="icon" type="image/png" href="images/apple-touch-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="storeData.js" defer></script>
+    <script src="js/storeData.js" defer></script>
     <title>Bracketify | New</title>
 </head>
 <body>
-
-    <script src="js/app.js"></script>
-
 
     <ul class="nav p-2 justify-content-center bg-dark">
         <li class="nav-item">
@@ -28,7 +25,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="newBracket.html" title="New">
+            <a class="nav-link active" href="newBracket.php" title="New">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -50,20 +47,20 @@
             <div class="container text-center pb-3">
                 <h2 class="p-3 border-top border-bottom">New Bracket</h2>
             </div>
-            <form onsubmit="upload();">
+            <form method="post" action="edit.php">
                 <div class="mb-3 mt-3">
                     <label class="form-label" for="nameInput">Bracket Name:</label>
-                    <input type="text" class="form-control" id="nameInput" required>
+                    <input type="text" class="form-control" name="nameInput" id="nameInput" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="sizeInput">Bracket Size:</label>
-                    <input type="number" class="form-control" id="sizeInput" min="2" max="128" required>
+                    <input type="number" class="form-control" name="size" id="sizeInput" min="2" max="128" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="typeInput">Bracket Type:</label>
-                    <select class="form-select" id="typeInput" required>
+                    <select class="form-select" name="type" name="type" id="typeInput" required>
                         <option></option>
                         <option value="single">Single Elimination</option>
                         <option value="double">Double Elimination</option>
@@ -73,20 +70,20 @@
                 </div>
 
                 <div class="form-check mb-3">
-                    <label class="form-check-label me-5"><input type="checkbox" class="form-check-input" id="seededInput"> Seeded</label>
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" id="scoredInput"> Scored</label>
+                    <label class="form-check-label me-5"><input type="checkbox" class="form-check-input" name="seeded" id="seededInput"> Seeded</label>
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" name="scored" id="scoredInput" value=""> Scored</label>
                 </div>
 
                 <hr>
 
                 <div class="mb-3">
                     <label class="form-label" for="authorInput">Author (optional):</label>
-                    <input type="text" class="form-control" id="authorInput">
+                    <input type="text" class="form-control" name="author" id="authorInput">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="descriptionInput">Description (optional):</label>
-                    <textarea class="form-control" id="descriptionInput" rows="4" cols="30"></textarea>
+                    <textarea class="form-control" name="desc" id="descriptionInput" rows="4" cols="30"></textarea>
                 </div>
                 <!---dbConnect()-->
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -95,25 +92,6 @@
   
         </div>
     </div>
-
-    <script>
-        // Upload form data
-        function upload() {
-            let id = generateId();
-            console.log(generateId());
-
-            let name = document.getElementById("nameInput").value;
-            let size = document.getElementById("sizeInput").value;
-            let type = document.getElementById("typeInput").value;
-            let seed = document.getElementById("seededInput").checked;
-            let scored = document.getElementById("scoredInput").checked;
-            let author = document.getElementById("authorInput").value;
-            let desc = document.getElementById("descriptionInput").value;
-
-            dbConnect(id, name, size, type, seed, scored, author, desc);
-        }
-    </script>
-
 
 </body>
 </html>

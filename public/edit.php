@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +10,7 @@
     <meta name="description" content="Create your free bracket today!">
     <meta name="keywords" content="Bracket, Tournament, Round Robin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="apple-touch-icon" type="image/png" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="images/apple-touch-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,6 +19,7 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <!-- <script src="../edit.js"></script> -->
+    <script src="js/storeData.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -30,7 +33,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="newBracket.html" title="New">
+            <a class="nav-link" href="newBracket.php" title="New">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -49,38 +52,56 @@
 
     <h1>Edit Page</h1>
 
-    <script>
-        // Register SW
-        if ('serviceWorker' in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register('sw.js').then(reg => {
-                    console.log("sw registered");
-                }).catch(error => {
-                    console.log("err");
-                });
-            });
-        }
-    </script>
+        <?php 
 
-    <script>
-        
-        window.onload = () => {
-            // Parse url params
-            //const queryStr = window.location.search;
-            //console.log(queryStr.split('='));
-            //let params = queryStr.split('=');
-            //let id = params[1];
-            //console.log(id);
-
-            //Get last id stored in database
-            
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $name = $_POST["nameInput"];
+            $size = $_POST["size"];
+            $type = $_POST["type"];
+            $seeded = isset($_POST["seeded"]);
+            $scored = isset($_POST["scored"]);
+            $author = $_POST["author"];
+            $desc = $_POST["desc"];
 
 
-        }
+            if ($scored == "") {
+                $scored = false;
+            }
 
+            if ($seeded == "") {
+                $seeded = false;
+            } 
 
+            $formData = json_encode(
+                array("name"    => $name, 
+                      "size"    => $size,
+                      "type"    => $type,
+                      "seeded"  => $seeded,
+                      "scored"  => $scored,
+                      "author"  => $author,
+                      "desc"    => $desc
+            ));
 
-    </script>
+            // Insert data
+            echo "<script>
+                function upload(bracketData) {
+                    let id = generateId();
+                    document.write(bracketData.name);
+                    document.write(bracketData.size);
+                    document.write(bracketData.seeded);
+                    document.write(bracketData.scored);
+                    document.write(bracketData.author);
+                    document.write(bracketData.desc);
+                    console.log(generateId());
+                    
+                    dbConnect(id, bracketData.name, bracketData.size, bracketData.type, bracketData.seeded, bracketData.scored, bracketData.author, bracketData.desc);
+                }
+                upload($formData);
+                </script>";
+        } 
+
+        ?>
+
 </body>
 
 </html>
