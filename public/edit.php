@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -208,6 +211,61 @@
             });
         }
     </script>
+</body>
+
+</html>
+=======
+        <?php 
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $name = $_POST["nameInput"];
+            $size = $_POST["size"];
+            $type = $_POST["type"];
+            $seeded = isset($_POST["seeded"]);
+            $scored = isset($_POST["scored"]);
+            $author = $_POST["author"];
+            $desc = $_POST["desc"];
+
+
+            if ($scored == "") {
+                $scored = false;
+            }
+
+            if ($seeded == "") {
+                $seeded = false;
+            } 
+
+            $formData = json_encode(
+                array("name"    => $name, 
+                      "size"    => $size,
+                      "type"    => $type,
+                      "seeded"  => $seeded,
+                      "scored"  => $scored,
+                      "author"  => $author,
+                      "desc"    => $desc
+            ));
+
+            // Insert data
+            echo "<script>
+                function upload(bracketData) {
+                    let id = generateId();
+                    document.write(bracketData.name);
+                    document.write(bracketData.size);
+                    document.write(bracketData.seeded);
+                    document.write(bracketData.scored);
+                    document.write(bracketData.author);
+                    document.write(bracketData.desc);
+                    console.log(generateId());
+                    
+                    dbConnect(id, bracketData.name, bracketData.size, bracketData.type, bracketData.seeded, bracketData.scored, bracketData.author, bracketData.desc);
+                }
+                upload($formData);
+                </script>";
+        } 
+
+        ?>
+
+>>>>>>> cfbdf653ea45b64b132eaac06066336264ec7739:public/edit.php
 </body>
 
 </html>

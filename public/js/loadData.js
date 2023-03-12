@@ -6,7 +6,6 @@ window.onload = getRecords();
 function getRecords() {
     console.log("running");
     
-    //const request = indexedDB.open("BracketDB", 1);
     let db = true;
     let request = indexedDB.open("BracketDB");
     request.onupgradeneeded = function(e) {
@@ -15,7 +14,6 @@ function getRecords() {
 
         console.log("You don't have any saved brackets");
         let historyContainer = document.getElementsByClassName("contentCard")[0];
-        //let msgDiv = document.getElementsByClassName("msgDiv")[0];
         historyContainer.setAttribute("style", "display: flex; flex-direction: column; height:100vh;");
 
         let msg = document.createElement("h5");
@@ -46,16 +44,14 @@ function getRecords() {
         const bracketQuery = store.getAll();
         
         bracketQuery.onsuccess = function() {
-            //console.log("Logged Brackets", bracketQuery.result)
-            // Output brackets
             let recordCount = bracketQuery.result.length;
 
             for (let i = 0; i < recordCount; i++) {
-                //console.log("record: ", bracketQuery.result[i]["type"], bracketQuery.result[i]["name"]);
                 let name = bracketQuery.result[i]["name"];
                 let date = bracketQuery.result[i]["date"];
-                let type = bracketQuery.result[i]["type"];                
-                renderBracket(name, type, date);
+                let type = bracketQuery.result[i]["type"];  
+                let id = bracketQuery.result[i]["id"];              
+                renderBracket(name, type, date, id);
             }
 
         };
@@ -65,11 +61,11 @@ function getRecords() {
 
 }
 
-// add edge case msg if no brackets found
-// add date, status/time last modified, link to bracket contents (pass id)
-// store id of last clicked item/on button click open that bracket
-function renderBracket(name, type, date) {
+let ids = [];
+function renderBracket(name, type, date, id) {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
+
+    ids.push(id);
 
     let card = document.createElement("div");
     let cardRow = document.createElement("div");
@@ -83,30 +79,23 @@ function renderBracket(name, type, date) {
 
     cardCol1.innerHTML = "<h1>" + name + "</h1>";
     cardCol1.innerHTML += "<p>" + date + " (Created)" + "</p>"
-    cardCol2.innerHTML = "<button id='open' class='btn btn-primary p-3'>Open</button>";
+    cardCol2.innerHTML = "<button class='btn btn-primary p-3 open'>Open</button>";
 
     cardRow.appendChild(cardCol1);
     cardRow.appendChild(cardCol2);
     card.appendChild(cardRow);
     historyContainer.appendChild(card);
 
-    //get unique bracket id from database
-    //set html id to bracket id
-    //then set event listener for each
+    let editLink = document.getElementsByClassName("open");
 
-    document.getElementById("open").addEventListener("click", function() {
-        redirect();
+    for (let i = 0; i < editLink.length; i++)
+    editLink[i].addEventListener("click", function() {
+        redirect(ids[i]);
     }, false);
 }
 
-function redirect() {
+function redirect(id) {
     console.log("clicked");
-    window.location = "settings.html";
-    
-    window.onload = () => {
-        console.log("name");
-    }
-
-    console.log("name");
-
+    window.location = `edit.php?id=${id}`;
 }
+
