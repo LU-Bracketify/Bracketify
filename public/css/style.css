@@ -35,8 +35,6 @@ html {
     margin: 10px;
     padding: 10px;
     padding-top: 60px;
-    display: flex;
-    flex-direction: column;
 }
 
 .card {
@@ -53,6 +51,10 @@ html {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1;
+}
+.card {
+    z-index: 0;
 }
 
   .slider {

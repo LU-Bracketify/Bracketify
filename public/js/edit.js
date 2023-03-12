@@ -3,15 +3,16 @@ window.onload = generatePage();
 function generatePage() {
     var title = "See Work"
     var type = "single elim";
-    var teamNum = 64;
+    var teamNumCount = 128;
+    var teamNum = 128;
     var isSeeded = true;
     var isScored = true;
     var is1 = false;
     var count = 1;
     if (type === "single elim") {
         while (is1 === false) {
-            teamNum /= 2;
-            if (teamNum === 1) {
+            teamNumCount /= 2;
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
@@ -19,41 +20,43 @@ function generatePage() {
     }
     else if (type === "double elim") {
         while (is1 === false) {
-            if (teamNum <= 4) {
-                teamNum -= 1
+            if (teamNumCount <= 4) {
+                teamNumCount -= 1
             }
             else {
-                teamNum -= teamNum / 4
+                teamNumCount -= teamNum / 4
             }
-            if (teamNum === 1) {
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
         }
     }
     else if (type === "round robin") {
-        count = teamNum;
+        count = teamNumCount;
     }
     else if (type === "group") {
         count = 3;
-        teamNum / 2;
+        teamNumCount / 2;
         count++;
         while (is1 === false) {
-            teamNum /= 2;
-            if (teamNum === 1) {
+            teamNumCount /= 2;
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
         }
     }
-    var titleGet = getElementById("title");
+    var titleGet = document.getElementById("title");
     titleGet.innerHTML = `Edit - ${title}`
     if (type === "single elim") {
         var cardCreation = document.createElement("div")
         cardCreation.classList.add("cardContainer")
         document.getElementsByClassName('mainContainer')[0].appendChild(cardCreation);
         var rowCreation = document.createElement("div")
-        rowCreation.classList.add(`row row-cols-1 row-cols-md-${count + 1}`)
+        rowCreation.classList.add(`row`)
+        rowCreation.classList.add(`row-cols-1`)
+        rowCreation.classList.add(`row-cols-md-${count + 1}`)
         cardCreation.appendChild(rowCreation)
         for (var i = 0; i < count; i++) {
             var deck = document.createElement("div")
@@ -61,17 +64,30 @@ function generatePage() {
             rowCreation.appendChild(deck)
             if (i === count - 1) {
                 var winner = document.createElement("h2")
-                winner.classList.add("p-3 border-top border-bottom")
+                winner.classList.add("p-3")
+                winner.classList.add("border-top")
+                winner.classList.add("border-bottom")
                 winner.innerHTML = "Winner"
-                deck.appendChild(winner)
+                console.log(winner.innerHTML)
                 var winCard = document.createElement("div")
-                winCard.classList.add("card p-2 mb-3 text-center")
+                winCard.classList.add("card")
+                winCard.classList.add("p-2")
+                winCard.classList.add("mb-3")
+                winCard.classList.add("text-center")
                 deck.appendChild(winCard)
                 var winRow = document.createElement("div")
-                winRow.classList.add("row p-2 m-2")
+                winRow.classList.add("row")
+                winRow.classList.add("p-2")
+                winRow.classList.add("m-2")
                 winCard.appendChild(winRow)
                 var winCol = document.createElement("div")
-                winCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
+                winCol.classList.add("col")
+                winCol.classList.add("p-2")
+                winCol.classList.add("m-2")
+                winCol.classList.add("d-flex")
+                winCol.classList.add("flex-column")
+                winCol.classList.add("justify-content-center")
+                winCol.classList.add("align-items-center")
                 winRow.appendChild(winCol)
                 var winTeam = document.createElement("h1")
                 winTeam.classList.add("small-view")
@@ -81,44 +97,62 @@ function generatePage() {
             }
             else {
                 var round = document.createElement("h2")
-                round.classList.add("p-3 border-top border-bottom")
-                round.innerHTML = `Round ${i}`
+                round.classList.add("p-3")
+                round.classList.add("border-top")
+                round.classList.add("border-bottom")
+                round.innerHTML = `Round ${i + 1}`
                 deck.appendChild(round)
-                for (var j = 0; j < teamNum / 2; j++) {
+                for (var j = 0; j < teamNum/2; j++) {
                     var card = document.createElement("div")
-                    card.classList.add("card p-2 mb-3 text-center")
+                    card.classList.add("card")
+                    card.classList.add("p-2")
+                    card.classList.add("mb-3")
+                    card.classList.add("text-center")
                     deck.appendChild(card)
-                    ()
                     var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row p-2 m-2")
+                    cardFormat.classList.add("row")
+                    cardFormat.classList.add("p-2")
+                    cardFormat.classList.add("m-2")
                     card.appendChild(cardFormat)
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
-                        teamCol.classList.add("col m-2")
+                        teamCol.classList.add("col")
+                        teamCol.classList.add("m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
                         teamName.innerHTML = `Team`
+                        teamCol.appendChild(teamName)
                         if (isScored === true) {
                             k++;
                             var score = document.createElement("p")
                             score.classList.add("bigger-view")
                             score.id = `r${i} g${j} a${k}`
                             score.innerHTML = "Score"
+                            teamCol.appendChild(score)
                         }
                     }
                     var butCol = document.createElement("div")
-                    butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
+                    butCol.classList.add("col")
+                    butCol.classList.add("m-2")
+                    butCol.classList.add("p-2")
+                    butCol.classList.add("d-flex")
+                    butCol.classList.add("flex-column")
+                    butCol.classList.add("justify-content-center")
+                    butCol.classList.add("align-items-center")
                     cardFormat.appendChild(butCol)
                     var but = document.createElement("button")
                     but.type = "button"
-                    but.classList.add("btn btn-primary p-3")
+                    but.classList.add("btn")
+                    but.classList.add("btn-primary")
+                    but.classList.add("p-3")
                     but.dataset.bsToggle = "modal"
                     but.dataset.bsTarget = "#exampleModal"
                     but.innerHTML = "Open"
                     butCol.appendChild(but)
                 }
-                teamNum /= 2;
+                teamNum = teamNum/2;
             }
         }
     }
