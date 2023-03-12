@@ -68,7 +68,7 @@ function generatePage() {
                 winner.classList.add("border-top")
                 winner.classList.add("border-bottom")
                 winner.innerHTML = "Winner"
-                console.log(winner.innerHTML)
+                deck.appendChild(winner)
                 var winCard = document.createElement("div")
                 winCard.classList.add("card")
                 winCard.classList.add("p-2")
