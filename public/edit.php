@@ -11,7 +11,6 @@
     <meta name="keywords" content="Bracket, Tournament, Round Robin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" type="image/png" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="images/apple-touch-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -23,6 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
         integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="./edit.js"></script>
+    <script src="js/storeData.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -38,7 +38,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="newBracket.html" title="New">
+            <a class="nav-link" href="newBracket.php" title="New">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                     class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path
@@ -209,58 +209,52 @@
 </body>
 
 </html>
-<!-- ======= -->
         <?php 
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $name = $_POST["nameInput"];
-            $size = $_POST["size"];
-            $type = $_POST["type"];
-            $seeded = isset($_POST["seeded"]);
-            $scored = isset($_POST["scored"]);
-            $author = $_POST["author"];
-            $desc = $_POST["desc"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["nameInput"];
+    $size = $_POST["size"];
+    $type = $_POST["type"];
+    $seeded = isset($_POST["seeded"]);
+    $scored = isset($_POST["scored"]);
+    $author = $_POST["author"];
+    $desc = $_POST["desc"];
 
 
-            if ($scored == "") {
-                $scored = false;
-            }
+    if ($scored == "") {
+        $scored = false;
+    }
 
-            if ($seeded == "") {
-                $seeded = false;
-            } 
+    if ($seeded == "") {
+        $seeded = false;
+    } 
 
-            $formData = json_encode(
-                array("name"    => $name, 
-                      "size"    => $size,
-                      "type"    => $type,
-                      "seeded"  => $seeded,
-                      "scored"  => $scored,
-                      "author"  => $author,
-                      "desc"    => $desc
-            ));
+    $formData = json_encode(
+        array("name"    => $name, 
+              "size"    => $size,
+              "type"    => $type,
+              "seeded"  => $seeded,
+              "scored"  => $scored,
+              "author"  => $author,
+              "desc"    => $desc
+    ));
 
-            // Insert data
-            echo "<script>
-                function upload(bracketData) {
-                    let id = generateId();
-                    document.write(bracketData.name);
-                    document.write(bracketData.size);
-                    document.write(bracketData.seeded);
-                    document.write(bracketData.scored);
-                    document.write(bracketData.author);
-                    document.write(bracketData.desc);
-                    console.log(generateId());
-                    
-                    dbConnect(id, bracketData.name, bracketData.size, bracketData.type, bracketData.seeded, bracketData.scored, bracketData.author, bracketData.desc);
-                }
-                upload($formData);
-                </script>";
-        } 
+    // Insert data
+    echo "<script>
+        function upload(bracketData) {
+            let id = generateId();
+            console.log(generateId());
+            
+            dbConnect(id, bracketData.name, bracketData.size, bracketData.type, bracketData.seeded, bracketData.scored, bracketData.author, bracketData.desc);
+        }
+        upload($formData);
+        </script>";
+} 
 
-        ?>
+?>
 
-<!-- >>>>>>> cfbdf653ea45b64b132eaac06066336264ec7739:public/edit.php -->
 </body>
 
 </html>
+
+
