@@ -147,12 +147,16 @@
                             <div class="top">
                                 <label>Team Name</label>
                                 <input type="text" name="Team Name" id="team1" required>
+                                <br/>
+                                <br/>
                                 <label>Score</label>
                                 <input type="text" name="Score" id="score1" required>
                             </div>
                             <div class="bottom">
                                 <label>Team Name</label>
                                 <input type="text" name="Team Name" id="team2" required>
+                                <br/>
+                                <br/>
                                 <label>Score</label>
                                 <input type="text" name="Score" id="score2" required>
                             </div>

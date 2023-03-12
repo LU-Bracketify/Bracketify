@@ -3,15 +3,16 @@ window.onload = generatePage();
 function generatePage() {
     var title = "See Work"
     var type = "single elim";
-    var teamNum = 64;
+    var teamNumCount = 128;
+    var teamNum = 128;
     var isSeeded = true;
     var isScored = true;
     var is1 = false;
     var count = 1;
     if (type === "single elim") {
         while (is1 === false) {
-            teamNum /= 2;
-            if (teamNum === 1) {
+            teamNumCount /= 2;
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
@@ -19,28 +20,28 @@ function generatePage() {
     }
     else if (type === "double elim") {
         while (is1 === false) {
-            if (teamNum <= 4) {
-                teamNum -= 1
+            if (teamNumCount <= 4) {
+                teamNumCount -= 1
             }
             else {
-                teamNum -= teamNum / 4
+                teamNumCount -= teamNum / 4
             }
-            if (teamNum === 1) {
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
         }
     }
     else if (type === "round robin") {
-        count = teamNum;
+        count = teamNumCount;
     }
     else if (type === "group") {
         count = 3;
-        teamNum / 2;
+        teamNumCount / 2;
         count++;
         while (is1 === false) {
-            teamNum /= 2;
-            if (teamNum === 1) {
+            teamNumCount /= 2;
+            if (teamNumCount === 1) {
                 is1 = true;
             }
             count++;
@@ -67,7 +68,7 @@ function generatePage() {
                 winner.classList.add("border-top")
                 winner.classList.add("border-bottom")
                 winner.innerHTML = "Winner"
-                deck.appendChild(winner)
+                console.log(winner.innerHTML)
                 var winCard = document.createElement("div")
                 winCard.classList.add("card")
                 winCard.classList.add("p-2")
@@ -101,7 +102,7 @@ function generatePage() {
                 round.classList.add("border-bottom")
                 round.innerHTML = `Round ${i + 1}`
                 deck.appendChild(round)
-                for (var j = 0; j < teamNum / 2; j++) {
+                for (var j = 0; j < teamNum/2; j++) {
                     var card = document.createElement("div")
                     card.classList.add("card")
                     card.classList.add("p-2")
@@ -117,16 +118,19 @@ function generatePage() {
                         var teamCol = document.createElement("div")
                         teamCol.classList.add("col")
                         teamCol.classList.add("m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
                         teamName.innerHTML = `Team`
+                        teamCol.appendChild(teamName)
                         if (isScored === true) {
                             k++;
                             var score = document.createElement("p")
                             score.classList.add("bigger-view")
                             score.id = `r${i} g${j} a${k}`
                             score.innerHTML = "Score"
+                            teamCol.appendChild(score)
                         }
                     }
                     var butCol = document.createElement("div")
@@ -147,10 +151,8 @@ function generatePage() {
                     but.dataset.bsTarget = "#exampleModal"
                     but.innerHTML = "Open"
                     butCol.appendChild(but)
-                    console.log(j)
-                    console.log()
                 }
-                teamNum /= 2;
+                teamNum = teamNum/2;
             }
         }
     }
