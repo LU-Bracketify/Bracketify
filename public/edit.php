@@ -178,38 +178,8 @@
             </div>
         </div>
     </div>
-    <script>
 
-        // window.onload = generatePage();
-        //     // Parse url params
-        //     //const queryStr = window.location.search;
-        //     //console.log(queryStr.split('='));
-        //     //let params = queryStr.split('=');
-        //     //let id = params[1];
-        //     //console.log(id);
-
-        //     //Get last id stored in database
-
-
-
-        // }
-    </script>
-    <script>
-        // Register SW
-        if ('serviceWorker' in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register('sw.js').then(reg => {
-                    console.log("sw registered");
-                }).catch(error => {
-                    console.log("err");
-                });
-            });
-        }
-    </script>
-</body>
-
-</html>
-        <?php 
+<?php 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["nameInput"];
@@ -253,8 +223,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 
+
 </body>
 
 </html>
+
+
 
 
