@@ -7,6 +7,6 @@
       "type": "image/png"
     }],
     "id": "bracketify",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "standalone"
   }
