@@ -35,8 +35,6 @@ html {
     margin: 10px;
     padding: 10px;
     padding-top: 60px;
-    display: flex;
-    flex-direction: column;
 }
 
 .card {
@@ -46,6 +44,7 @@ html {
 #nav {
     opacity: 0.7;
     background-color: black;
+    z-index: 50;
   }
 
 #navbar {
@@ -53,6 +52,9 @@ html {
     position: fixed;
     top: 0;
     width: 100%;
+}
+.card {
+    z-index: 1;
 }
 
   .slider {
