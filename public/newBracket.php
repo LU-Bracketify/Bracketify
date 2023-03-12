@@ -60,7 +60,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="typeInput">Bracket Type:</label>
-                    <select class="form-select" name="type" name="type" id="typeInput" required>
+                    <select class="form-select" name="type" id="typeInput" required>
                         <option></option>
                         <option value="single">Single Elimination</option>
                         <option value="double">Double Elimination</option>
