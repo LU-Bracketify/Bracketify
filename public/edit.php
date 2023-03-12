@@ -22,7 +22,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
         integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <!-- <script src="../edit.js"></script> -->
+    <script src="./edit.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -61,25 +61,23 @@
         </li>
     </ul>
 
-    <div class="mainContainer" id="navbar-title">
+    <div class="mainContainer" onload="generatePage()">
         <div class="container text-center pb-3">
-            <h2 class="p-3 border-top border-bottom">Edit</h2>
+            <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
         </div>
-    </div>
-    <div class="page">
-        <div class="cardContainer" style="width: 150rem;">
+        <!-- <div class="cardContainer">
             <div class="row row-cols-1 row-cols-md-4" id="form">
                 <div class="card-deck">
                     <h2 class="p-3 border-top border-bottom">Round 1</h2>
                     <div class="card p-2 mb-3 text-center">
                         <div class="row p-2 m-2">
                             <div class="col m-2">
-                                <h1 class="small-view" id="r1 g1">Team 1</h1>
-                                <p class="bigger-view r1 g1">Score</p>
+                                <h1 class="small-view" id="r1 g1 a0">Team 1</h1>
+                                <p class="bigger-view" id ="r1 g1 a1">Score</p>
                             </div>
                             <div class="col m-2">
-                                <h1 class="small-view" id="r1 g1">Team 2</h1>
-                                <p class="bigger-view" id="r1 g1">Score</p>
+                                <h1 class="small-view" id="r1 g1 a2">Team 2</h1>
+                                <p class="bigger-view" id="r1 g1 a3">Score</p>
                             </div>
                             <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
                                 <button class="btn btn-primary p-3" data-bs-toggle="modal"
@@ -137,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -180,12 +178,9 @@
             </div>
         </div>
     </div>
-
     <script>
 
-
-
-        // window.onload = () => {
+        // window.onload = generatePage();
         //     // Parse url params
         //     //const queryStr = window.location.search;
         //     //console.log(queryStr.split('='));
@@ -214,7 +209,7 @@
 </body>
 
 </html>
-=======
+<!-- ======= -->
         <?php 
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -265,7 +260,7 @@
 
         ?>
 
->>>>>>> cfbdf653ea45b64b132eaac06066336264ec7739:public/edit.php
+<!-- >>>>>>> cfbdf653ea45b64b132eaac06066336264ec7739:public/edit.php -->
 </body>
 
 </html>
