@@ -1,0 +1,12 @@
+{
+    "lang": "en",
+    "name": "Bracketify",
+    "icons": [{
+      "src": "images/apple-touch-icon.png",
+      "sizes": "57x57",
+      "type": "image/png"
+    }],
+    "id": "bracketify",
+    "start_url": "/index.html",
+    "display": "standalone"
+  }
