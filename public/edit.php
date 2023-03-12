@@ -18,10 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script src="./edit.js"></script>
+    <script src="js/edit.js" defer></script>
     <script src="js/storeData.js"></script>
     <title>Bracketify | Edit</title>
 </head>
@@ -61,7 +58,7 @@
         </li>
     </ul>
 
-    <div class="mainContainer" onload="generatePage()">
+    <div class="mainContainer">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
         </div>

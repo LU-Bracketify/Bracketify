@@ -1,3 +1,5 @@
+window.onload = generatePage();
+
 function generatePage() {
     var title = "See Work"
     var type = "single elim";
@@ -75,6 +77,7 @@ function generatePage() {
                 winTeam.classList.add("small-view")
                 winTeam.id = `r${i}`
                 winTeam.innerHTML = `Team`
+                winCol.appendChild(winTeam)
             }
             else {
                 var round = document.createElement("h2")
@@ -85,6 +88,7 @@ function generatePage() {
                     var card = document.createElement("div")
                     card.classList.add("card p-2 mb-3 text-center")
                     deck.appendChild(card)
+                    ()
                     var cardFormat = document.createElement("div")
                     cardFormat.classList.add("row p-2 m-2")
                     card.appendChild(cardFormat)
@@ -94,12 +98,14 @@ function generatePage() {
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
-                        k++;
                         teamName.innerHTML = `Team`
-                        var score = document.createElement("p")
-                        score.classList.add("bigger-view")
-                        score.id = `r${i} g${j} a${k}`
-                        score.innerHTML = "Score"
+                        if (isScored === true) {
+                            k++;
+                            var score = document.createElement("p")
+                            score.classList.add("bigger-view")
+                            score.id = `r${i} g${j} a${k}`
+                            score.innerHTML = "Score"
+                        }
                     }
                     var butCol = document.createElement("div")
                     butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -148,6 +154,7 @@ function generatePage() {
                 winTeam.classList.add("small-view")
                 winTeam.id = `r${i}`
                 winTeam.innerHTML = `Team`
+                winCol.appendChild(winTeam)
             }
             else {
                 var round = document.createElement("h2")
@@ -164,15 +171,20 @@ function generatePage() {
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
                         teamCol.classList.add("col m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
-                        k++;
                         teamName.innerHTML = `Team`
-                        var score = document.createElement("p")
-                        score.classList.add("bigger-view")
-                        score.id = `r${i} g${j} a${k}`
-                        score.innerHTML = "Score"
+                        teamCol.appendChild(teamName)
+                        if (isScored === true) {
+                            k++;
+                            var score = document.createElement("p")
+                            score.classList.add("bigger-view")
+                            score.id = `r${i} g${j} a${k}`
+                            score.innerHTML = "Score"
+                            teamCol.appendChild(score)
+                        }
                     }
                     var butCol = document.createElement("div")
                     butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -196,15 +208,20 @@ function generatePage() {
                         for (var k = 0; k < 4; k++) {
                             var teamCol = document.createElement("div")
                             teamCol.classList.add("col m-2")
+                            cardFormat.appendChild(teamCol)
                             var teamName = document.createElement("h1")
                             teamName.classList.add("small-view")
                             teamName.id = `r${i} g${j} a${k}`
-                            k++;
                             teamName.innerHTML = `L Team`
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            teamCol.appendChild(teamName)
+                            if (isScored === true) {
+                                k++;
+                                var score = document.createElement("p")
+                                score.classList.add("bigger-view")
+                                score.id = `r${i} g${j} a${k}`
+                                score.innerHTML = "Score"
+                                teamCol.appendChild(score)
+                            }
                         }
                         var butCol = document.createElement("div")
                         butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -229,15 +246,19 @@ function generatePage() {
                         for (var k = 0; k < 4; k++) {
                             var teamCol = document.createElement("div")
                             teamCol.classList.add("col m-2")
+                            cardFormat.appendChild(teamCol)
                             var teamName = document.createElement("h1")
                             teamName.classList.add("small-view")
                             teamName.id = `r${i} g${j} a${k}`
-                            k++;
-                            teamName.innerHTML = `L Team`
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            teamName.innerHTML = `Team`
+                            teamCol.appeadChild()
+                            if (isScored === true) {
+                                k++;
+                                var score = document.createElement("p")
+                                score.classList.add("bigger-view")
+                                score.id = `r${i} g${j} a${k}`
+                                score.innerHTML = "Score"
+                            }
                         }
                         var butCol = document.createElement("div")
                         butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -269,13 +290,13 @@ function generatePage() {
         cardCreation.appendChild(rowCreation)
         for (var i = 0; i < count; i++) {
             var deck = document.createElement("div")
-            deck.classList.add("card-deck") 
+            deck.classList.add("card-deck")
             rowCreation.appendChild(deck)
             var deck = document.createElement("div")
             deck.classList.add("card-deck")
             rowCreation.appendChild(deck)
             if (i === count - 1) {
-                 var winner = document.createElement("h2")
+                var winner = document.createElement("h2")
                 winner.classList.add("p-3 border-top border-bottom")
                 winner.innerHTML = "Winner"
                 deck.appendChild(winner)
@@ -311,12 +332,14 @@ function generatePage() {
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
-                        k++;
                         teamName.innerHTML = `Team`
-                        var score = document.createElement("p")
-                        score.classList.add("bigger-view")
-                        score.id = `r${i} g${j} a${k}`
-                        score.innerHTML = "Score"
+                        if (isScored === true) {
+                            k++;
+                            var score = document.createElement("p")
+                            score.classList.add("bigger-view")
+                            score.id = `r${i} g${j} a${k}`
+                            score.innerHTML = "Score"
+                        }
                     }
                     var butCol = document.createElement("div")
                     butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -333,7 +356,7 @@ function generatePage() {
         }
     }
     else if (type === "group") {
-        var groupNum = teamNum/4;
+        var groupNum = teamNum / 4;
         var cardCreation = document.createElement("div")
         cardCreation.classList.add("cardContainer")
         document.getElementsByClassName('mainContainer')[0].appendChild(cardCreation);
@@ -366,7 +389,7 @@ function generatePage() {
                 winTeam.id = `r${i}`
                 winTeam.innerHTML = `Team`
             }
-            else if (i<3) {
+            else if (i < 3) {
                 var round = document.createElement("h2")
                 round.classList.add("p-3 border-top border-bottom")
                 round.innerHTML = `Round ${i}`
@@ -379,20 +402,21 @@ function generatePage() {
                     cardFormat.classList.add("row p-2 m-2")
                     card.appendChild(cardFormat)
                     var group = document.createElement("h1")
-                    group.innerHTML = `Group ${(i+1)*groupNum}`
+                    group.innerHTML = `Group ${(i + 1) * groupNum}`
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
                         teamCol.classList.add("col m-2")
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
-                        k++;
-                        teamName.innerHTML = `Team ${teams}`
-                        teams++;
-                        var score = document.createElement("p")
-                        score.classList.add("bigger-view")
-                        score.id = `r${i} g${j} a${k}`
-                        score.innerHTML = "Score"
+                        teamName.innerHTML = `Team`
+                        if (isScored === true) {
+                            k++;
+                            var score = document.createElement("p")
+                            score.classList.add("bigger-view")
+                            score.id = `r${i} g${j} a${k}`
+                            score.innerHTML = "Score"
+                        }
                     }
                     var butCol = document.createElement("div")
                     butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
@@ -424,13 +448,14 @@ function generatePage() {
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
                         teamName.id = `r${i} g${j} a${k}`
-                        k++;
-                        teamName.innerHTML = `Team ${teams}`
-                        teams++;
-                        var score = document.createElement("p")
-                        score.classList.add("bigger-view")
-                        score.id = `r${i} g${j} a${k}`
-                        score.innerHTML = "Score"
+                        teamName.innerHTML = `Team`
+                        if (isScored === true) {
+                            k++;
+                            var score = document.createElement("p")
+                            score.classList.add("bigger-view")
+                            score.id = `r${i} g${j} a${k}`
+                            score.innerHTML = "Score"
+                        }
                     }
                     var butCol = document.createElement("div")
                     butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
