@@ -5,7 +5,6 @@ function retrieveRecord(id) {
     let request = indexedDB.open("BracketDB");
     request.onupgradeneeded = function(e) {
         e.target.transaction.abort();
-        noRecordsFound();
     }
 
     request.onsuccess = function() {
