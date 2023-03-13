@@ -76,6 +76,7 @@ function noRecordsFound() {
     msg.textContent = "You don't have any saved brackets";
 
     let msgDiv = document.createElement("div");
+    msgDiv.className = "text-center";
     msgDiv.appendChild(msg);
 
     let msgContainer = document.createElement("div");
@@ -85,6 +86,7 @@ function noRecordsFound() {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
     historyContainer.setAttribute("style", "display: flex; flex-direction: column; height:100%;");
     historyContainer.appendChild(msgContainer);
+
 }
 
 let ids = [];
