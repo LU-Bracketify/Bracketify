@@ -122,3 +122,12 @@ html {
     flex-direction: row;
     flex-wrap: nowrap;
 }
+
+.paddingRight {
+    padding-right: 10px;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
