@@ -5,10 +5,12 @@ function generatePage() {
     var type = "single elim";
     var teamNumCount = 16;
     var teamNum = 16;
-    var isSeeded = true;
+    var isSeeded = "randomizedSeed";
+    // var isSeeded = "seeded";
     var isScored = true;
     var is1 = false;
     var count = 1;
+    var winners = [];
     if (type === "single elim") {
         while (is1 === false) {
             teamNumCount /= 2;
@@ -62,6 +64,7 @@ function generatePage() {
             var colCreation = document.createElement("div")
             colCreation.classList.add(`col`)
             colCreation.classList.add(`mb-4`)
+            colCreation.id = `${i}`
             colCreation.style.width = "auto";
             rowCreation.appendChild(colCreation)
             var deck = document.createElement("div")
@@ -99,6 +102,14 @@ function generatePage() {
                 winTeam.id = `r${i}`
                 winTeam.innerHTML = `Team`
                 winCol.appendChild(winTeam)
+                var winBut = document.createElement("button")
+                winBut.type = "button"
+                winBut.classList.add("btn")
+                winBut.classList.add("btn-primary")
+                winBut.classList.add("p-3")
+                winBut.setAttribute("onclick", "window.print()")
+                winBut.innerHTML = "Share"
+                winCol.appendChild(winBut)
             }
             else {
                 var round = document.createElement("h2")
@@ -107,7 +118,7 @@ function generatePage() {
                 round.classList.add("border-bottom")
                 round.innerHTML = `Round ${i + 1}`
                 deck.appendChild(round)
-                for (var j = 0; j < teamNum/2; j++) {
+                for (var j = 0; j < teamNum / 2; j++) {
                     var card = document.createElement("div")
                     card.classList.add("card")
                     card.classList.add("p-2")
@@ -124,41 +135,58 @@ function generatePage() {
                         teamCol.classList.add("col")
                         teamCol.classList.add("m-2")
                         cardFormat.appendChild(teamCol)
-                        var teamName = document.createElement("h1")
-                        teamName.classList.add("small-view")
-                        teamName.id = `r${i} g${j} a${k}`
-                        teamName.innerHTML = `Team`
+                        if (i===0) {
+                            var teamName = document.createElement("input")
+                            teamName.type = "text"
+                            teamName.placeholder = "Team"
+                        }
+                        else {
+                            var teamName = document.createElement("h1")
+                            teamName.classList.add("small-view")
+                            teamName.innerHTML = "Team"
+                        }
+                        // var teamName = document.createElement("h1")
+                        // teamName.classList.add("small-view")
+                        // teamName.classList.add(`r${i}`)
+                        // teamName.innerHTML = `Team`
                         teamCol.appendChild(teamName)
+                        k++;
                         if (isScored === true) {
-                            k++;
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var score = document.createElement("input")
+                            score.classList.add(`${i}`)
+                            score.placeholder = "Score"
                             teamCol.appendChild(score)
                         }
+                        else {
+                            if(k===3) {
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var winnerLabel = document.createElement("label")
+                            winnerLabel.innerHTML = "Select a Winner:"
+                            teamCol.appendChild(winnerLabel)
+                            var winnerDropdown = document.createElement("select")
+                            var team1  = document.createElement("option")
+                            team1.value = "team1"
+                            team1.innerHTML = "Left Team"
+                            winnerDropdown.appendChild(team1)
+                            var team2 = document.createElement("option")
+                            team2.innerHTML = "Right Team"
+                            winnerDropdown.appendChild(team2)
+                            teamCol.appendChild(winnerDropdown)
+                            }
+                        }
                     }
-                    var butCol = document.createElement("div")
-                    butCol.classList.add("col")
-                    butCol.classList.add("m-2")
-                    butCol.classList.add("p-2")
-                    butCol.classList.add("d-flex")
-                    butCol.classList.add("flex-column")
-                    butCol.classList.add("justify-content-center")
-                    butCol.classList.add("align-items-center")
-                    cardFormat.appendChild(butCol)
-                    var but = document.createElement("button")
-                    but.type = "button"
-                    but.classList.add("btn")
-                    but.classList.add("btn-primary")
-                    but.classList.add("p-3")
-                    but.dataset.bsToggle = "modal"
-                    but.dataset.bsTarget = "#exampleModal"
-                    but.innerHTML = "Open"
-                    butCol.appendChild(but)
                 }
-                teamNum = teamNum/2;
+                teamNum = teamNum / 2;
             }
+                // make button here to call a function to evaluate column scores
+                // change team names based on winners
         }
     }
     else if (type === "double elim") {
@@ -380,16 +408,18 @@ function generatePage() {
                             score.innerHTML = "Score"
                         }
                     }
-                    var butCol = document.createElement("div")
-                    butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
-                    cardFormat.appendChild(butCol)
-                    var but = document.createElement("button")
-                    but.type = "button"
-                    but.classList.add("btn btn-primary p-3")
-                    but.dataset.bsToggle = "modal"
-                    but.dataset.bsTarget = "#exampleModal"
-                    but.innerHTML = "Open"
-                    butCol.appendChild(but)
+                    if (i === 0) {
+                        var butCol = document.createElement("div")
+                        butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
+                        cardFormat.appendChild(butCol)
+                        var but = document.createElement("button")
+                        but.type = "button"
+                        but.classList.add("btn btn-primary p-3")
+                        but.dataset.bsToggle = "modal"
+                        but.dataset.bsTarget = "#exampleModal"
+                        but.innerHTML = "Open"
+                        butCol.appendChild(but)
+                    }
                 }
             }
         }
@@ -511,13 +541,44 @@ function generatePage() {
             }
         }
     }
-}
+    // if (isScored === true) {
+    //     for (var i = 0; i < count; i++) {
+    //         for (var j = 0; j < teamNum / 2; j++)
+    //             var data = document.getElementById(`${i}`),
+    //                 btn = document.getElementById(`${j}`),
+    //                 ps = data.querySelectorAll('p');
+    //         btn.addEventListener('click', function (p) {
+    //             ps.forEach(function (p) {
+    //                 p.toggleAttribute('contenteditable');
+    //             });
 
-function changeElemModal(team1, score1, team2, score2) {
-    var changeTo = [team1, score1, team2, score2];
-    var collection = [];
-    for (var i = 0; i < 4; i++) {
-        colletion[i] = document.getElementById("r1 g1 a${i}");
-        collection[i].innerHTML = changeTo[i];
-    }
+    //             if (ps[0].hasAttribute('contenteditable')) {
+    //                 // Currently editing, change the button
+    //                 btn.innerText = 'Save';
+    //             } else {
+    //                 // We just "saved". run "save functions" here
+    //                 btn.innerText = 'Edit';
+    //             }
+    //         });
+    //     }
+    // }
+    // for (var j = 0;j<teamNum/2;j++) {
+    //     var data = document.getElementById("0"),
+    //     btn = document.getElementById(`${j}`),
+    //     h1s = data.querySelectorAll('h1');
+    //     btn.addEventListener('click', function (e) {
+    //         h1s.forEach(function (h1) {
+    //             h1.toggleAttribute('contenteditable');
+    //         });
+
+    //         if (h1s[0].hasAttribute('contenteditable')) {
+    //             // Currently editing, change the button
+    //             btn.innerText = 'Save';
+    //         } else {
+    //             // We just "saved". run "save functions" here
+    //             btn.innerText = 'Edit';
+    //         }
+    //     });
+    // }
+
 }
