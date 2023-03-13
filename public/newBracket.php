@@ -1,3 +1,8 @@
+<?php
+session_start();
+$_SESSION['id'] = uniqid();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +112,10 @@
         </div>
     </div>
     <script>
-        window.onload = readPreferencesCache();
+        window.onload =() => {
+            readPreferencesCache();
+            //generateId();
+        }
     </script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+<?php 
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +24,7 @@
     <script src="js/edit.js" async></script>
     <script src="js/storeData.js"></script>
     <script src="js/preferences.js"></script>
+    <script src="js/editDB.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -185,7 +191,17 @@
 
 <?php 
 
+// IF SERVER REQUEST === POST
+    // conn to db using generated id
+    // store record in database
+    // retrieve stored record using id
+
+// IF SERVER REQUEST === GET
+    // get id from search params
+    // retrieve stored record using id
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_SESSION['id'];
     $name = $_POST["nameInput"];
     $size = $_POST["size"];
     $bType = $_POST["bType"];
@@ -199,14 +215,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $scored = false;
     }
 
-    /*
-    if ($seeded == "") {
-        $seeded = false;
-    } 
-    */
-
     $formData = json_encode(
-        array("name"    => $name, 
+        array("id"      => $id,
+              "name"    => $name, 
               "size"    => $size,
               "bType" => $bType,
               "seedType"  => $seedType,
@@ -215,11 +226,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               "desc"    => $desc
     ));
 
-    // Insert data
     echo "<script>
         function upload(bracketData) {
-            let id = generateId();
-            console.log(generateId());
+            //let id = generateId();
 
             console.log(bracketData.name);
             console.log(bracketData.size);
@@ -229,11 +238,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             console.log(bracketData.author);
             console.log(bracketData.desc);
             
-            dbConnect(id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
+            dbConnect(bracketData.id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
+            retrieveRecord(bracketData.id);
         }
         upload($formData);
         </script>";
-} 
+
+} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    echo "getting search params </br>";
+    $id = $_GET["id"];
+    echo $id;
+
+    $formID = json_encode( array("id" => $id) );
+
+    echo "<script>
+        retrieveRecord($formID.id);
+        </script>";
+
+}
+
+
 
 ?>
 
