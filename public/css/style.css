@@ -29,12 +29,22 @@ html {
     font-size: 60px;
 }
 
+.parentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .mainContainer {
     height: auto;
     margin: 10px;
     padding: 10px;
-    padding-top: 60px;
-    max-width: 300px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .mainContainerForEdit {
@@ -45,7 +55,6 @@ html {
 }
 
 .card {
-    width: 350px;
     z-index: 0;
 }
 
