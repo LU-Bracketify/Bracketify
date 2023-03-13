@@ -54,9 +54,12 @@ function getRecords() {
                     for (let i = 0; i < recordCount; i++) {
                         let name = bracketQuery.result[i]["name"];
                         let date = bracketQuery.result[i]["date"];
-                        let type = bracketQuery.result[i]["type"];  
-                        let id = bracketQuery.result[i]["id"];              
-                        renderBracket(name, type, date, id);
+                        let type = bracketQuery.result[i]["type"];
+                        let id = bracketQuery.result[i]["id"];
+                        let author = bracketQuery.result[i]["author"];
+                        let desc = bracketQuery.result[i]["desc"];
+                        let modified = bracketQuery.result[i]["modified"];
+                        renderBracket(name, type, date, id, author, desc, modified);
                     }
                 };
             }
@@ -85,7 +88,7 @@ function noRecordsFound() {
 }
 
 let ids = [];
-function renderBracket(name, type, date, id) {
+function renderBracket(name, type, date, id, author, desc, modified) {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
 
     ids.push(id);
@@ -100,8 +103,20 @@ function renderBracket(name, type, date, id) {
     cardCol1.className = "col m-2";
     cardCol2.className = "col m-2 p-2 d-flex flex-column justify-content-center align-items-center";
 
-    cardCol1.innerHTML = "<h1>" + name + "</h1>";
-    cardCol1.innerHTML += "<p>Created on " + date + "</p>";
+    cardCol1.innerHTML = "<h2>" + name + "</h2>";
+    if (author != "") {
+        cardCol1.innerHTML += "<h5>By " + author + "</h5>";
+    }
+    if (modified == "true") {
+        cardCol1.innerHTML += "<h5>Modified on " + date + "</h5>";
+    }
+    else {
+        cardCol1.innerHTML += "<h5>Created on " + date + "</h5>";
+    }
+    if (desc != "") {
+        cardCol1.innerHTML += "<p>" + desc + "</p>";
+    }
+    
     cardCol2.innerHTML = "<button class='btn btn-primary p-3 open'>Open</button>";
 
     cardRow.appendChild(cardCol1);
@@ -113,6 +128,26 @@ function renderBracket(name, type, date, id) {
 
     for (let i = 0; i < editLink.length; i++)
     editLink[i].addEventListener("click", function() {
+        
+        let request = indexedDB.open("BracketDB");
+        request.onerror = function() {
+            console.error("err", this.error);
+        };
+        request.onupgradeneeded = function(e) {
+            e.target.transaction.abort();
+        }
+        request.onsuccess = function() {
+            const db = request.result;
+            const transaction = db.transaction("brackets", "readwrite");
+            const store = transaction.objectStore("brackets");
+            alert("test?");
+            store.put({id: id, name: name, size: size, type: type, seeded: seed, scored: scored, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true"});
+            alert("it's not reaching here");
+            transaction.oncomplete = function() {
+                db.close();
+            };
+        }
+
         redirect(ids[i]);
     }, false);
 }
