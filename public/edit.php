@@ -188,8 +188,8 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["nameInput"];
     $size = $_POST["size"];
-    $type = $_POST["type"];
-    $seeded = isset($_POST["seeded"]);
+    $bType = $_POST["bType"];
+    $seedType = $_POST["seedType"];
     $scored = isset($_POST["scored"]);
     $author = $_POST["author"];
     $desc = $_POST["desc"];
@@ -199,15 +199,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $scored = false;
     }
 
+    /*
     if ($seeded == "") {
         $seeded = false;
     } 
+    */
 
     $formData = json_encode(
         array("name"    => $name, 
               "size"    => $size,
-              "type"    => $type,
-              "seeded"  => $seeded,
+              "bType" => $bType,
+              "seedType"  => $seedType,
               "scored"  => $scored,
               "author"  => $author,
               "desc"    => $desc
@@ -218,8 +220,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         function upload(bracketData) {
             let id = generateId();
             console.log(generateId());
+
+            console.log(bracketData.name);
+            console.log(bracketData.size);
+            console.log(bracketData.bType);
+            console.log(bracketData.seedType);
+            console.log(bracketData.scored);
+            console.log(bracketData.author);
+            console.log(bracketData.desc);
             
-            dbConnect(id, bracketData.name, bracketData.size, bracketData.type, bracketData.seeded, bracketData.scored, bracketData.author, bracketData.desc);
+            dbConnect(id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
         }
         upload($formData);
         </script>";

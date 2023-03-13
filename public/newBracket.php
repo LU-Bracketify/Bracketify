@@ -69,7 +69,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="typeInput">Bracket Type:</label>
-                    <select class="form-select" name="type" id="typeInput" required>
+                    <select class="form-select" name="bType" id="typeInput" required>
                         <option value="single" selected>Single Elimination</option>
                         <option value="double">Double Elimination</option>
                         <option value="robin">Round Robin</option>
@@ -79,7 +79,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="seedInput">Seed Type:</label>
-                    <select class="form-select" name="seed" id="seedInput" required>
+                    <select class="form-select" name="seedType" id="seedInput" required>
                         <option value="none" selected>None</option>
                         <option value="normal">Seed</option>
                         <option value="randomized">Randomized Seed</option>
