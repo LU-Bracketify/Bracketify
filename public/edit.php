@@ -57,7 +57,7 @@
         </li>
     </ul>
 
-    <div class="mainContainer">
+    <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
         </div>

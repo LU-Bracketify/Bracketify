@@ -52,7 +52,7 @@ function generatePage() {
     if (type === "single elim") {
         var cardCreation = document.createElement("div")
         cardCreation.classList.add("cardContainer")
-        document.getElementsByClassName('mainContainer')[0].appendChild(cardCreation);
+        document.getElementsByClassName('mainContainerForEdit')[0].appendChild(cardCreation);
         var rowCreation = document.createElement("div")
         rowCreation.classList.add(`row`)
         rowCreation.classList.add(`row-cols-1`)
