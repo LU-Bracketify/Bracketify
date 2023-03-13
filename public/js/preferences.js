@@ -1,4 +1,8 @@
-function readPreferencesCache() {
+async function readPreferencesCache() {
+    if ((await window.indexedDB.databases()).map(db => db.name).includes("BracketDB") == false) {
+        return;
+    }
+
     let request = indexedDB.open("BracketDB");
 
     request.onerror = function() {
@@ -42,13 +46,6 @@ function changeBackground(mode) {
 }
 
 function changeSort(type) {
-    if (type == "lastModified") {
-        // INSERT
-    }
-    if (type == "alphabetically") {
-        // INSERT
-    }
-
     if (document.getElementById("sortInput") != null) {
         document.getElementById("sortInput").value = type;
     }

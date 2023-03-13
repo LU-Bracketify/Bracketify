@@ -2,42 +2,42 @@
   "lang": "en",
   "name": "Bracketify",
   "icons": [{
-    "src": "media/icon1024",
+    "src": "media/icon1024.png",
     "sizes": "1024x1024",
     "type": "image/png"
   },
   {
-    "src": "media/icon512",
+    "src": "media/icon512.png",
     "sizes": "512x512",
     "type": "image/png"
   },
   {
-    "src": "media/icon256",
+    "src": "media/icon256.png",
     "sizes": "256x256",
     "type": "image/png"
   },
   {
-    "src": "media/icon192",
+    "src": "media/icon192.png",
     "sizes": "192x192",
     "type": "image/png"
   },
   {
-    "src": "media/icon180",
+    "src": "media/icon180.png",
     "sizes": "180x180",
     "type": "image/png"
   },
   {
-    "src": "media/icon128",
+    "src": "media/icon128.png",
     "sizes": "128x128",
     "type": "image/png"
   },
   {
-    "src": "media/icon64",
+    "src": "media/icon64.png",
     "sizes": "64x64",
     "type": "image/png"
   },
   {
-    "src": "media/icon32",
+    "src": "media/icon32.png",
     "sizes": "32x32",
     "type": "image/png"
   }],

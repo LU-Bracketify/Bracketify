@@ -7,13 +7,7 @@ function generateId() {
 
 function getCurrentDate() {
     let today = new Date();
-    let day = today.getDate();
-    let month = today.getMonth() + 1;
-    let year = today.getFullYear();
-
-    let dateStr = month + "/" + day + "/" + year;
-
-    return dateStr;
+    return today.toLocaleString();
 }
 
 function dbConnect(id, name, size, type, seed, scored, author, desc) {
@@ -43,19 +37,19 @@ function dbConnect(id, name, size, type, seed, scored, author, desc) {
 
     // Runs after onUpgrade
     request.onsuccess = function() {
-        const db = request.result;
-        const transaction = db.transaction("brackets", "readwrite");
-        const store = transaction.objectStore("brackets");
+        const bracketDb = request.result;
+        const bracketTransaction = bracketDb.transaction("brackets", "readwrite");
+        const bracketStore = bracketTransaction.objectStore("brackets");
 
         // For lookup queries
-        const nameIndex = store.index("brackets_name");
-        const typeIndex = store.index("brackets_type");
+        const nameIndex = bracketStore.index("brackets_name");
+        const typeIndex = bracketStore.index("brackets_type");
 
         //console.log(Date.now());
         //let id = generateId();
 
         // generate unique/random id
-        store.put({id: id, name: name, size: size, type: type, seeded: seed, scored: scored, author: author, desc: desc, date: getCurrentDate()});
+        bracketStore.put({id: id, name: name, size: size, type: type, seeded: seed, scored: scored, author: author, desc: desc, date: getCurrentDate()});
         //store.put({id: 2, type: "Single Elimination", name: "bracket2"});
         
         /*
@@ -77,8 +71,25 @@ function dbConnect(id, name, size, type, seed, scored, author, desc) {
         };
         */
 
-        transaction.oncomplete = function() {
-            db.close();
+        bracketTransaction.oncomplete = function() {
+            bracketDb.close();
+        };
+
+        const preferenceDb = request.result;
+
+        const preferenceTransaction = preferenceDb.transaction("preferences", "readwrite");
+        const preferenceStore = preferenceTransaction.objectStore("preferences");
+
+        const preferenceQuery = preferenceStore.getAll();
+
+        preferenceQuery.onsuccess = function() {
+            if (preferenceQuery.result.length == 0) {
+                preferenceStore.put({exists: "true", background: "light", sort: "lastModified", size: "50"});
+            }
+        }
+
+        preferenceTransaction.oncomplete = function() {
+            preferenceDb.close();
         };
         
     };

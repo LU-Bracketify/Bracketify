@@ -43,14 +43,13 @@
             </a>
         </li>
     </ul>
-<div class="parentContainer">
     <div class="mainContainer">
         <div class="contentCard">
             <div class="container text-center pb-3">
                 <h2 class="p-3 border-top border-bottom">New Bracket</h2>
             </div>
             <form method="post" action="edit.php">
-                <div class="mb-3 mt-3">
+                <div class="mb-3">
                     <label class="form-label" for="nameInput">Bracket Name:</label>
                     <input type="text" class="form-control" name="nameInput" id="nameInput" required>
                 </div>
@@ -58,7 +57,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="sizeInput">Bracket Size:</label>
                     <select class="form-select" name="size" id="sizeInput" required>
-                        <option></option>
                         <option value="2">2</option>
                         <option value="4">4</option>
                         <option value="8">8</option>
@@ -106,13 +104,10 @@
                 <!---dbConnect()-->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-
-  
         </div>
     </div>
-</div>
-<script>
-    window.onload = readPreferencesCache();
-</script>
+    <script>
+        window.onload = readPreferencesCache();
+    </script>
 </body>
 </html>
