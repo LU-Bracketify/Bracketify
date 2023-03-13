@@ -63,7 +63,7 @@
                         <option value="4">4</option>
                         <option value="8">8</option>
                         <option value="16">16</option>
-                        <option value="32">32</option>
+                        <option value="32" selected>32</option>
                         <option value="64">64</option>
                         <option value="128">128</option>
                     </select>
@@ -72,16 +72,23 @@
                 <div class="mb-3">
                     <label class="form-label" for="typeInput">Bracket Type:</label>
                     <select class="form-select" name="type" id="typeInput" required>
-                        <option></option>
-                        <option value="single">Single Elimination</option>
+                        <option value="single" selected>Single Elimination</option>
                         <option value="double">Double Elimination</option>
                         <option value="robin">Round Robin</option>
                         <option value="group">Group Stage</option>
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="seedInput">Seed Type:</label>
+                    <select class="form-select" name="seed" id="seedInput" required>
+                        <option value="none" selected>None</option>
+                        <option value="normal">Seed</option>
+                        <option value="randomized">Randomized Seed</option>
+                    </select>
+                </div>
+
                 <div class="form-check mb-3">
-                    <label class="form-check-label me-5"><input type="checkbox" class="form-check-input" name="seeded" id="seededInput"> Seeded</label>
                     <label class="form-check-label"><input type="checkbox" class="form-check-input" name="scored" id="scoredInput" value=""> Scored</label>
                 </div>
 
