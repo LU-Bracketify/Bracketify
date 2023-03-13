@@ -6,31 +6,10 @@ window.onload = getRecords();
 function getRecords() {
     console.log("running");
     
-    let db = true;
     let request = indexedDB.open("BracketDB");
     request.onupgradeneeded = function(e) {
         e.target.transaction.abort();
-        db = false;
-
-        console.log("You don't have any saved brackets");
-        let historyContainer = document.getElementsByClassName("contentCard")[0];
-        historyContainer.setAttribute("style", "display: flex; flex-direction: column; height:100vh;");
-
-        let msg = document.createElement("h5");
-        let msgDiv = document.createElement("div");
-    
-        let msgContainer = document.createElement("div");
-        msg.className = "text-center";
-        msgContainer.className = "msgContainer";
-
-        msg.textContent = "You don't have any saved brackets";
-
-        msgDiv.appendChild(msg);
-        msgContainer.appendChild(msgDiv);
-
-        historyContainer.appendChild(msgContainer);
-
-        db.close();
+        noRecordsFound();
     }
 
     request.onsuccess = function() {
@@ -47,19 +26,62 @@ function getRecords() {
         bracketQuery.onsuccess = function() {
             let recordCount = bracketQuery.result.length;
 
-            for (let i = 0; i < recordCount; i++) {
-                let name = bracketQuery.result[i]["name"];
-                let date = bracketQuery.result[i]["date"];
-                let type = bracketQuery.result[i]["type"];  
-                let id = bracketQuery.result[i]["id"];              
-                renderBracket(name, type, date, id);
+            if (recordCount == 0) {
+                noRecordsFound();
             }
+            else {
+                const preferenceDb = request.result;
+                const preferenceTransaction = preferenceDb.transaction("preferences", "readwrite");
+                const preferenceStore = preferenceTransaction.objectStore("preferences");
+                const preferenceQuery = preferenceStore.getAll();
+                preferenceQuery.onsuccess = function() {
+                    let type = preferenceQuery.result[0]["sort"];
 
+                    if (type == "alphabetically") {
+                        bracketQuery.result.sort(function (a,b) {
+                            if (a["name"].toLowerCase() < b["name"].toLowerCase()) return -1;
+                            if (a["name"].toLowerCase() > b["name"].toLowerCase()) return 1;
+                            return 0;
+                        });
+                    }
+                    else if (type == "lastModified") {
+                        bracketQuery.result.sort(function (a,b) {
+                            if (a["date"] < b["date"]) return 1;
+                            if (a["date"] > b["date"]) return -1;
+                            return 0;
+                        });
+                    }
+                    for (let i = 0; i < recordCount; i++) {
+                        let name = bracketQuery.result[i]["name"];
+                        let date = bracketQuery.result[i]["date"];
+                        let type = bracketQuery.result[i]["type"];  
+                        let id = bracketQuery.result[i]["id"];              
+                        renderBracket(name, type, date, id);
+                    }
+                };
+            }
         };
-
     }
+}
 
+function noRecordsFound() {
+    console.log("You don't have any saved brackets");
 
+    let msg = document.createElement("h5");
+    msg.className = "text-center";
+    msg.id = "noBracketsMsg"
+    msg.textContent = "You don't have any saved brackets";
+
+    let msgDiv = document.createElement("div");
+    msgDiv.appendChild(msg);
+
+    let msgContainer = document.createElement("div");
+    msgContainer.className = "msgContainer";
+    msgContainer.appendChild(msgDiv);
+
+    let historyContainer = document.getElementsByClassName("contentCard")[0];
+    historyContainer.setAttribute("style", "display: flex; flex-direction: column; height:100%;");
+    historyContainer.appendChild(msgContainer);
 }
 
 let ids = [];
@@ -79,7 +101,7 @@ function renderBracket(name, type, date, id) {
     cardCol2.className = "col m-2 p-2 d-flex flex-column justify-content-center align-items-center";
 
     cardCol1.innerHTML = "<h1>" + name + "</h1>";
-    cardCol1.innerHTML += "<p>" + date + " (Created)" + "</p>"
+    cardCol1.innerHTML += "<p>Created on " + date + "</p>";
     cardCol2.innerHTML = "<button class='btn btn-primary p-3 open'>Open</button>";
 
     cardRow.appendChild(cardCol1);
@@ -99,4 +121,3 @@ function redirect(id) {
     console.log("clicked");
     window.location = `edit.php?id=${id}`;
 }
-

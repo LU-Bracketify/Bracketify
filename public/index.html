@@ -49,16 +49,21 @@
         <div class="imgText">
             <h1>Bracketify</h1>
             <p>Create a free bracket today!</p>
-            <button onclick="moveScreen()" class="btn btn-primary">Start now</button>
+            <button onclick="takeAction()" class="btn btn-primary">Start now</button>
         </div>
     </div>
 
     <script>
         window.onload = readPreferencesCache();
 
-        const moveScreen = () => {
-            let loggedBrackets = document.getElementsByClassName("mainContainer")[0];
-            loggedBrackets.scrollIntoView();
+        const takeAction = () => {
+            if (document.getElementById("noBracketsMsg") == null) {
+                let loggedBrackets = document.getElementsByClassName("mainContainer")[0];
+                loggedBrackets.scrollIntoView();
+            }
+            else {
+                window.location = "./newBracket.php"
+            }
         }
     </script>
 

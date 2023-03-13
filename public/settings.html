@@ -51,7 +51,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="backgroundInput">Background:</label>
-                    <select class="form-select" name="background" id="backgroundInput" onchange="updatePreferencesCache()">
+                    <select class="form-select" name="background" id="backgroundInput" onchange="updatePreferencesCache(); changeBackground(this.value);">
                         <option value="light" selected>Light</option>
                         <option value="dark">Dark</option>
                     </select>
@@ -60,6 +60,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="sortInput">Sort Brackets:</label>
                     <select class="form-select" name="sort" id="sortInput" onchange="updatePreferencesCache()">
+                        <option value="dateCreated">Date Created</option>
                         <option value="lastModified">Last Modified</option>
                         <option value="alphabetically">Alphabetically</option>
                     </select>
@@ -83,7 +84,6 @@
         let bracketSize = document.getElementById("rangeInput").value;
 
         dbPreferencesConnect(backgroundMode, sortType, bracketSize);
-        readPreferencesCache();
     }
 
     // Upload form data

@@ -57,7 +57,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="sizeInput">Bracket Size:</label>
                     <select class="form-select" name="size" id="sizeInput" required>
-                        <option></option>
                         <option value="2">2</option>
                         <option value="4">4</option>
                         <option value="8">8</option>
