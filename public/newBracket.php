@@ -43,7 +43,7 @@
             </a>
         </li>
     </ul>
-
+<div class="parentContainer">
     <div class="mainContainer">
         <div class="contentCard">
             <div class="container text-center pb-3">
@@ -103,6 +103,7 @@
   
         </div>
     </div>
+</div>
 <script>
     window.onload = readPreferencesCache();
 </script>
