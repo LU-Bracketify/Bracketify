@@ -3,8 +3,8 @@ window.onload = generatePage();
 function generatePage() {
     var title = "See Work"
     var type = "single elim";
-    var teamNumCount = 128;
-    var teamNum = 128;
+    var teamNumCount = 16;
+    var teamNum = 16;
     var isSeeded = true;
     var isScored = true;
     var is1 = false;
@@ -52,16 +52,21 @@ function generatePage() {
     if (type === "single elim") {
         var cardCreation = document.createElement("div")
         cardCreation.classList.add("cardContainer")
-        document.getElementsByClassName('mainContainer')[0].appendChild(cardCreation);
+        document.getElementsByClassName('mainContainerForEdit')[0].appendChild(cardCreation);
         var rowCreation = document.createElement("div")
         rowCreation.classList.add(`row`)
         rowCreation.classList.add(`row-cols-1`)
-        rowCreation.classList.add(`row-cols-md-${count + 1}`)
+        rowCreation.id = "roundRow"
         cardCreation.appendChild(rowCreation)
         for (var i = 0; i < count; i++) {
+            var colCreation = document.createElement("div")
+            colCreation.classList.add(`col`)
+            colCreation.classList.add(`mb-4`)
+            colCreation.style.width = "auto";
+            rowCreation.appendChild(colCreation)
             var deck = document.createElement("div")
             deck.classList.add("card-deck")
-            rowCreation.appendChild(deck)
+            colCreation.appendChild(deck)
             if (i === count - 1) {
                 var winner = document.createElement("h2")
                 winner.classList.add("p-3")
