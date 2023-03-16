@@ -150,10 +150,6 @@ function generatePage() {
                             teamName.classList.add(`g${j}`)
                             teamName.innerHTML = "Team"
                         }
-                        // var teamName = document.createElement("h1")
-                        // teamName.classList.add("small-view")
-                        // teamName.classList.add(`r${i}`)
-                        // teamName.innerHTML = `Team`
                         teamCol.appendChild(teamName)
                         k++;
                         if (isScored === true) {
@@ -200,7 +196,7 @@ function generatePage() {
                 columnSubmit.classList.add("btn")
                 columnSubmit.classList.add("btn-primary")
                 columnSubmit.classList.add("p-3")
-                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval/2},'teamNumEval')`)
+                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
             }
@@ -275,101 +271,178 @@ function generatePage() {
                 deck.appendChild(round)
                 for (var j = 0; j < teamNum / 2; j++) {
                     var card = document.createElement("div")
-                    card.classList.add("card p-2 mb-3 text-center")
+                    card.classList.add("card")
+                    card.classList.add("p-2")
+                    card.classList.add("mb-3")
+                    card.classList.add("text-center")
                     deck.appendChild(card)
                     var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row p-2 m-2")
+                    cardFormat.classList.add("row")
+                    cardFormat.classList.add("p-2")
+                    cardFormat.classList.add("m-2")
                     card.appendChild(cardFormat)
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
-                        teamCol.classList.add("col m-2")
+                        teamCol.classList.add("col")
+                        teamCol.classList.add("m-2")
                         cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
-                        teamName.id = `r${i} g${j} a${k}`
-                        teamName.innerHTML = `Team`
+                        teamName.classList.add(`r${i}`)
+                        teamName.classList.add(`g${j}`)
+                        teamName.innerHTML = "Team"
                         teamCol.appendChild(teamName)
+                        k++;
                         if (isScored === true) {
-                            k++;
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var score = document.createElement("input")
+                            score.classList.add(`r${i}`)
+                            score.classList.add(`g${j}`)
+                            score.classList.add(`a${k}`)
+                            score.placeholder = "Score"
                             teamCol.appendChild(score)
                         }
+                        else {
+                            if (k === 3) {
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var winnerLabel = document.createElement("label")
+                                winnerLabel.innerHTML = "Select a Winner:"
+                                teamCol.appendChild(winnerLabel)
+                                var winnerDropdown = document.createElement("select")
+                                var team1 = document.createElement("option")
+                                team1.value = "team1"
+                                team1.innerHTML = "Left Team"
+                                winnerDropdown.appendChild(team1)
+                                var team2 = document.createElement("option")
+                                team2.innerHTML = "Right Team"
+                                winnerDropdown.appendChild(team2)
+                                teamCol.appendChild(winnerDropdown)
+                            }
+                        }
                     }
-                    var butCol = document.createElement("div")
-                    butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
-                    cardFormat.appendChild(butCol)
-                    var but = document.createElement("button")
-                    but.type = "button"
-                    but.classList.add("btn btn-primary p-3")
-                    but.dataset.bsToggle = "modal"
-                    but.dataset.bsTarget = "#exampleModal"
-                    but.innerHTML = "Open"
-                    butCol.appendChild(but)
                 }
                 if (i === 0) {
                     for (var l = 0; l < team / 2; l++) {
                         var card = document.createElement("div")
-                        card.classList.add("card p-2 mb-3 text-center")
+                        card.classList.add("card")
+                        card.classList.add("p-2")
+                        card.classList.add("mb-3")
+                        card.classList.add("text-center")
                         deck.appendChild(card)
                         var cardFormat = document.createElement("div")
-                        cardFormat.classList.add("row p-2 m-2")
+                        cardFormat.classList.add("row")
+                        cardFormat.classList.add("p-2")
+                        cardFormat.classList.add("m-2")
                         card.appendChild(cardFormat)
                         for (var k = 0; k < 4; k++) {
                             var teamCol = document.createElement("div")
-                            teamCol.classList.add("col m-2")
+                            teamCol.classList.add("col")
+                            teamCol.classList.add("m-2")
                             cardFormat.appendChild(teamCol)
                             var teamName = document.createElement("h1")
                             teamName.classList.add("small-view")
-                            teamName.id = `r${i} g${j} a${k}`
-                            teamName.innerHTML = `L Team`
+                            teamName.classList.add(`r${i}`)
+                            teamName.classList.add(`g${j}`)
+                            teamName.innerHTML = "L Team"
                             teamCol.appendChild(teamName)
+                            k++;
                             if (isScored === true) {
-                                k++;
-                                var score = document.createElement("p")
-                                score.classList.add("bigger-view")
-                                score.id = `r${i} g${j} a${k}`
-                                score.innerHTML = "Score"
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var score = document.createElement("input")
+                                score.classList.add(`r${i}`)
+                                score.classList.add(`g${j}`)
+                                score.classList.add(`a${k}`)
+                                score.placeholder = "Score"
                                 teamCol.appendChild(score)
                             }
+                            else {
+                                if (k === 3) {
+                                    var pageBreak = document.createElement("br")
+                                    teamCol.appendChild(pageBreak)
+                                    var pageBreak2 = document.createElement("br")
+                                    teamCol.appendChild(pageBreak2)
+                                    var winnerLabel = document.createElement("label")
+                                    winnerLabel.innerHTML = "Select a Winner:"
+                                    teamCol.appendChild(winnerLabel)
+                                    var winnerDropdown = document.createElement("select")
+                                    var team1 = document.createElement("option")
+                                    team1.value = "team1"
+                                    team1.innerHTML = "Left Team"
+                                    winnerDropdown.appendChild(team1)
+                                    var team2 = document.createElement("option")
+                                    team2.innerHTML = "Right Team"
+                                    winnerDropdown.appendChild(team2)
+                                    teamCol.appendChild(winnerDropdown)
+                                }
+                            }
                         }
-                        var butCol = document.createElement("div")
-                        butCol.classList.add("col m-2 p-2 d-flex flex-column justify-content-center align-items-center")
-                        cardFormat.appendChild(butCol)
-                        var but = document.createElement("button")
-                        but.type = "button"
-                        but.classList.add("btn btn-primary p-3")
-                        but.dataset.bsToggle = "modal"
-                        but.dataset.bsTarget = "#exampleModal"
-                        but.innerHTML = "Open"
-                        butCol.appendChild(but)
                     }
                 }
                 else {
                     for (var l = 0; l < team; l++) {
                         var card = document.createElement("div")
-                        card.classList.add("card p-2 mb-3 text-center")
+                        card.classList.add("card")
+                        card.classList.add("p-2")
+                        card.classList.add("mb-3")
+                        card.classList.add("text-center")
                         deck.appendChild(card)
                         var cardFormat = document.createElement("div")
-                        cardFormat.classList.add("row p-2 m-2")
+                        cardFormat.classList.add("row")
+                        cardFormat.classList.add("p-2")
+                        cardFormat.classList.add("m-2")
                         card.appendChild(cardFormat)
                         for (var k = 0; k < 4; k++) {
                             var teamCol = document.createElement("div")
-                            teamCol.classList.add("col m-2")
+                            teamCol.classList.add("col")
+                            teamCol.classList.add("m-2")
                             cardFormat.appendChild(teamCol)
                             var teamName = document.createElement("h1")
                             teamName.classList.add("small-view")
-                            teamName.id = `r${i} g${j} a${k}`
-                            teamName.innerHTML = `Team`
+                            teamName.classList.add(`r${i}`)
+                            teamName.classList.add(`g${j}`)
+                            teamName.innerHTML = "Team"
                             teamCol.appeadChild()
+                            k++;
                             if (isScored === true) {
-                                k++;
-                                var score = document.createElement("p")
-                                score.classList.add("bigger-view")
-                                score.id = `r${i} g${j} a${k}`
-                                score.innerHTML = "Score"
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var score = document.createElement("input")
+                                score.classList.add(`r${i}`)
+                                score.classList.add(`g${j}`)
+                                score.classList.add(`a${k}`)
+                                score.placeholder = "Score"
+                                teamCol.appendChild(score)
+                            }
+                            else {
+                                if (k === 3) {
+                                    var pageBreak = document.createElement("br")
+                                    teamCol.appendChild(pageBreak)
+                                    var pageBreak2 = document.createElement("br")
+                                    teamCol.appendChild(pageBreak2)
+                                    var winnerLabel = document.createElement("label")
+                                    winnerLabel.innerHTML = "Select a Winner:"
+                                    teamCol.appendChild(winnerLabel)
+                                    var winnerDropdown = document.createElement("select")
+                                    var team1 = document.createElement("option")
+                                    team1.value = "team1"
+                                    team1.innerHTML = "Left Team"
+                                    winnerDropdown.appendChild(team1)
+                                    var team2 = document.createElement("option")
+                                    team2.innerHTML = "Right Team"
+                                    winnerDropdown.appendChild(team2)
+                                    teamCol.appendChild(winnerDropdown)
+                                }
                             }
                         }
                     }
@@ -380,6 +453,18 @@ function generatePage() {
                 else {
                     teamNum -= teamNum / 4
                 }
+            }
+            if (i !== count - 1) {
+                // make button here to call a function to evaluate column scores
+                // change team names based on winners
+                var columnSubmit = document.createElement("button")
+                columnSubmit.type = "button"
+                columnSubmit.classList.add("btn")
+                columnSubmit.classList.add("btn-primary")
+                columnSubmit.classList.add("p-3")
+                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
+                columnSubmit.innerHTML = "Submit Round"
+                deck.appendChild(columnSubmit)
             }
         }
     }
@@ -452,27 +537,73 @@ function generatePage() {
                 deck.appendChild(round)
                 for (var j = 0; j < teamNum - 1; j++) {
                     var card = document.createElement("div")
-                    card.classList.add("card p-2 mb-3 text-center")
+                    card.classList.add("card")
+                    card.classList.add("p-2")
+                    card.classList.add("mb-3")
+                    card.classList.add("text-center")
                     deck.appendChild(card)
                     var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row p-2 m-2")
+                    cardFormat.classList.add("row")
+                    cardFormat.classList.add("p-2")
+                    cardFormat.classList.add("m-2")
                     card.appendChild(cardFormat)
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
-                        teamCol.classList.add("col m-2")
+                        teamCol.classList.add("col")
+                        teamCol.classList.add("m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
-                        teamName.id = `r${i} g${j} a${k}`
-                        teamName.innerHTML = `Team`
+                        teamName.classList.add(`r${i}`)
+                        teamName.classList.add(`g${j}`)
+                        teamName.innerHTML = "Team"
+                        k++;
                         if (isScored === true) {
-                            k++;
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var score = document.createElement("input")
+                            score.classList.add(`r${i}`)
+                            score.classList.add(`g${j}`)
+                            score.classList.add(`a${k}`)
+                            score.placeholder = "Score"
+                            teamCol.appendChild(score)
+                        }
+                        else {
+                            if (k === 3) {
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var winnerLabel = document.createElement("label")
+                                winnerLabel.innerHTML = "Select a Winner:"
+                                teamCol.appendChild(winnerLabel)
+                                var winnerDropdown = document.createElement("select")
+                                var team1 = document.createElement("option")
+                                team1.value = "team1"
+                                team1.innerHTML = "Left Team"
+                                winnerDropdown.appendChild(team1)
+                                var team2 = document.createElement("option")
+                                team2.innerHTML = "Right Team"
+                                winnerDropdown.appendChild(team2)
+                                teamCol.appendChild(winnerDropdown)
+                            }
                         }
                     }
                 }
+            }
+            if (i !== count - 1) {
+                // make button here to call a function to evaluate column scores
+                // change team names based on winners
+                var columnSubmit = document.createElement("button")
+                columnSubmit.type = "button"
+                columnSubmit.classList.add("btn")
+                columnSubmit.classList.add("btn-primary")
+                columnSubmit.classList.add("p-3")
+                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
+                columnSubmit.innerHTML = "Submit Round"
+                deck.appendChild(columnSubmit)
             }
         }
     }
@@ -543,29 +674,62 @@ function generatePage() {
                 round.classList.add("border-bottom")
                 round.innerHTML = `Round ${i + 1}`
                 deck.appendChild(round)
-                deck.appendChild(round)
                 for (var j = 0; j < teamNum / 2; j++) {
                     var card = document.createElement("div")
-                    card.classList.add("card p-2 mb-3 text-center")
+                    card.classList.add("card")
+                    card.classList.add("p-2")
+                    card.classList.add("mb-3")
+                    card.classList.add("text-center")
                     deck.appendChild(card)
                     var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row p-2 m-2")
+                    cardFormat.classList.add("row")
+                    cardFormat.classList.add("p-2")
+                    cardFormat.classList.add("m-2")
                     card.appendChild(cardFormat)
                     var group = document.createElement("h1")
                     group.innerHTML = `Group ${(i + 1) * groupNum}`
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
-                        teamCol.classList.add("col m-2")
+                        teamCol.classList.add("col")
+                        teamCol.classList.add("m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
-                        teamName.id = `r${i} g${j} a${k}`
-                        teamName.innerHTML = `Team`
+                        teamName.classList.add(`r${i}`)
+                        teamName.classList.add(`g${j}`)
+                        teamName.innerHTML = "Team"
+                        k++;
                         if (isScored === true) {
-                            k++;
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var score = document.createElement("input")
+                            score.classList.add(`r${i}`)
+                            score.classList.add(`g${j}`)
+                            score.classList.add(`a${k}`)
+                            score.placeholder = "Score"
+                            teamCol.appendChild(score)
+                        }
+                        else {
+                            if (k === 3) {
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var winnerLabel = document.createElement("label")
+                                winnerLabel.innerHTML = "Select a Winner:"
+                                teamCol.appendChild(winnerLabel)
+                                var winnerDropdown = document.createElement("select")
+                                var team1 = document.createElement("option")
+                                team1.value = "team1"
+                                team1.innerHTML = "Left Team"
+                                winnerDropdown.appendChild(team1)
+                                var team2 = document.createElement("option")
+                                team2.innerHTML = "Right Team"
+                                winnerDropdown.appendChild(team2)
+                                teamCol.appendChild(winnerDropdown)
+                            }
                         }
                     }
                 }
@@ -579,28 +743,73 @@ function generatePage() {
                 deck.appendChild(round)
                 for (var j = 0; j < teamNum / 2; j++) {
                     var card = document.createElement("div")
-                    card.classList.add("card p-2 mb-3 text-center")
+                    card.classList.add("card")
+                    card.classList.add("p-2")
+                    card.classList.add("mb-3")
+                    card.classList.add("text-center")
                     deck.appendChild(card)
                     var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row p-2 m-2")
-                    card.appendChild(cardFormat)
+                    cardFormat.classList.add("row")
+                    cardFormat.classList.add("p-2")
+                    cardFormat.classList.add("m-2")
                     for (var k = 0; k < 4; k++) {
                         var teamCol = document.createElement("div")
-                        teamCol.classList.add("col m-2")
+                        teamCol.classList.add("col")
+                        teamCol.classList.add("m-2")
+                        cardFormat.appendChild(teamCol)
                         var teamName = document.createElement("h1")
                         teamName.classList.add("small-view")
-                        teamName.id = `r${i} g${j} a${k}`
-                        teamName.innerHTML = `Team`
+                        teamName.classList.add(`r${i}`)
+                        teamName.classList.add(`g${j}`)
+                        teamName.innerHTML = "Team"
+                        k++;
                         if (isScored === true) {
-                            k++;
-                            var score = document.createElement("p")
-                            score.classList.add("bigger-view")
-                            score.id = `r${i} g${j} a${k}`
-                            score.innerHTML = "Score"
+                            var pageBreak = document.createElement("br")
+                            teamCol.appendChild(pageBreak)
+                            var pageBreak2 = document.createElement("br")
+                            teamCol.appendChild(pageBreak2)
+                            var score = document.createElement("input")
+                            score.classList.add(`r${i}`)
+                            score.classList.add(`g${j}`)
+                            score.classList.add(`a${k}`)
+                            score.placeholder = "Score"
+                            teamCol.appendChild(score)
+                        }
+                        else {
+                            if (k === 3) {
+                                var pageBreak = document.createElement("br")
+                                teamCol.appendChild(pageBreak)
+                                var pageBreak2 = document.createElement("br")
+                                teamCol.appendChild(pageBreak2)
+                                var winnerLabel = document.createElement("label")
+                                winnerLabel.innerHTML = "Select a Winner:"
+                                teamCol.appendChild(winnerLabel)
+                                var winnerDropdown = document.createElement("select")
+                                var team1 = document.createElement("option")
+                                team1.value = "team1"
+                                team1.innerHTML = "Left Team"
+                                winnerDropdown.appendChild(team1)
+                                var team2 = document.createElement("option")
+                                team2.innerHTML = "Right Team"
+                                winnerDropdown.appendChild(team2)
+                                teamCol.appendChild(winnerDropdown)
+                            }
                         }
                     }
                 }
                 teamNum /= 2;
+            }
+            if (i !== count - 1) {
+                // make button here to call a function to evaluate column scores
+                // change team names based on winners
+                var columnSubmit = document.createElement("button")
+                columnSubmit.type = "button"
+                columnSubmit.classList.add("btn")
+                columnSubmit.classList.add("btn-primary")
+                columnSubmit.classList.add("p-3")
+                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
+                columnSubmit.innerHTML = "Submit Round"
+                deck.appendChild(columnSubmit)
             }
         }
     }
@@ -674,5 +883,5 @@ function rerenderPage(i, gameNum, teamNumEval) {
     for (var c = 0; c < gameNum; c++) {
         teamsChange[c].innerHTML = winningTeamArray[c]
     }
-    return teamNumEval/2;
+    return teamNumEval / 2;
 }
