@@ -196,7 +196,9 @@ function generatePage() {
                 columnSubmit.classList.add("btn")
                 columnSubmit.classList.add("btn-primary")
                 columnSubmit.classList.add("p-3")
-                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
+                var roundCount = i
+                var gameCount = teamNumEval/2
+                columnSubmit.setAttribute("onclick", `rerenderPage(${roundCount},${gameCount},${teamNumEval})`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
             }
