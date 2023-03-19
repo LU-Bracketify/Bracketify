@@ -1,14 +1,27 @@
-window.onload = generatePage();
+//window.onload = generatePage();
 
-function generatePage() {
-    var title = "See Work"
-    var type = "single elim";
-    var teamNumCount = 4;
-    var teamNumEval = 4;
-    var teamNum = 4;
-    var isSeeded = "randomizedSeed";
+async function generatePage(id) {
+
+    // Get DB record
+    let record = await retrieveRecord(id);
+
+    // Set values
+    let title = record.name;
+    let type = record.type;
+    let teamNumCount = record.size;
+    let teamNumEval = teamNum = teamNumCount;
+    // change to str
+    let isSeeded = record.seeded;
+    let isScored = record.scored;
+
+    //var title = "See Work"
+    //var type = "single elim";
+    //var teamNumCount = 4;
+    //var teamNumEval = 4;
+    //var teamNum = 4;
+    //var isSeeded = "randomizedSeed";
     // var isSeeded = "seeded";
-    var isScored = true;
+    //var isScored = true;
     var is1 = false;
     var count = 1;
     var winners = [];
