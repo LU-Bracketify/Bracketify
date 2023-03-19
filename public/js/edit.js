@@ -196,8 +196,10 @@ function generatePage() {
                 columnSubmit.classList.add("btn")
                 columnSubmit.classList.add("btn-primary")
                 columnSubmit.classList.add("p-3")
+                ////////////////////////////////////////////
                 var roundCount = i
                 var gameCount = teamNumEval/2
+
                 columnSubmit.setAttribute("onclick", `rerenderPage(${roundCount},${gameCount},${teamNumEval})`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
@@ -858,32 +860,118 @@ function generatePage() {
 }
 // , isScored, isSeeded
 function rerenderPage(i, gameNum, teamNumEval) {
-    var preRoundTeamArray = [];
-    var winningTeamArray = [];
-    var preRoundScoresArray = [];
-    var index = 0;
-    var teamsChange = document.getElementsByClassName(`.r${i + 1}`);
-    preRoundTeamArray = document.getElementsByClassName(`.r${i}`);
-    for (var j = 0; j < gameNum * 2; j++) {
-        for (var k = 1; k < 4; k + 2) {
-            preRoundScoresArray.push(document.getElementsByClassName(`.g${j} .a${k}`))
+    console.log("button clicked");
+    console.log("gameNum: ", gameNum);
+    console.log("teamEval: ", teamNumEval);
+
+    // Iterate over team scores for round
+    let round = document.getElementsByClassName(`r${i}`);
+    let teamNames = [];
+    let scores = [];
+
+    // If first round get team names from input boxes
+    if (i === 0) {
+        console.log("ROUND 1");
+
+        for (let item in round) {
+            // Get names
+            if (item % 2 === 0 || item == 0) {
+                teamNames.push(round[item].value);
+            }
+
+            // Get scores
+            if (item % 2) {
+                scores.push(round[item].value)
+            }
         }
-        console.log(preRoundScoresArray[j])
-    }
-    for (var g = 0; g < gameNum; g + 2) {
-        if (preRoundScoresArray[g] > preRoundScoresArray[g + 1]) {
-            winningTeamArray[index] = preRoundScoresArray[g].innerHTML
+
+        // Select winners
+        let winners = nextMatchup(teamNames, scores);
+
+        console.log(winners);
+
+        // Set team names for next round
+        let nextRoundNum = i + 1;
+        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+
+        for (let item in nextHeaders) {
+            // Set names
+            nextHeaders[item].textContent = winners.names[item];
         }
-        else if (preRoundScoresArray[g] < preRoundScoresArray[g + 1]) {
-            winningTeamArray[index] = preRoundScoresArray[g + 1].innerHTML
+
+    // If not last round
+    } else {
+        console.log("NOT ROUND 2");
+
+        for (let item in round) {
+            // Get Names
+            if (item % 2 === 0 || item == 0) {
+                teamNames.push(round[item].textContent);
+            }
+
+            // Get scores
+            if (item % 2) {
+                scores.push(round[item].value)
+            }
         }
-        else {
-            winningTeamArray[index] = preRoundScoresArray[g].innerHTML
+
+        // Select winners
+        let winners = nextMatchup(teamNames, scores);
+
+        console.log(winners);
+
+        // Set team names for next round
+        let nextRoundNum = i + 1;
+        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+
+        for (let item in nextHeaders) {
+            // Set names
+            nextHeaders[item].textContent = winners.names[item];
         }
-        index++;
-    }
-    for (var c = 0; c < gameNum; c++) {
-        teamsChange[c].innerHTML = winningTeamArray[c]
-    }
-    return teamNumEval / 2;
+
+    } 
+
 }
+
+// Returns winners of match
+function nextMatchup(teamNames, scores) {
+
+    let winners = [];
+
+    let winnerObj = {
+        names: [],
+        scores: [],
+    }
+
+    for (let i in scores) {
+        // if second team
+        if (i % 2) {
+            let winner = gameWinner(scores[i - 1], scores[i]);
+            console.log(winner);
+
+            // Get index pos
+            let index = scores.indexOf(winner);
+
+            let tNames = teamNames[index];
+            console.log(tNames);
+
+            winnerObj.scores.push(winner);
+            winnerObj.names.push(tNames);
+        }
+    }
+
+    return winnerObj;
+
+}
+
+// Returns winner of game
+function gameWinner(t1, t2) {
+    if (t1 > t2) {
+        return t1;
+    } else {
+        return t2;
+    }
+}
+
