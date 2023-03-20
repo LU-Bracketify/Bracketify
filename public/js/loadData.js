@@ -103,7 +103,7 @@ function renderBracket(name, type, date, id, author, desc, scored, seed, size, m
     let cardCol1 = document.createElement("div");
     let cardCol2 = document.createElement("div");
 
-    card.className = "card p-2 mb-3 text-center";
+    card.className = "card p-2 text-center";
     cardRow.className = "row p-2 m-2";
     cardCol1.className = "col m-2";
     cardCol2.className = "col m-2 p-2 d-flex flex-column justify-content-center align-items-center";
@@ -128,6 +128,7 @@ function renderBracket(name, type, date, id, author, desc, scored, seed, size, m
     cardRow.appendChild(cardCol2);
     card.appendChild(cardRow);
     historyContainer.appendChild(card);
+    historyContainer.appendChild(document.createElement("br"));
 
     let editLink = document.getElementsByClassName("open");
 
