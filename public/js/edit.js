@@ -8,7 +8,7 @@ async function generatePage(id) {
     // Set values
     let title = record.name;
     let type = record.type;
-    let teamNumCount = record.size*2;
+    let teamNumCount = record.size;
     let teamNumEval = teamNum = teamNumSeed = teamNumCount;
     let isSeeded = record.seeded;
 
