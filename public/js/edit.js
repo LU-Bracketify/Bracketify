@@ -535,6 +535,7 @@ function nextMatchup(teamNames, scores) {
 
             // Get index pos
             let index = scores.indexOf(winner);
+            console.log("index pos:: ", index);
 
             let tNames = teamNames[index];
             console.log(tNames);
