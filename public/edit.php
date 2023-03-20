@@ -66,7 +66,7 @@ session_start();
     <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
-        </div>
+            <button class="btn btn-primary mt-2" onclick="saveBracket()">Save Bracket</button>
         </div>
         <div class="container">
             <div class="row">

@@ -47,9 +47,9 @@
             <div class="container text-center pb-3">
                 <h2 class="p-3 border-top border-bottom">Settings</h2>
             </div>
-            <div id="successMessage" class="alert alert-success" hidden>
-                <button type="button" class="btn-close" onclick="hideSuccessMessage()"></button>
+            <div id="successMessage" class="alert alert-success alert-dismissible" hidden>
                 <strong>Success!</strong> Setting saved.
+                <button type="button" class="btn-close" onclick="hideSuccessMessage()" aria-label="close"></button>
               </div>
             <form onsubmit="upload();">
 
