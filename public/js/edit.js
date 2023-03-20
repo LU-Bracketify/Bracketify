@@ -380,3 +380,4 @@ function renderLastContent(deck) {
 function addSeeds() {
     
 }
+
