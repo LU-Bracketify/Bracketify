@@ -21,7 +21,7 @@ async function generatePage(id) {
         type = "double elim";
     } else if (type === "robin") {
         type = "round robin";
-    } else if (type === "group"){
+    } else if (type === "group") {
         type = "group";
     }
 
@@ -250,7 +250,7 @@ async function generatePage(id) {
                 ////////////////////////////////////////////
                 var roundCount = i
                 var gameCount = teamNumEval / 2
-                columnSubmit.setAttribute("onclick", `rerenderPage(${roundCount},${gameCount},${teamNumEval})`)
+                columnSubmit.setAttribute("onclick", `rerenderPage("${type}",${roundCount},${gameCount},${teamNumEval})`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
             }
@@ -375,7 +375,7 @@ async function generatePage(id) {
                                 }
                                 p++;
                                 teamCol.appendChild(seedNum)
-                            } ``
+                            } 
                             var teamName = document.createElement("input")
                             teamName.type = "text"
                             teamName.placeholder = "Team"
@@ -434,86 +434,161 @@ async function generatePage(id) {
                 columnSubmit.classList.add("btn")
                 columnSubmit.classList.add("btn-primary")
                 columnSubmit.classList.add("p-3")
-                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
+                ////////////////////////////////////////////
+                var roundCount = i
+                var gameCount = teamNumEval / 2
+                columnSubmit.setAttribute("onclick", `rerenderPage("${type}",${roundCount},${gameCount},${teamNumEval})`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
             }
         }
     }
 }
-// , isScored, isSeeded
-function rerenderPage(i, gameNum, teamNumEval) {
+
+function rerenderPage(type, i, gameNum, teamNumEval) {
     console.log("button clicked");
     console.log("gameNum: ", gameNum);
     console.log("teamEval: ", teamNumEval);
+    console.log(type);
+    if (type === "single elim") {
+        // Iterate over team scores for round
+        let round = document.getElementsByClassName(`r${i}`);
+        let teamNames = [];
+        let scores = [];
 
-    // Iterate over team scores for round
-    let round = document.getElementsByClassName(`r${i}`);
-    let teamNames = [];
-    let scores = [];
+        // If first round get team names from input boxes
+        if (i === 0) {
+            console.log("ROUND 1");
 
-    // If first round get team names from input boxes
-    if (i === 0) {
-        console.log("ROUND 1");
+            for (let item in round) {
+                // Get names
+                if (item % 2 === 0 || item == 0) {
+                    teamNames.push(round[item].value);
+                }
 
-        for (let item in round) {
-            // Get names
-            if (item % 2 === 0 || item == 0) {
-                teamNames.push(round[item].value);
+                // Get scores
+                if (item % 2) {
+                    scores.push(round[item].value)
+                }
             }
 
-            // Get scores
-            if (item % 2) {
-                scores.push(round[item].value)
-            }
-        }
+            // Select winners
+            let winners = nextMatchup(teamNames, scores);
 
-        // Select winners
-        let winners = nextMatchup(teamNames, scores);
+            console.log(winners);
 
-        console.log(winners);
+            // Set team names for next round
+            let nextRoundNum = i + 1;
+            let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+            let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
 
-        // Set team names for next round
-        let nextRoundNum = i + 1;
-        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
-        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
-
-        for (let item in nextHeaders) {
-            // Set names
-            nextHeaders[item].textContent = winners.names[item];
-        }
-
-        // If not last round
-    } else {
-        console.log("NOT ROUND 2");
-
-        for (let item in round) {
-            // Get Names
-            if (item % 2 === 0 || item == 0) {
-                teamNames.push(round[item].textContent);
+            for (let item in nextHeaders) {
+                // Set names
+                nextHeaders[item].textContent = winners.names[item];
             }
 
-            // Get scores
-            if (item % 2) {
-                scores.push(round[item].value)
+            // If not last round
+        } else {
+            console.log("NOT ROUND 2");
+
+            for (let item in round) {
+                // Get Names
+                if (item % 2 === 0 || item == 0) {
+                    teamNames.push(round[item].textContent);
+                }
+
+                // Get scores
+                if (item % 2) {
+                    scores.push(round[item].value)
+                }
             }
+
+            // Select winners
+            let winners = nextMatchup(teamNames, scores);
+
+            console.log(winners);
+
+            // Set team names for next round
+            let nextRoundNum = i + 1;
+            let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+            let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+
+            for (let item in nextHeaders) {
+                // Set names
+                nextHeaders[item].textContent = winners.names[item];
+            }
+
         }
+    }
+    else if (type === "round robin") {
+        // Iterate over team scores for round
+        let round = document.getElementsByClassName(`r${i}`);
+        let teamNames = [];
+        let scores = [];
 
-        // Select winners
-        let winners = nextMatchup(teamNames, scores);
+        // If first round get team names from input boxes
+        if (i === 0) {
+            console.log("ROUND 1");
 
-        console.log(winners);
+            for (let item in round) {
+                // Get names
+                if (item % 2 === 0 || item == 0) {
+                    teamNames.push(round[item].value);
+                }
 
-        // Set team names for next round
-        let nextRoundNum = i + 1;
-        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
-        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+                // Get scores
+                if (item % 2) {
+                    scores.push(round[item].value)
+                }
+            }
 
-        for (let item in nextHeaders) {
-            // Set names
-            nextHeaders[item].textContent = winners.names[item];
+            // Select winners
+            let winners = nextMatchup(teamNames, scores);
+
+            console.log(winners);
+
+            // Set team names for next round
+            let nextRoundNum = i + 1;
+            let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+            let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+
+            for (let item in nextHeaders) {
+                // Set names
+                nextHeaders[item].textContent = winners.names[item];
+            }
+
+            // If not last round
+        } else {
+            console.log("NOT ROUND 2");
+
+            for (let item in round) {
+                // Get Names
+                if (item % 2 === 0 || item == 0) {
+                    teamNames.push(round[item].textContent);
+                }
+
+                // Get scores
+                if (item % 2) {
+                    scores.push(round[item].value)
+                }
+            }
+
+            // Select winners
+            let winners = nextMatchup(teamNames, scores);
+
+            console.log(winners);
+
+            // Set team names for next round
+            let nextRoundNum = i + 1;
+            let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
+            let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+
+            for (let item in nextHeaders) {
+                // Set names
+                nextHeaders[item].textContent = winners.names[item];
+            }
+
         }
-
     }
 }
 
@@ -553,6 +628,7 @@ function gameWinner(t1, t2) {
     console.log(t1, t2)
     if (t1 > t2) {
         return t1;
+        console.log(t1)
     } else {
         return t2;
     }
