@@ -55,11 +55,14 @@ function getRecords() {
                         let name = bracketQuery.result[i]["name"];
                         let date = bracketQuery.result[i]["date"];
                         let type = bracketQuery.result[i]["type"];
+                        let scored = bracketQuery.result[i]["scored"];
+                        let seeded = bracketQuery.result[i]["seeded"];
+                        let size = bracketQuery.result[i]["size"];
                         let id = bracketQuery.result[i]["id"];
                         let author = bracketQuery.result[i]["author"];
                         let desc = bracketQuery.result[i]["desc"];
                         let modified = bracketQuery.result[i]["modified"];
-                        renderBracket(name, type, date, id, author, desc, modified);
+                        renderBracket(name, type, date, id, author, desc, scored, seeded, size, modified);
                     }
                 };
             }
@@ -90,7 +93,7 @@ function noRecordsFound() {
 }
 
 let ids = [];
-function renderBracket(name, type, date, id, author, desc, modified) {
+function renderBracket(name, type, date, id, author, desc, scored, seed, size, modified) {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
 
     ids.push(id);
@@ -142,9 +145,7 @@ function renderBracket(name, type, date, id, author, desc, modified) {
             const db = request.result;
             const transaction = db.transaction("brackets", "readwrite");
             const store = transaction.objectStore("brackets");
-            alert("test?");
             store.put({id: id, name: name, size: size, type: type, seeded: seed, scored: scored, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true"});
-            alert("it's not reaching here");
             transaction.oncomplete = function() {
                 db.close();
             };
