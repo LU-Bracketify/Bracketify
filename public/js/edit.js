@@ -72,6 +72,9 @@ function createBracket(roundCount, rowCreation, teamNum, type) {
             renderMidContent(deck,cardCount);
         }
         roundInc++;
+        if (type === "single") {
+            gameNum /= 2;
+        }
     }
 } 
 
@@ -207,12 +210,10 @@ function rerenderNextRound(type, roundNum, teams, scores) {
 
 function cardPerRound (type,gameNum, cardCount) {
     cardCount = 0;
-    console.log(type)
     if (type === "single") {
         for (let cc = 0; cc < gameNum; cc++) {
            cardCount++;
         }
-        gameNum=gameNum/2;
     }
     else if (type === "robin") {
         cardCount = teamNum;
