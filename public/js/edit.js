@@ -9,7 +9,7 @@ async function generatePage(id) {
     let title = record.name;
     let type = record.type;
     let teamNumCount = record.size;
-    let teamNumEval = teamNum = teamNumCount;
+    let teamNumEval = teamNum = teamNumSeed = teamNumCount;
     // change to str
     let isSeeded = record.seeded;
     let isScored = true;
@@ -40,9 +40,6 @@ async function generatePage(id) {
     //var isSeeded = "randomizedSeed";
     // var isSeeded = "seeded";
     //var isScored = true;
-
-
-
     var is1 = false;
     var count = 1;
     if (type === "single elim") {
@@ -70,18 +67,6 @@ async function generatePage(id) {
     }
     else if (type === "round robin") {
         count = teamNumCount;
-    }
-    else if (type === "group") {
-        count = 3;
-        teamNumCount / 2;
-        count++;
-        while (is1 === false) {
-            teamNumCount /= 2;
-            if (teamNumCount === 1) {
-                is1 = true;
-            }
-            count++;
-        }
     }
     var titleGet = document.getElementById("title");
     titleGet.innerHTML = `Edit - ${title}`
@@ -265,7 +250,7 @@ async function generatePage(id) {
                 ////////////////////////////////////////////
                 var roundCount = i
                 var gameCount = teamNumEval / 2
-                columnSubmit.setAttribute("onclick", `rerenderPage(${type},${roundCount},${gameCount},${teamNumEval})`)
+                columnSubmit.setAttribute("onclick", `rerenderPage(${roundCount},${gameCount},${teamNumEval})`)
                 columnSubmit.innerHTML = "Submit Round"
                 deck.appendChild(columnSubmit)
             }
@@ -457,11 +442,10 @@ async function generatePage(id) {
     }
 }
 // , isScored, isSeeded
-function rerenderPage(type, i, gameNum, teamNumEval) {
+function rerenderPage(i, gameNum, teamNumEval) {
     console.log("button clicked");
     console.log("gameNum: ", gameNum);
     console.log("teamEval: ", teamNumEval);
-    console.log(type)
 
     // Iterate over team scores for round
     let round = document.getElementsByClassName(`r${i}`);
