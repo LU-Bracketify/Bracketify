@@ -1,16 +1,48 @@
-window.onload = generatePage();
+//window.onload = generatePage();
 
-function generatePage() {
-    var title = "See Work"
-    var type = "single elim";
-    var teamNumCount = 4;
-    var teamNumEval = teamNumCount;
-    var teamNum = teamNumCount;
-    var teamNumSeed = teamNumCount;
-    // var groupNum = teamNum/4;
-    var isSeeded = "randomizedSeed";
-    //var isSeeded = "seeded";
-    var isScored = true;
+async function generatePage(id) {
+
+    // Get DB record
+    let record = await retrieveRecord(id);
+
+    // Set values
+    let title = record.name;
+    let type = record.type;
+    let teamNumCount = record.size;
+    let teamNumEval = teamNum = teamNumCount;
+    // change to str
+    let isSeeded = record.seeded;
+    let isScored = true;
+
+    // Convert values
+    if (type === "single") {
+        type = "single elim";
+    } else if (type === "double") {
+        type = "double elim";
+    } else if (type === "robin") {
+        type = "round robin";
+    } else if (type === "group"){
+        type = "group";
+    }
+
+    if (isSeeded === "normal") {
+        isSeeded = "seeded";
+    } else if (isSeeded === "randomized") {
+        isSeeded = "randomizedSeed";
+    }
+
+
+    //var title = "See Work"
+    //var type = "single elim";
+    //var teamNumCount = 4;
+    //var teamNumEval = 4;
+    //var teamNum = 4;
+    //var isSeeded = "randomizedSeed";
+    // var isSeeded = "seeded";
+    //var isScored = true;
+
+
+
     var is1 = false;
     var count = 1;
     if (type === "single elim") {

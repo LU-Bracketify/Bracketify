@@ -91,10 +91,6 @@ $_SESSION['id'] = uniqid();
                     </select>
                 </div>
 
-                <div class="form-check mb-3">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" name="scored" id="scoredInput" value=""> Scored</label>
-                </div>
-
                 <hr>
 
                 <div class="mb-3">

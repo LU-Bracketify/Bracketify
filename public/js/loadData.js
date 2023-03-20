@@ -55,11 +55,13 @@ function getRecords() {
                         let name = bracketQuery.result[i]["name"];
                         let date = bracketQuery.result[i]["date"];
                         let type = bracketQuery.result[i]["type"];
+                        let seeded = bracketQuery.result[i]["seeded"];
+                        let size = bracketQuery.result[i]["size"];
                         let id = bracketQuery.result[i]["id"];
                         let author = bracketQuery.result[i]["author"];
                         let desc = bracketQuery.result[i]["desc"];
                         let modified = bracketQuery.result[i]["modified"];
-                        renderBracket(name, type, date, id, author, desc, modified);
+                        renderBracket(name, type, date, id, author, desc, seeded, size, modified);
                     }
                 };
             }
@@ -90,7 +92,7 @@ function noRecordsFound() {
 }
 
 let ids = [];
-function renderBracket(name, type, date, id, author, desc, modified) {
+function renderBracket(name, type, date, id, author, desc, seed, size, modified) {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
 
     ids.push(id);
@@ -100,7 +102,7 @@ function renderBracket(name, type, date, id, author, desc, modified) {
     let cardCol1 = document.createElement("div");
     let cardCol2 = document.createElement("div");
 
-    card.className = "card p-2 mb-3 text-center";
+    card.className = "card p-2 text-center";
     cardRow.className = "row p-2 m-2";
     cardCol1.className = "col m-2";
     cardCol2.className = "col m-2 p-2 d-flex flex-column justify-content-center align-items-center";
@@ -125,6 +127,7 @@ function renderBracket(name, type, date, id, author, desc, modified) {
     cardRow.appendChild(cardCol2);
     card.appendChild(cardRow);
     historyContainer.appendChild(card);
+    historyContainer.appendChild(document.createElement("br"));
 
     let editLink = document.getElementsByClassName("open");
 
@@ -142,9 +145,7 @@ function renderBracket(name, type, date, id, author, desc, modified) {
             const db = request.result;
             const transaction = db.transaction("brackets", "readwrite");
             const store = transaction.objectStore("brackets");
-            alert("test?");
-            store.put({id: id, name: name, size: size, type: type, seeded: seed, scored: scored, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true"});
-            alert("it's not reaching here");
+            store.put({id: id, name: name, size: size, type: type, seeded: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true"});
             transaction.oncomplete = function() {
                 db.close();
             };

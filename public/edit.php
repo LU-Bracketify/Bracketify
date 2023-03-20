@@ -21,7 +21,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    <script src="js/edit.js" async></script>
+    <script src="js/edit.js"></script>
     <script src="js/storeData.js"></script>
     <script src="js/preferences.js"></script>
     <script src="js/editDB.js"></script>
@@ -66,6 +66,7 @@ session_start();
     <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
+            <button onclick="pickWinner()" class="mt-2 btn btn-primary">Pick a Winner</button>
         </div>
         <!-- <div class="cardContainer">
             <div class="row row-cols-1 row-cols-md-4" id="form">
@@ -239,22 +240,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             console.log(bracketData.desc);
             
             dbConnect(bracketData.id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
-            retrieveRecord(bracketData.id);
+            //retrieveRecord(bracketData.id);
+            generatePage(bracketData.id);
         }
         upload($formData);
         </script>";
 
-} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    echo "getting search params </br>";
+} else if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+    //echo "getting search params </br>";
     $id = $_GET["id"];
-    echo $id;
+    //echo $id;
 
     $formID = json_encode( array("id" => $id) );
 
     echo "<script>
-        retrieveRecord($formID.id);
+        //retrieveRecord($formID.id);
+        generatePage($formID.id);
         </script>";
 
+} else {
+    echo "<div class='text-center text-danger'>";
+    echo "<p>Oops! An error occured</p>";
+    echo "</div>";
 }
 
 
