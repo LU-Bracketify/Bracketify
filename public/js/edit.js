@@ -8,7 +8,7 @@ async function generatePage(id) {
     // Set values
     let title = record.name;
     let type = record.type;
-    let teamNumCount = record.size;
+    let teamNumCount = record.size*2;
     let teamNumEval = teamNum = teamNumSeed = teamNumCount;
     let isSeeded = record.seeded;
 
@@ -36,6 +36,7 @@ async function generatePage(id) {
 function countingRounds(type, teamNumCount) {
     let roundCount = 1;
     let is1 = false;
+    console.log(teamNumCount)
     if (type === "single") {
         while (is1 === false) {
             teamNumCount /= 2;
@@ -46,6 +47,7 @@ function countingRounds(type, teamNumCount) {
         }
     }
     else if (type === "robin") {
+        console.log(teamNumCount)
         roundCount = teamNumCount;
     }
 
