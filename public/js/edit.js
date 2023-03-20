@@ -25,9 +25,7 @@ async function generatePage(id) {
         type = "group";
     }
 
-    if (isSeeded === "none") {
-        isSeeded = "";
-    } else if (isSeeded === "normal") {
+    if (isSeeded === "normal") {
         isSeeded = "seeded";
     } else if (isSeeded === "randomized") {
         isSeeded = "randomizedSeed";
