@@ -66,8 +66,139 @@ session_start();
     <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
-            <button onclick="pickWinner()" class="mt-2 btn btn-primary">Pick a Winner</button>
+            <button class="mt-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#winnerModal">Pick a Winner</button>
         </div>
+        <div class="modal" id="winnerModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Winner</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    The winner is team 2
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+            </div>
+        <!-- <div class="cardContainer">
+            <div class="row row-cols-1 row-cols-md-4" id="form">
+                <div class="card-deck">
+                    <h2 class="p-3 border-top border-bottom">Round 1</h2>
+                    <div class="card p-2 mb-3 text-center">
+                        <div class="row p-2 m-2">
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r1 g1 a0">Team 1</h1>
+                                <p class="bigger-view" id ="r1 g1 a1">Score</p>
+                            </div>
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r1 g1 a2">Team 2</h1>
+                                <p class="bigger-view" id="r1 g1 a3">Score</p>
+                            </div>
+                            <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
+                                <button class="btn btn-primary p-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-2 mb-3 text-center">
+                        <div class="row p-2 m-2">
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r1 g2">Team 3</h1>
+                                <p class="bigger-view" id="r1 g2">Score</p>
+                            </div>
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r1 g2">Team 4</h1>
+                                <p class="bigger-view" id="r1 g2">Score</p>
+                            </div>
+                            <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
+                                <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck">
+                    <h2 class="p-3 border-top border-bottom">Round 2</h2>
+                    <div class="card p-2 mb-3 text-center">
+                        <div class="row p-2 m-2">
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r2 g1">Team 1</h1>
+                                <p class="bigger-view" id="r2 g1">Score</p>
+                            </div>
+                            <div class="col m-2">
+                                <h1 class="small-view" id="r2 g1">Team 4</h1>
+                                <p class="bigger-view" id="r2 g1">Score</p>
+                            </div>
+                            <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
+                                <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck">
+                    <h2 class="p-3 border-top border-bottom">Winner</h2>
+                    <div class="card p-2 mb-3 text-center">
+                        <div class="row p-2 m-2">
+                            <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
+                                <h1 class="small-view" id="r3 g1">Team 1</h1>
+                            </div>
+                            <div class="col m-2 p-2 d-flex flex-column justify-content-center align-items-center">
+                                <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="top">
+                                <label>Team Name</label>
+                                <input type="text" name="Team Name" id="team1" required>
+                                <br/>
+                                <br/>
+                                <label>Score</label>
+                                <input type="text" name="Score" id="score1" required>
+                            </div>
+                            <div class="bottom">
+                                <label>Team Name</label>
+                                <input type="text" name="Team Name" id="team2" required>
+                                <br/>
+                                <br/>
+                                <label>Score</label>
+                                <input type="text" name="Score" id="score2" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button
+                                onclick="changeElemModal(document.getElementById('team1').value,document.getElementById('score1').value,document.getElementById('team2').value,document.getElementById('score2').value)"
+                                type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
         <div class="container">
             <div class="row">
