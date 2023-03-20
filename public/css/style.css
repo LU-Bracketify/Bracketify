@@ -110,6 +110,8 @@ html {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    width: auto;
+    max-width: 500px;
 }
 
 .paddingRight {
@@ -119,4 +121,8 @@ html {
 .center {
     justify-content: center;
     align-items: center;
+}
+
+.col-width {
+    width: auto;
 }

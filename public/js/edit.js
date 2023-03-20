@@ -10,551 +10,355 @@ async function generatePage(id) {
     let type = record.type;
     let teamNumCount = record.size;
     let teamNumEval = teamNum = teamNumSeed = teamNumCount;
-    // change to str
     let isSeeded = record.seeded;
-    let isScored = true;
 
-    // Convert values
+    let bracket = {
+        seed: [],
+        name: [],
+        score: [],
+        roundNum: [],
+    };
+    
+    let rowCreation = document.createElement("div");
+    rowCreation.className = `row row-cols-1`;
+    rowCreation.id = "roundRow";
+    document.getElementsByClassName('mainContainerForEdit')[0].appendChild(rowCreation);
+    
+    // Driver
+    let roundCount = countingRounds(type, teamNumCount);
+    let columns = createBracket(roundCount, rowCreation, teamNum, type);
+
+
+
+
+}
+
+function countingRounds(type, teamNumCount) {
+    let roundCount = 1;
+    let is1 = false;
     if (type === "single") {
-        type = "single elim";
-    } else if (type === "double") {
-        type = "double elim";
-    } else if (type === "robin") {
-        type = "round robin";
-    } else if (type === "group"){
-        type = "group";
-    }
-
-    if (isSeeded === "normal") {
-        isSeeded = "seeded";
-    } else if (isSeeded === "randomized") {
-        isSeeded = "randomizedSeed";
-    }
-
-
-    //var title = "See Work"
-    //var type = "single elim";
-    //var teamNumCount = 4;
-    //var teamNumEval = 4;
-    //var teamNum = 4;
-    //var isSeeded = "randomizedSeed";
-    // var isSeeded = "seeded";
-    //var isScored = true;
-    var is1 = false;
-    var count = 1;
-    if (type === "single elim") {
         while (is1 === false) {
             teamNumCount /= 2;
             if (teamNumCount === 1) {
                 is1 = true;
             }
-            count++;
+            roundCount++;
         }
     }
-    else if (type === "double elim") {
-        while (is1 === false) {
-            if (teamNumCount <= 4) {
-                teamNumCount -= 1
-            }
-            else {
-                teamNumCount -= teamNum / 4
-            }
-            if (teamNumCount === 1) {
-                is1 = true;
-            }
-            count++;
-        }
+    else if (type === "robin") {
+        roundCount = teamNumCount;
     }
-    else if (type === "round robin") {
-        count = teamNumCount;
-    }
-    var titleGet = document.getElementById("title");
-    titleGet.innerHTML = `Edit - ${title}`
-    if (type === "single elim") {
-        var cardCreation = document.createElement("div")
-        cardCreation.classList.add("cardContainer")
-        document.getElementsByClassName('mainContainerForEdit')[0].appendChild(cardCreation);
-        var rowCreation = document.createElement("div")
-        rowCreation.classList.add(`row`)
-        rowCreation.classList.add(`row-cols-1`)
-        rowCreation.id = "roundRow"
-        cardCreation.appendChild(rowCreation)
-        var teamSeedArr = []
-        for (var t = 1; t <= teamNum; t++) {
-            teamSeedArr.push(t);
-        }
-        var ranNums = [],
-            ri = teamSeedArr.length,
-            p = 1,
-            rising = 1,
-            ind = 0;
-        while (ri--) {
-            ind = Math.floor(Math.random() * (ri + 1));
-            ranNums.push(teamSeedArr[ind]);
-            teamSeedArr.splice(ind, 1);
-        }
-        for (var i = 0; i < count; i++) {
-            var colCreation = document.createElement("div")
-            colCreation.classList.add(`col`)
-            colCreation.classList.add(`mb-4`)
-            colCreation.id = `${i}`
-            colCreation.style.width = "auto";
-            rowCreation.appendChild(colCreation)
-            var deck = document.createElement("div")
-            deck.classList.add("card-deck")
-            colCreation.appendChild(deck)
-            if (i === count - 1) {
-                var winner = document.createElement("h2")
-                winner.classList.add("p-3")
-                winner.classList.add("border-top")
-                winner.classList.add("border-bottom")
-                winner.innerHTML = "Winner"
-                deck.appendChild(winner)
-                var winCard = document.createElement("div")
-                winCard.classList.add("card")
-                winCard.classList.add("p-2")
-                winCard.classList.add("mb-3")
-                winCard.classList.add("text-center")
-                deck.appendChild(winCard)
-                var winRow = document.createElement("div")
-                winRow.classList.add("row")
-                winRow.classList.add("p-2")
-                winRow.classList.add("m-2")
-                winCard.appendChild(winRow)
-                var winCol = document.createElement("div")
-                winCol.classList.add("col")
-                winCol.classList.add("p-2")
-                winCol.classList.add("m-2")
-                winCol.classList.add("d-flex")
-                winCol.classList.add("flex-column")
-                winCol.classList.add("justify-content-center")
-                winCol.classList.add("align-items-center")
-                winRow.appendChild(winCol)
-                var winTeam = document.createElement("h1")
-                winTeam.classList.add("small-view")
-                winTeam.classList.add(`r${i}`)
-                winTeam.innerHTML = `Team`
-                winCol.appendChild(winTeam)
-                var winBut = document.createElement("button")
-                winBut.type = "button"
-                winBut.classList.add("btn")
-                winBut.classList.add("btn-primary")
-                winBut.classList.add("p-3")
-                winBut.setAttribute("onclick", "window.print()")
-                winBut.innerHTML = "Share"
-                winCol.appendChild(winBut)
-            }
-            else {
-                var round = document.createElement("h2")
-                round.classList.add("p-3")
-                round.classList.add("border-top")
-                round.classList.add("border-bottom")
-                round.innerHTML = `Round ${i + 1}`
-                deck.appendChild(round)
-                for (var j = 0; j < teamNum / 2; j++) {
-                    var card = document.createElement("div")
-                    card.classList.add("card")
-                    card.classList.add("p-2")
-                    card.classList.add("mb-3")
-                    card.classList.add("text-center")
-                    deck.appendChild(card)
-                    var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row")
-                    cardFormat.classList.add("p-2")
-                    cardFormat.classList.add("m-2")
-                    card.appendChild(cardFormat)
-                    for (var k = 0; k < 4; k++) {
-                        var teamCol = document.createElement("div")
-                        teamCol.classList.add("col")
-                        teamCol.classList.add("m-2")
-                        cardFormat.appendChild(teamCol)
-                        if (i === 0) {
-                            if (isSeeded === "randomizedSeed") {
-                                var seedNum = document.createElement("p")
-                                seedNum.innerHTML = ranNums[p - 1];
-                                p++;
-                                teamCol.appendChild(seedNum)
-                            }
-                            else if (isSeeded === "seeded") {
-                                var seedNum = document.createElement("p")
-                                if ((p % 2) === 0) {
-                                    seedNum.innerHTML = teamNumSeed;
-                                    teamNumSeed--;
-
-                                }
-                                else {
-                                    seedNum.innerHTML = rising;
-                                    rising++;
-                                }
-                                p++;
-                                teamCol.appendChild(seedNum)
-                            }
-                            var teamName = document.createElement("input")
-                            teamName.type = "text"
-                            teamName.placeholder = "Team"
-                            teamName.classList.add(`r${i}`)
-                            teamName.classList.add(`g${j}`)
-                        }
-                        else {
-                            var teamName = document.createElement("h1")
-                            teamName.classList.add("small-view")
-                            teamName.classList.add(`r${i}`)
-                            teamName.classList.add(`g${j}`)
-                            teamName.innerHTML = "Team"
-                        }
-                        teamCol.appendChild(teamName)
-                        k++;
-                        if (isScored === true) {
-                            var pageBreak = document.createElement("br")
-                            teamCol.appendChild(pageBreak)
-                            var pageBreak2 = document.createElement("br")
-                            teamCol.appendChild(pageBreak2)
-                            var score = document.createElement("input")
-                            score.classList.add(`r${i}`)
-                            score.classList.add(`g${j}`)
-                            score.placeholder = "Score"
-                            teamCol.appendChild(score)
-                        }
-                        else {
-                            if (k === 3) {
-                                var pageBreak = document.createElement("br")
-                                teamCol.appendChild(pageBreak)
-                                var pageBreak2 = document.createElement("br")
-                                teamCol.appendChild(pageBreak2)
-                                var winnerLabel = document.createElement("label")
-                                winnerLabel.innerHTML = "Select a Winner:"
-                                teamCol.appendChild(winnerLabel)
-                                var winnerDropdown = document.createElement("select")
-                                var team1 = document.createElement("option")
-                                team1.value = "team1"
-                                team1.innerHTML = "Left Team"
-                                winnerDropdown.appendChild(team1)
-                                var team2 = document.createElement("option")
-                                team2.innerHTML = "Right Team"
-                                winnerDropdown.appendChild(team2)
-                                teamCol.appendChild(winnerDropdown)
-                            }
-                        }
-                    }
-                }
-                teamNum = teamNum / 2;
-            }
-            if (i !== count - 1) {
-                // make button here to call a function to evaluate column scores
-                // change team names based on winners
-                var columnSubmit = document.createElement("button")
-                columnSubmit.type = "button"
-                columnSubmit.classList.add("btn")
-                columnSubmit.classList.add("btn-primary")
-                columnSubmit.classList.add("p-3")
-                ////////////////////////////////////////////
-                var roundCount = i
-                var gameCount = teamNumEval / 2
-                columnSubmit.setAttribute("onclick", `rerenderPage(${roundCount},${gameCount},${teamNumEval})`)
-                columnSubmit.innerHTML = "Submit Round"
-                deck.appendChild(columnSubmit)
-            }
-        }
-    }
-    else if (type === "round robin") {
-        var cardCreation = document.createElement("div")
-        cardCreation.classList.add("cardContainer")
-        document.getElementsByClassName('mainContainerForEdit')[0].appendChild(cardCreation);
-        var rowCreation = document.createElement("div")
-        rowCreation.classList.add(`row`)
-        rowCreation.classList.add(`row-cols-1`)
-        rowCreation.id = "roundRow"
-        cardCreation.appendChild(rowCreation)
-        var teamSeedArr = []
-        for (var t = 1; t <= teamNum; t++) {
-            teamSeedArr.push(t);
-        }
-        var ranNums = [],
-            ri = teamSeedArr.length,
-            p = 1,
-            rising = 1,
-            ind = 0;
-        while (ri--) {
-            ind = Math.floor(Math.random() * (ri + 1));
-            ranNums.push(teamSeedArr[ind]);
-            teamSeedArr.splice(ind, 1);
-        }
-        for (var i = 0; i < count; i++) {
-            var colCreation = document.createElement("div")
-            colCreation.classList.add(`col`)
-            colCreation.classList.add(`mb-4`)
-            colCreation.id = `${i}`
-            colCreation.style.width = "auto";
-            rowCreation.appendChild(colCreation)
-            var deck = document.createElement("div")
-            deck.classList.add("card-deck")
-            colCreation.appendChild(deck)
-            if (i === count - 1) {
-                var winner = document.createElement("h2")
-                winner.classList.add("p-3")
-                winner.classList.add("border-top")
-                winner.classList.add("border-bottom")
-                winner.innerHTML = "Winner"
-                deck.appendChild(winner)
-                var winCard = document.createElement("div")
-                winCard.classList.add("card")
-                winCard.classList.add("p-2")
-                winCard.classList.add("mb-3")
-                winCard.classList.add("text-center")
-                deck.appendChild(winCard)
-                var winRow = document.createElement("div")
-                winRow.classList.add("row")
-                winRow.classList.add("p-2")
-                winRow.classList.add("m-2")
-                winCard.appendChild(winRow)
-                var winCol = document.createElement("div")
-                winCol.classList.add("col")
-                winCol.classList.add("p-2")
-                winCol.classList.add("m-2")
-                winCol.classList.add("d-flex")
-                winCol.classList.add("flex-column")
-                winCol.classList.add("justify-content-center")
-                winCol.classList.add("align-items-center")
-                winRow.appendChild(winCol)
-                var winTeam = document.createElement("h1")
-                winTeam.classList.add("small-view")
-                winTeam.classList.add(`r${i}`)
-                winTeam.innerHTML = `Team`
-                winCol.appendChild(winTeam)
-                var winBut = document.createElement("button")
-                winBut.type = "button"
-                winBut.classList.add("btn")
-                winBut.classList.add("btn-primary")
-                winBut.classList.add("p-3")
-                winBut.setAttribute("onclick", "window.print()")
-                winBut.innerHTML = "Share"
-                winCol.appendChild(winBut)
-            }
-            else {
-                var round = document.createElement("h2")
-                round.classList.add("p-3")
-                round.classList.add("border-top")
-                round.classList.add("border-bottom")
-                round.innerHTML = `Round ${i + 1}`
-                deck.appendChild(round)
-                for (var j = 0; j < teamNum / 2; j++) {
-                    var card = document.createElement("div")
-                    card.classList.add("card")
-                    card.classList.add("p-2")
-                    card.classList.add("mb-3")
-                    card.classList.add("text-center")
-                    deck.appendChild(card)
-                    var cardFormat = document.createElement("div")
-                    cardFormat.classList.add("row")
-                    cardFormat.classList.add("p-2")
-                    cardFormat.classList.add("m-2")
-                    card.appendChild(cardFormat)
-                    for (var k = 0; k < 4; k++) {
-                        var teamCol = document.createElement("div")
-                        teamCol.classList.add("col")
-                        teamCol.classList.add("m-2")
-                        cardFormat.appendChild(teamCol)
-                        if (i === 0) {
-                            if (isSeeded === "randomizedSeed") {
-                                var seedNum = document.createElement("p")
-                                seedNum.innerHTML = ranNums[p - 1];
-                                p++;
-                                teamCol.appendChild(seedNum)
-                            }
-                            else if (isSeeded === "seeded") {
-                                var seedNum = document.createElement("p")
-                                console.log(p)
-                                if ((p % 2) === 0) {
-                                    seedNum.innerHTML = teamNumSeed;
-                                    teamNumSeed--;
-
-                                }
-                                else {
-                                    seedNum.innerHTML = rising;
-                                    rising++;
-                                }
-                                p++;
-                                teamCol.appendChild(seedNum)
-                            } ``
-                            var teamName = document.createElement("input")
-                            teamName.type = "text"
-                            teamName.placeholder = "Team"
-                            teamName.classList.add(`r${i}`)
-                            teamName.classList.add(`g${j}`)
-                        }
-                        else {
-                            var teamName = document.createElement("h1")
-                            teamName.classList.add("small-view")
-                            teamName.classList.add(`r${i}`)
-                            teamName.classList.add(`g${j}`)
-                            teamName.innerHTML = "Team"
-                        }
-                        teamCol.appendChild(teamName)
-                        k++;
-                        if (isScored === true) {
-                            var pageBreak = document.createElement("br")
-                            teamCol.appendChild(pageBreak)
-                            var pageBreak2 = document.createElement("br")
-                            teamCol.appendChild(pageBreak2)
-                            var score = document.createElement("input")
-                            score.classList.add(`r${i}`)
-                            score.classList.add(`g${j}`)
-                            score.classList.add(`a${k}`)
-                            score.placeholder = "Score"
-                            teamCol.appendChild(score)
-                        }
-                        else {
-                            if (k === 3) {
-                                var pageBreak = document.createElement("br")
-                                teamCol.appendChild(pageBreak)
-                                var pageBreak2 = document.createElement("br")
-                                teamCol.appendChild(pageBreak2)
-                                var winnerLabel = document.createElement("label")
-                                winnerLabel.innerHTML = "Select a Winner:"
-                                teamCol.appendChild(winnerLabel)
-                                var winnerDropdown = document.createElement("select")
-                                var team1 = document.createElement("option")
-                                team1.value = "team1"
-                                team1.innerHTML = "Left Team"
-                                winnerDropdown.appendChild(team1)
-                                var team2 = document.createElement("option")
-                                team2.innerHTML = "Right Team"
-                                winnerDropdown.appendChild(team2)
-                                teamCol.appendChild(winnerDropdown)
-                            }
-                        }
-                    }
-                }
-            }
-            if (i !== count - 1) {
-                // make button here to call a function to evaluate column scores
-                // change team names based on winners
-                var columnSubmit = document.createElement("button")
-                columnSubmit.type = "button"
-                columnSubmit.classList.add("btn")
-                columnSubmit.classList.add("btn-primary")
-                columnSubmit.classList.add("p-3")
-                columnSubmit.setAttribute("onclick", `rerenderPage(${i},${teamNumEval / 2},'teamNumEval')`)
-                columnSubmit.innerHTML = "Submit Round"
-                deck.appendChild(columnSubmit)
-            }
-        }
-    }
+    return roundCount;
 }
-// , isScored, isSeeded
-function rerenderPage(i, gameNum, teamNumEval) {
-    console.log("button clicked");
-    console.log("gameNum: ", gameNum);
-    console.log("teamEval: ", teamNumEval);
 
-    // Iterate over team scores for round
-    let round = document.getElementsByClassName(`r${i}`);
-    let teamNames = [];
-    let scores = [];
-
-    // If first round get team names from input boxes
-    if (i === 0) {
-        console.log("ROUND 1");
-
-        for (let item in round) {
-            // Get names
-            if (item % 2 === 0 || item == 0) {
-                teamNames.push(round[item].value);
-            }
-
-            // Get scores
-            if (item % 2) {
-                scores.push(round[item].value)
-            }
+function createBracket(roundCount, rowCreation, teamNum, type) {
+    let roundInc = 1;
+    let cardCount = 0;
+    let gameNum = teamNum/2;
+    for (let cb = 0; cb < roundCount; cb++) {
+        if (cb === 0) {
+            let deck = renderColumn(roundInc, rowCreation);
+            cardCount = cardPerRound(type, gameNum, cardCount);
+            renderFirstContent(deck, cardCount);
         }
-
-        // Select winners
-        let winners = nextMatchup(teamNames, scores);
-
-        console.log(winners);
-
-        // Set team names for next round
-        let nextRoundNum = i + 1;
-        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
-        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
-
-        for (let item in nextHeaders) {
-            // Set names
-            nextHeaders[item].textContent = winners.names[item];
+        else if (cb === roundCount-1) {
+            let deck = renderLastColumn(rowCreation);
+            cardCount = cardPerRound(type, gameNum, cardCount);
+            renderLastContent(deck, cardCount);
         }
-
-        // If not last round
-    } else {
-        console.log("NOT ROUND 2");
-
-        for (let item in round) {
-            // Get Names
-            if (item % 2 === 0 || item == 0) {
-                teamNames.push(round[item].textContent);
-            }
-
-            // Get scores
-            if (item % 2) {
-                scores.push(round[item].value)
-            }
+        else {
+            let deck = renderColumn(roundInc, rowCreation);
+            cardCount = cardPerRound(type, gameNum, cardCount);
+            renderMidContent(deck,cardCount);
         }
+        roundInc++;
+    }
+} 
 
-        // Select winners
-        let winners = nextMatchup(teamNames, scores);
+function renderColumn(roundInc, rowCreation) {
+    let colCreation = document.createElement("div");
+    colCreation.className = `col mb-4 col-width bg-danger`;
+    rowCreation.appendChild(colCreation);
+    let round = renderRound(roundInc, colCreation);
+    colCreation.appendChild(round);
+    let deck = document.createElement("div");
+    deck.className = "card-deck";
+    colCreation.appendChild(deck);
 
-        console.log(winners);
+    return deck;
+}
 
-        // Set team names for next round
-        let nextRoundNum = i + 1;
-        let nextRound = document.getElementsByClassName(`r${nextRoundNum}`);
-        let nextHeaders = document.querySelectorAll(`h1.r${nextRoundNum}`);
+function renderRound(roundInc, colCreation) {
+    let round = document.createElement("h2");
+    round.className = "p-3 border-top border-bottom";
+    round.textContent = `Round ${roundInc}`;
+    
+    return round;
+}
 
-        for (let item in nextHeaders) {
-            // Set names
-            nextHeaders[item].textContent = winners.names[item];
-        }
+function renderLastColumn(rowCreation) {
+    let colCreation = document.createElement("div");
+    colCreation.className = `col mb-4 col-width bg-danger`;
+    rowCreation.appendChild(colCreation);
+    renderLastRound(colCreation);
+    let deck = document.createElement("div");
+    deck.className = "card-deck";
+    colCreation.appendChild(deck);
 
+    return deck;
+}
+
+function renderLastRound(colCreation) {
+    let round = document.createElement("h2");
+    round.className = "p-3 border-top border-bottom";
+    round.textContent = `Winner`;
+    colCreation.appendChild(round);
+}
+
+// Render team parent div
+function renderTeamDiv() {
+    // flex contents
+    let tDiv = document.createElement('div');
+    tDiv.className = "d-flex align-items-left justify-content-left";
+    
+    return tDiv;
+}
+
+// Render card with two teams
+function renderCard() {
+    let cardDiv = document.createElement('div');
+
+    // Set items
+    cardDiv.className = "card p-2 m-2";
+    
+    return cardDiv;
+}
+
+// Render text input
+function renderText() {
+    let nameInput = document.createElement('input');
+
+    nameInput.required = true;
+    nameInput.type = "text";
+    nameInput.placeholder = "Team Name";
+    nameInput.className = "form-control p-2 m-2";
+
+    return nameInput;
+}
+
+// Render score input
+function renderNum() {
+    let scoreInput = document.createElement('input');
+
+    scoreInput.required = true;
+    scoreInput.type = "number";
+    scoreInput.min = 0;
+    scoreInput.placeholder = "Score";
+    scoreInput.className = "form-control p-2 m-2";
+
+    return scoreInput;
+}
+
+// Render team seed
+function renderSeed() {
+    let seed = document.createElement('p');
+    seed.textContent = "1"; // TODO
+    seed.className = "text-danger justify-content-center align-items-center pt-2 pb-2 mt-2 mb-2 ms-1 me-1";
+    return seed;
+}
+
+// Render pick a winner button
+function renderPickWinnerButton() {
+    let pickWinnerButton = document.createElement('button');
+    pickWinnerButton.className = "btn btn-primary";
+    pickWinnerButton.setAttribute("onclick", `let newValue = pickWinner(); this.setAttribute("value", newValue)`);
+    pickWinnerButton.textContent = "Pick a Winner";
+
+    return pickWinnerButton;
+}
+
+function pickWinner(buttonId) {
+    let team1 = "TEAM 1";
+    let team2 = "TEAM 2";
+
+    let pick = Math.floor(Math.random() * 2);
+    if (pick == 0) {
+        return team1;
+    }
+    else {
+        return team2;
     }
 }
 
-// Returns winners of match
-function nextMatchup(teamNames, scores) {
+function renderSubmitButton(type = 0, roundNum = 0, teams = 0, scores = 0) {
+    let submitButton = document.createElement('button');
 
-    let winners = [];
+    submitButton.className = "btn btn-primary p-2 m-2";
+    submitButton.setAttribute("onclick", `rerenderNextRound("${type}", "${roundNum}", "${teams}", "${scores}")`); // TODO
+    submitButton.textContent = "Submit Column";
 
-    let winnerObj = {
-        names: [],
-        scores: [],
-    }
+    return submitButton;
+}
 
-    for (let i in scores) {
-        // if second team
-        if (i % 2) {
-            let winner = gameWinner(scores[i - 1], scores[i]);
-            console.log(winner);
-
-            // Get index pos
-            let index = scores.indexOf(winner);
-            console.log("index pos:: ", index);
-
-            let tNames = teamNames[index];
-            console.log(tNames);
-
-            winnerObj.scores.push(winner);
-            winnerObj.names.push(tNames);
-        }
-    }
-
-    return winnerObj;
+function rerenderNextRound(type, roundNum, teams, scores) {
+    return;
 
 }
 
-// Returns winner of game
-function gameWinner(t1, t2) {
-    console.log(t1, t2)
-    if (t1 > t2) {
-        return t1;
-    } else {
-        return t2;
+function cardPerRound (type,gameNum, cardCount) {
+    cardCount = 0;
+    console.log(type)
+    if (type === "single") {
+        for (let cc = 0; cc < gameNum; cc++) {
+           cardCount++;
+        }
+        gameNum=gameNum/2;
     }
+    else if (type === "robin") {
+        cardCount = teamNum;
+    }
+    return cardCount;
+}
+
+// Generate first col card and contents
+function generateFirstCard() {
+    // Set items
+    let team1 = renderText();
+    let team2 = renderText();
+    let score1 = renderNum();
+    let score2 = renderNum();
+    let seedLabel1 = renderSeed();
+    let seedLabel2 = renderSeed();
+    let pickWinnerButton = renderPickWinnerButton();
+
+    let card = renderCard();
+
+    // Render team div (2 in each card)
+    let teamDiv1 = renderTeamDiv();
+    let teamDiv2 = renderTeamDiv();
+
+    
+    // Append seeds
+    teamDiv1.appendChild(seedLabel1);
+    teamDiv2.appendChild(seedLabel2);
+
+    // Append team names to team div
+    teamDiv1.appendChild(team1);
+    teamDiv2.appendChild(team2);
+
+    // Append scores to team div
+    teamDiv1.appendChild(score1);
+    teamDiv2.appendChild(score2);
+
+    // Append team info to parent div
+    card.appendChild(teamDiv1);
+    card.appendChild(teamDiv2);
+    card.appendChild(pickWinnerButton)
+    //deck.appendChild(card);
+
+    return card;
+}
+
+// Generate 2nd - last card and contents
+function generateSecondCard() {
+    // Set items
+    let team1 = renderText();
+    let team2 = renderText();
+    let score1 = renderNum();
+    let score2 = renderNum();
+    let seedLabel1 = renderSeed();
+    let seedLabel2 = renderSeed();
+    let pickWinnerButton = renderPickWinnerButton(team1, team2);
+
+    let card = renderCard();
+
+    // Render team div (2 in each card)
+    let teamDiv1 = renderTeamDiv();
+    let teamDiv2 = renderTeamDiv();
+
+    
+    // Append seeds
+    teamDiv1.appendChild(seedLabel1);
+    teamDiv2.appendChild(seedLabel2);
+
+    // Append team names to team div
+    teamDiv1.appendChild(team1);
+    teamDiv2.appendChild(team2);
+
+    // Append scores to team div
+    teamDiv1.appendChild(score1);
+    teamDiv2.appendChild(score2);
+
+    // Append team info to parent div
+    card.appendChild(teamDiv1);
+    card.appendChild(teamDiv2);
+    card.appendChild(pickWinnerButton)
+    //deck.appendChild(card);
+
+    return card;
+}
+
+// Render first round inputs for team names and scores
+function renderFirstContent(deck,cardCount) {
+    let submitButton = renderSubmitButton();
+
+    // Generate x cards
+    for (let i = 0; i < cardCount; i++) {
+        let card = generateFirstCard();
+        deck.append(card);
+    }
+
+    deck.appendChild(submitButton);
+}
+
+// Render team names as headers and scores as inputs
+//** account for multiple columns */
+function renderMidContent(deck, cardCount) {
+    let submitButton = renderSubmitButton();
+    console.log(cardCount);
+    // Generate x cards
+    for (let i = 0; i < cardCount; i++) {
+        let card = generateFirstCard();
+        deck.append(card);
+    }
+
+    deck.appendChild(submitButton);
+}
+
+// Render winning team
+function renderLastContent(deck) {
+    let winningTeam = document.createElement('h3');
+
+    // Set items
+    winningTeam.textContent = "TEAM 1"; // TODO
+    winningTeam.className = "p-2 m-2";
+
+    let seedLabel = renderSeed();
+    
+    // Render Card
+    let card = renderCard();
+
+    // Render team div
+    let teamDiv = renderTeamDiv();
+
+    // Append seed
+    teamDiv.appendChild(seedLabel);
+
+    // Append headers to team div
+    teamDiv.appendChild(winningTeam);
+
+    // Share button
+    let shareButton = document.createElement('button');
+    shareButton.className = "btn btn-primary";
+    shareButton.setAttribute("onclick", "window.print()");
+    shareButton.textContent = "Share Results";
+    teamDiv.appendChild(shareButton);
+
+    // Append team info to parent div
+    card.appendChild(teamDiv);
+    deck.appendChild(card);
+}
+
+function addSeeds() {
+    
 }
