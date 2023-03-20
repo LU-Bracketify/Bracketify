@@ -10,7 +10,7 @@ function getCurrentDate() {
     return today.toLocaleString();
 }
 
-function dbConnect(id, name, size, type, seed, author, desc) {
+function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
     console.log("clicked");
     console.log(name);
     console.log(size);
@@ -49,7 +49,7 @@ function dbConnect(id, name, size, type, seed, author, desc) {
         //let id = generateId();
 
         // generate unique/random id
-        bracketStore.put({id: id, name: name, size: size, type: type, seeded: seed, author: author, desc: desc, date: getCurrentDate(), modified: "false"});
+        bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: getCurrentDate(), modified: "false", teams: teams, scores: scores});
         //store.put({id: 2, type: "Single Elimination", name: "bracket2"});
         
         /*
