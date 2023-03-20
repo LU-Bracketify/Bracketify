@@ -47,6 +47,10 @@
             <div class="container text-center pb-3">
                 <h2 class="p-3 border-top border-bottom">Settings</h2>
             </div>
+            <div id="successMessage" class="alert alert-success" hidden>
+                <button type="button" class="btn-close" onclick="hideSuccessMessage()"></button>
+                <strong>Success!</strong> Setting saved.
+              </div>
             <form onsubmit="upload();">
 
                 <div class="mb-3">
@@ -78,12 +82,24 @@
 <script>
     window.onload = readPreferencesCache();
 
+    function showSuccessMessage() {
+        let success = document.getElementById("successMessage");
+        success.hidden = false;
+    }
+
+    function hideSuccessMessage() {
+        let success = document.getElementById("successMessage");
+        success.hidden = true;
+    }
+
     function updatePreferencesCache() {
         let backgroundMode = document.getElementById("backgroundInput").value;
         let sortType = document.getElementById("sortInput").value;
         let bracketSize = document.getElementById("rangeInput").value;
 
         dbPreferencesConnect(backgroundMode, sortType, bracketSize);
+
+        showSuccessMessage();
     }
 
     // Upload form data

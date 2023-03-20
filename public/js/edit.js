@@ -76,6 +76,9 @@ function createBracket(roundCount, rowCreation, teamNum, type) {
             renderMidContent(deck,cardCount);
         }
         roundInc++;
+        if (type === "single") {
+            gameNum /= 2;
+        }
     }
 } 
 
@@ -212,12 +215,10 @@ function rerenderNextRound(type, roundNum, teams, scores) {
 ///////////////////////////
 function cardPerRound (type,gameNum, cardCount) {
     cardCount = 0;
-    console.log(type)
     if (type === "single") {
         for (let cc = 0; cc < gameNum; cc++) {
            cardCount++;
         }
-        gameNum=gameNum/2;
     }
     else if (type === "robin") {
         cardCount = teamNum;
@@ -270,13 +271,20 @@ function generateFirstCard() {
 // Generate 2nd - last card and contents
 function generateSecondCard() {
     // Set items
-    let team1 = renderText();
-    let team2 = renderText();
+    let team1 = document.createElement('h6');
+    let team2 = document.createElement('h6');
+    
+    team1.className = "text-nowrap p-2 m-2";
+    team2.className = "text-nowrap p-2 m-2";
+
+    team1.textContent = "TEAM 1";
+    team2.textContent = "TEAM 2";
+
     let score1 = renderNum();
     let score2 = renderNum();
     let seedLabel1 = renderSeed();
     let seedLabel2 = renderSeed();
-    let pickWinnerButton = renderPickWinnerButton(team1, team2);
+    let pickWinnerButton = renderPickWinnerButton();
 
     let card = renderCard();
 
@@ -326,7 +334,7 @@ function renderMidContent(deck, cardCount) {
     console.log(cardCount);
     // Generate x cards
     for (let i = 0; i < cardCount; i++) {
-        let card = generateFirstCard();
+        let card = generateSecondCard();
         deck.append(card);
     }
 
