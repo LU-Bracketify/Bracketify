@@ -66,8 +66,31 @@ session_start();
     <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
-            <button onclick="pickWinner()" class="mt-2 btn btn-primary">Pick a Winner</button>
+            <button class="mt-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#winnerModal">Pick a Winner</button>
         </div>
+        <div class="modal" id="winnerModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Winner</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    The winner is team 2
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+            </div>
         <!-- <div class="cardContainer">
             <div class="row row-cols-1 row-cols-md-4" id="form">
                 <div class="card-deck">
