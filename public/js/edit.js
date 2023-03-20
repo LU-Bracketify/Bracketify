@@ -48,6 +48,7 @@ function countingRounds(type, teamNumCount) {
     else if (type === "robin") {
         roundCount = teamNumCount;
     }
+
     return roundCount;
 }
 
@@ -58,15 +59,18 @@ function createBracket(roundCount, rowCreation, teamNum, type) {
     for (let cb = 0; cb < roundCount; cb++) {
         if (cb === 0) {
             let deck = renderColumn(roundInc, rowCreation);
+            console.log("cc0: ", cardCount);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderFirstContent(deck, cardCount);
         }
         else if (cb === roundCount-1) {
+            console.log("cc1: ", cardCount);
             let deck = renderLastColumn(rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderLastContent(deck, cardCount);
         }
         else {
+            console.log("cc2: ", cardCount);
             let deck = renderColumn(roundInc, rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderMidContent(deck,cardCount);
@@ -205,6 +209,7 @@ function rerenderNextRound(type, roundNum, teams, scores) {
 
 }
 
+///////////////////////////
 function cardPerRound (type,gameNum, cardCount) {
     cardCount = 0;
     console.log(type)
@@ -217,8 +222,11 @@ function cardPerRound (type,gameNum, cardCount) {
     else if (type === "robin") {
         cardCount = teamNum;
     }
+
+    console.log("cards per round:: ", cardCount);
     return cardCount;
 }
+/////////////////////////////
 
 // Generate first col card and contents
 function generateFirstCard() {
