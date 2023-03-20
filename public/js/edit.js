@@ -12,7 +12,27 @@ async function generatePage(id) {
     let teamNumEval = teamNum = teamNumCount;
     // change to str
     let isSeeded = record.seeded;
-    let isScored = record.scored;
+    let isScored = true;
+
+    // Convert values
+    if (type === "single") {
+        type = "single elim";
+    } else if (type === "double") {
+        type = "double elim";
+    } else if (type === "robin") {
+        type = "round robin";
+    } else if (type === "group"){
+        type = "group";
+    }
+
+    if (isSeeded === "none") {
+        isSeeded = "";
+    } else if (isSeeded === "normal") {
+        isSeeded = "seeded";
+    } else if (isSeeded === "randomized") {
+        isSeeded = "randomizedSeed";
+    }
+
 
     //var title = "See Work"
     //var type = "single elim";
@@ -22,6 +42,9 @@ async function generatePage(id) {
     //var isSeeded = "randomizedSeed";
     // var isSeeded = "seeded";
     //var isScored = true;
+
+
+
     var is1 = false;
     var count = 1;
     var winners = [];
