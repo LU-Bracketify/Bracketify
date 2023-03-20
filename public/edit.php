@@ -66,6 +66,7 @@ session_start();
     <div class="mainContainerForEdit">
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
+            <button onclick="pickWinner()" class="mt-2 btn btn-primary">Pick a Winner</button>
         </div>
         <!-- <div class="cardContainer">
             <div class="row row-cols-1 row-cols-md-4" id="form">
