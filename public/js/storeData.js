@@ -119,4 +119,6 @@ function dbUpdate(name, type, id, author, desc, seed, size, teams, scores, seeds
             bracketDb.close();
         };
     };
+
+    window.location = ("index.html");
 }
