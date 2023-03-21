@@ -56,7 +56,7 @@ $_SESSION['id'] = uniqid();
             <form method="post" action="edit.php">
                 <div class="mb-3">
                     <label class="form-label" for="nameInput">Bracket Name:</label>
-                    <input type="text" class="form-control" name="nameInput" id="nameInput" required>
+                    <input type="text" class="form-control" name="name" id="nameInput" required>
                 </div>
 
                 <div class="mb-3">

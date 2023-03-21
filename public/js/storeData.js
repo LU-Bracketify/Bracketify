@@ -5,12 +5,7 @@ function generateId() {
     return id;
 }
 
-function getCurrentDate() {
-    let today = new Date();
-    return today.toLocaleString();
-}
-
-function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
+function dbConnect(id, name, size, type, seed, author, desc) {
     console.log("clicked");
     console.log(name);
     console.log(size);
@@ -49,7 +44,7 @@ function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
         //let id = generateId();
 
         // generate unique/random id
-        bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: getCurrentDate(), modified: "false", teams: teams, scores: scores});
+        bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "false"});
         //store.put({id: 2, type: "Single Elimination", name: "bracket2"});
         
         /*
@@ -96,3 +91,32 @@ function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
 
 }
 
+function dbUpdate(name, type, id, author, desc, seed, size, teams, scores, seeds) {
+    const request = indexedDB.open("BracketDB", 1);
+
+    request.onerror = function() {
+        console.error("err", this.error);
+    };
+
+    // Runs when modified or first instance
+    request.onupgradeneeded = function() {
+        const db = request.result;
+        const bracketStore = db.createObjectStore("brackets", { keyPath: "id" });
+        bracketStore.createIndex("brackets_type", ["type"], { unique: false });
+        bracketStore.createIndex("brackets_name", ["name"], { unique: false });
+        const preferenceStore = db.createObjectStore("preferences", { keyPath: "exists" });
+    };
+
+    // Runs after onUpgrade
+    request.onsuccess = function() {
+        const bracketDb = request.result;
+        const bracketTransaction = bracketDb.transaction("brackets", "readwrite");
+        const bracketStore = bracketTransaction.objectStore("brackets");
+
+        bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true", teams: teams, scores: scores, seeds: seeds});
+
+        bracketTransaction.oncomplete = function() {
+            bracketDb.close();
+        };
+    };
+}

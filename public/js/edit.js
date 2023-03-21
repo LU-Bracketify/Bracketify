@@ -10,7 +10,7 @@ async function generatePage(id) {
     let type = record.type;
     let teamNumCount = record.size;
     let teamNumEval = teamNum = teamNumSeed = teamNumCount;
-    let isSeeded = record.seeded;
+    let seedType = record.seedType;
 
     let bracket = {
         seed: [],
@@ -18,7 +18,13 @@ async function generatePage(id) {
         score: [],
         roundNum: [],
     };
-    
+
+    let saveButton = document.createElement("button");
+    saveButton.className = "btn btn-primary mt-2";
+    saveButton.textContent = "Save Bracket";
+    saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
+    document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveButton);
+
     let rowCreation = document.createElement("div");
     rowCreation.className = `row row-cols-1`;
     rowCreation.id = "roundRow";
@@ -229,7 +235,6 @@ function cardPerRound (type,gameNum, cardCount) {
     console.log("cards per round:: ", cardCount);
     return cardCount;
 }
-/////////////////////////////
 
 // Generate first col card and contents
 function generateFirstCard() {
@@ -379,8 +384,4 @@ function renderLastContent(deck) {
 
 function addSeeds() {
     
-}
-
-function saveBracket() {
-    alert("Alert button go brrrrrrr");
 }
