@@ -68,13 +68,6 @@ session_start();
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
             <button class="btn btn-primary mt-2" onclick="saveBracket()">Save Bracket</button>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="scrollbar">
-                    <div class="handle"></div>
-                </div>
-            </div>
-        </div>
     </div>
 
 <script>
