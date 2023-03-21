@@ -65,8 +65,14 @@ function createBracket(roundCount, rowCreation, teamNum, type, isSeeded) {
         }
     }
     else if (isSeeded === "randomized") {
+        for (let s = 0; s < teamNumSeed; s++) {
+            seedArr.push(s+1);
+        }
         let randArr = shuffle(seedArr);
         seedArr = randArr;
+    }
+    for (let s = 0; s < teamNumSeed; s++) {
+        console.log(seedArr[s])
     }
     var index = 0;
     for (let cb = 0; cb < roundCount; cb++) {
@@ -233,7 +239,7 @@ function cardPerRound (type,gameNum, cardCount) {
         }
     }
     else if (type === "robin") {
-        cardCount = teamNum;
+        cardCount = teamNum/2;
     }
 
     return cardCount;
@@ -241,15 +247,14 @@ function cardPerRound (type,gameNum, cardCount) {
 /////////////////////////////
 
 // Generate first col card and contents
-function generateFirstCard(seedArr, index) {
+function generateFirstCard(seedArr, highest, lowest) {
     // Set items
     let team1 = renderText();
     let team2 = renderText();
     let score1 = renderNum();
     let score2 = renderNum();
-    let seedLabel1 = renderSeed(seedArr[index]);
-    index++;
-    let seedLabel2 = renderSeed(seedArr[index]);
+    let seedLabel1 = renderSeed(seedArr[highest]);
+    let seedLabel2 = renderSeed(seedArr[lowest]);
     let pickWinnerButton = renderPickWinnerButton();
 
     let card = renderCard();
@@ -328,14 +333,13 @@ function generateSecondCard() {
 // Render first round inputs for team names and scores
 function renderFirstContent(deck, cardCount, seedArr) {
     let submitButton = renderSubmitButton();
-    let index = 0;
+    let highest = 0;
+    let lowest = seedArr.length-1;
     // Generate x cards
     for (let i = 0; i < cardCount; i++) {
-        if (i !== 0) {
-            index++;
-        }
-        let card = generateFirstCard(seedArr, index);
-        index++;
+        let card = generateFirstCard(seedArr, highest, lowest);
+        highest++;
+        lowest--;
         deck.append(card);
     }
     deck.appendChild(submitButton);
