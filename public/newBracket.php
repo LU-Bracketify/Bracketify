@@ -56,7 +56,7 @@ $_SESSION['id'] = uniqid();
             <form method="post" action="edit.php">
                 <div class="mb-3">
                     <label class="form-label" for="nameInput">Bracket Name:</label>
-                    <input type="text" class="form-control" name="nameInput" id="nameInput" required>
+                    <input type="text" class="form-control" name="name" id="nameInput" required>
                 </div>
 
                 <div class="mb-3">
@@ -64,9 +64,9 @@ $_SESSION['id'] = uniqid();
                     <select class="form-select" name="size" id="sizeInput" required>
                         <option value="2">2</option>
                         <option value="4">4</option>
-                        <option value="8">8</option>
+                        <option value="8" selected>8</option>
                         <option value="16">16</option>
-                        <option value="32" selected>32</option>
+                        <option value="32">32</option>
                         <option value="64">64</option>
                         <option value="128">128</option>
                     </select>
@@ -76,9 +76,7 @@ $_SESSION['id'] = uniqid();
                     <label class="form-label" for="typeInput">Bracket Type:</label>
                     <select class="form-select" name="bType" id="typeInput" required>
                         <option value="single" selected>Single Elimination</option>
-                        <option value="double">Double Elimination</option>
                         <option value="robin">Round Robin</option>
-                        <option value="group">Group Stage</option>
                     </select>
                 </div>
 

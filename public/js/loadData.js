@@ -54,16 +54,11 @@ function getRecords() {
                     for (let i = 0; i < recordCount; i++) {
                         let name = bracketQuery.result[i]["name"];
                         let date = bracketQuery.result[i]["date"];
-                        let type = bracketQuery.result[i]["type"];
-                        let seed = bracketQuery.result[i]["seed"];
-                        let size = bracketQuery.result[i]["size"];
                         let id = bracketQuery.result[i]["id"];
                         let author = bracketQuery.result[i]["author"];
                         let desc = bracketQuery.result[i]["desc"];
                         let modified = bracketQuery.result[i]["modified"];
-                        let teams = bracketQuery.result[i]["teams"];
-                        let scores = bracketQuery.result[i]["scores"];
-                        renderBracket(name, type, date, id, author, desc, seed, size, modified, teams, scores);
+                        renderBracket(name, date, id, author, desc, modified);
                     }
                 };
             }
@@ -94,7 +89,7 @@ function noRecordsFound() {
 }
 
 let ids = [];
-function renderBracket(name, type, date, id, author, desc, seed, size, modified, teams, scores) {
+function renderBracket(name, date, id, author, desc, modified) {
     let historyContainer = document.getElementsByClassName("contentCard")[0];
 
     ids.push(id);
@@ -135,24 +130,6 @@ function renderBracket(name, type, date, id, author, desc, seed, size, modified,
 
     for (let i = 0; i < editLink.length; i++)
     editLink[i].addEventListener("click", function() {
-        
-        let request = indexedDB.open("BracketDB");
-        request.onerror = function() {
-            console.error("err", this.error);
-        };
-        request.onupgradeneeded = function(e) {
-            e.target.transaction.abort();
-        }
-        request.onsuccess = function() {
-            const db = request.result;
-            const transaction = db.transaction("brackets", "readwrite");
-            const store = transaction.objectStore("brackets");
-            store.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true", teams: teams, scores: scores});
-            transaction.oncomplete = function() {
-                db.close();
-            };
-        }
-
         redirect(ids[i]);
     }, false);
 }

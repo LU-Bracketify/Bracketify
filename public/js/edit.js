@@ -9,8 +9,8 @@ async function generatePage(id) {
     let title = record.name;
     let type = record.type;
     let teamNumCount = record.size;
-    let teamNumEval = teamNum = teamNumSeed = teamNumCount;
-    let isSeeded = record.seeded;
+    let teamNum = teamNumSeed = teamNumCount;
+    let seedType = record.seed;
 
     let bracket = {
         seed: [],
@@ -18,15 +18,28 @@ async function generatePage(id) {
         score: [],
         roundNum: [],
     };
+
+    let saveDiv = document.createElement("div");
+    saveDiv.className = "container text-center pb-3";
+
+    let saveButton = document.createElement("button");
+    saveButton.className = "btn btn-primary";
+    saveButton.textContent = "Save Bracket";
+    saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
     
+    saveDiv.appendChild(saveButton);
+    document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveDiv);
+
     let rowCreation = document.createElement("div");
     rowCreation.className = `row row-cols-1`;
     rowCreation.id = "roundRow";
     document.getElementsByClassName('mainContainerForEdit')[0].appendChild(rowCreation);
+    let editTitle = document.getElementById("title");
+    editTitle.textContent = `Edit - ${title}`
     
     // Driver
     let roundCount = countingRounds(type, teamNumCount);
-    let columns = createBracket(roundCount, rowCreation, teamNum, type);
+    let columns = createBracket(roundCount, rowCreation, teamNum, type, seedType);
 
 
 
@@ -36,7 +49,6 @@ async function generatePage(id) {
 function countingRounds(type, teamNumCount) {
     let roundCount = 1;
     let is1 = false;
-    //console.log(teamNumCount)
     if (type === "single") {
         while (is1 === false) {
             teamNumCount /= 2;
@@ -47,32 +59,45 @@ function countingRounds(type, teamNumCount) {
         }
     }
     else if (type === "robin") {
-        //console.log(teamNumCount)
         roundCount = teamNumCount;
     }
 
     return roundCount;
 }
 
-function createBracket(roundCount, rowCreation, teamNum, type) {
+function createBracket(roundCount, rowCreation, teamNum, type, seedType) {
     let roundInc = 1;
     let cardCount = 0;
     let gameNum = teamNum/2;
+    let seedArr = [];
+    if (seedType === "normal") {
+        for (let s = 0; s < teamNumSeed; s++) {
+            seedArr.push(s+1);
+        }
+    }
+    else if (seedType === "randomized") {
+        for (let s = 0; s < teamNumSeed; s++) {
+            seedArr.push(s+1);
+        }
+        let randArr = shuffle(seedArr);
+        seedArr = randArr;
+    }
+    for (let s = 0; s < teamNumSeed; s++) {
+        console.log(seedArr[s])
+    }
+    var index = 0;
     for (let cb = 0; cb < roundCount; cb++) {
         if (cb === 0) {
             let deck = renderColumn(roundInc, rowCreation);
-            //console.log("cc0: ", cardCount);
             cardCount = cardPerRound(type, gameNum, cardCount);
-            renderFirstContent(deck, cardCount);
+            renderFirstContent(deck, cardCount, seedArr, index);
         }
         else if (cb === roundCount-1) {
-            //console.log("cc1: ", cardCount);
             let deck = renderLastColumn(rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderLastContent(deck, cardCount);
         }
         else {
-            //console.log("cc2: ", cardCount);
             let deck = renderColumn(roundInc, rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderMidContent(deck,cardCount);
@@ -88,7 +113,7 @@ function renderColumn(roundInc, rowCreation) {
     let colCreation = document.createElement("div");
     colCreation.className = `col mb-4 col-width bg-danger`;
     rowCreation.appendChild(colCreation);
-    let round = renderRound(roundInc, colCreation);
+    let round = renderRound(roundInc);
     colCreation.appendChild(round);
     let deck = document.createElement("div");
     deck.className = "card-deck";
@@ -97,7 +122,7 @@ function renderColumn(roundInc, rowCreation) {
     return deck;
 }
 
-function renderRound(roundInc, colCreation) {
+function renderRound(roundInc) {
     let round = document.createElement("h2");
     round.className = "p-3 border-top border-bottom";
     round.textContent = `Round ${roundInc}`;
@@ -109,7 +134,8 @@ function renderLastColumn(rowCreation) {
     let colCreation = document.createElement("div");
     colCreation.className = `col mb-4 col-width bg-danger`;
     rowCreation.appendChild(colCreation);
-    renderLastRound(colCreation);
+    let round = renderLastRound();
+    colCreation.appendChild(round);
     let deck = document.createElement("div");
     deck.className = "card-deck";
     colCreation.appendChild(deck);
@@ -117,11 +143,12 @@ function renderLastColumn(rowCreation) {
     return deck;
 }
 
-function renderLastRound(colCreation) {
+function renderLastRound() {
     let round = document.createElement("h2");
     round.className = "p-3 border-top border-bottom";
     round.textContent = `Winner`;
-    colCreation.appendChild(round);
+
+    return round
 }
 
 // Render team parent div
@@ -182,9 +209,9 @@ function renderNum() {
 }
 
 // Render team seed
-function renderSeed() {
+function renderSeed(seedValue) {
     let seed = document.createElement('p');
-    seed.textContent = "1"; // TODO
+    seed.textContent = seedValue;
     seed.className = "text-danger justify-content-center align-items-center pt-2 pb-2 mt-2 mb-2 ms-1 me-1";
     return seed;
 }
@@ -317,7 +344,7 @@ function gameWinner(t1, t2) {
 }
 
 ///////////////////////////
-function cardPerRound (type,gameNum, cardCount) {
+function cardPerRound (type, gameNum, cardCount) {
     cardCount = 0;
     if (type === "single") {
         for (let cc = 0; cc < gameNum; cc++) {
@@ -325,23 +352,21 @@ function cardPerRound (type,gameNum, cardCount) {
         }
     }
     else if (type === "robin") {
-        cardCount = teamNum;
+        cardCount = gameNum;
     }
 
-    //console.log("cards per round:: ", cardCount);
     return cardCount;
 }
-/////////////////////////////
 
 // Generate first col card and contents
-function generateFirstCard() {
+function generateFirstCard(seedArr, highest, lowest) {
     // Set items
     let team1 = renderText();
     let team2 = renderText();
-    let score1 = renderNumFirst();
-    let score2 = renderNumFirst();
-    let seedLabel1 = renderSeed();
-    let seedLabel2 = renderSeed();
+    let score1 = renderNum();
+    let score2 = renderNum();
+    let seedLabel1 = renderSeed(seedArr[highest]);
+    let seedLabel2 = renderSeed(seedArr[lowest]);
     let pickWinnerButton = renderPickWinnerButton();
 
     let card = renderCard();
@@ -386,8 +411,8 @@ function generateSecondCard() {
 
     let score1 = renderNum();
     let score2 = renderNum();
-    let seedLabel1 = renderSeed();
-    let seedLabel2 = renderSeed();
+    // let seedLabel1 = renderSeed();
+    // let seedLabel2 = renderSeed();
     let pickWinnerButton = renderPickWinnerButton();
 
     let card = renderCard();
@@ -398,8 +423,8 @@ function generateSecondCard() {
 
     
     // Append seeds
-    teamDiv1.appendChild(seedLabel1);
-    teamDiv2.appendChild(seedLabel2);
+    // teamDiv1.appendChild(seedLabel1);
+    // teamDiv2.appendChild(seedLabel2);
 
     // Append team names to team div
     teamDiv1.appendChild(team1);
@@ -413,21 +438,22 @@ function generateSecondCard() {
     card.appendChild(teamDiv1);
     card.appendChild(teamDiv2);
     card.appendChild(pickWinnerButton)
-    //deck.appendChild(card);
 
     return card;
 }
 
 // Render first round inputs for team names and scores
-function renderFirstContent(deck,cardCount) {
+function renderFirstContent(deck, cardCount, seedArr) {
     let submitButton = renderSubmitButton();
-
+    let highest = 0;
+    let lowest = seedArr.length-1;
     // Generate x cards
     for (let i = 0; i < cardCount; i++) {
-        let card = generateFirstCard();
+        let card = generateFirstCard(seedArr, highest, lowest);
+        highest++;
+        lowest--;
         deck.append(card);
     }
-
     deck.appendChild(submitButton);
 }
 
@@ -435,7 +461,6 @@ function renderFirstContent(deck,cardCount) {
 //** account for multiple columns */
 function renderMidContent(deck, cardCount) {
     let submitButton = renderSubmitButton();
-    //console.log(cardCount);
     // Generate x cards
     for (let i = 0; i < cardCount; i++) {
         let card = generateSecondCard();
@@ -479,7 +504,20 @@ function renderLastContent(deck) {
     deck.appendChild(card);
 }
 
-function addSeeds() {
-    
-}
-
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }

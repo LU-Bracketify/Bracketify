@@ -67,14 +67,6 @@ session_start();
         <div class="container text-center pb-3">
             <h2 class="p-3 border-top border-bottom" id="title">Edit</h2>
         </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="scrollbar">
-                    <div class="handle"></div>
-                </div>
-            </div>
-        </div>
     </div>
 
 <script>
@@ -93,36 +85,29 @@ session_start();
     // retrieve stored record using id
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_SESSION['id'];
-    $name = $_POST["nameInput"];
+    $id = $_SESSION["id"];
+    $name = $_POST["name"];
     $size = $_POST["size"];
     $bType = $_POST["bType"];
     $seedType = $_POST["seedType"];
-    $scored = isset($_POST["scored"]);
     $author = $_POST["author"];
     $desc = $_POST["desc"];
 
-
-    if ($scored == "") {
-        $scored = false;
-    }
-
     $formData = json_encode(
-        array("id"      => $id,
-              "name"    => $name, 
-              "size"    => $size,
-              "bType" => $bType,
-              "seedType"  => $seedType,
-              "scored"  => $scored,
-              "author"  => $author,
-              "desc"    => $desc
+        array("id"       => $id,
+              "name"     => $name,
+              "size"     => $size,
+              "bType"    => $bType,
+              "seedType" => $seedType,
+              "author"   => $author,
+              "desc"     => $desc,
     ));
 
     echo "<script>
         function upload(bracketData) {
             //let id = generateId();
             
-            dbConnect(bracketData.id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
+            dbConnect(bracketData.id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.author, bracketData.desc);
             //retrieveRecord(bracketData.id);
             generatePage(bracketData.id);
         }
