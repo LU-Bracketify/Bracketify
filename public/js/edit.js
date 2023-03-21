@@ -36,7 +36,7 @@ async function generatePage(id) {
 function countingRounds(type, teamNumCount) {
     let roundCount = 1;
     let is1 = false;
-    console.log(teamNumCount)
+    //console.log(teamNumCount)
     if (type === "single") {
         while (is1 === false) {
             teamNumCount /= 2;
@@ -47,7 +47,7 @@ function countingRounds(type, teamNumCount) {
         }
     }
     else if (type === "robin") {
-        console.log(teamNumCount)
+        //console.log(teamNumCount)
         roundCount = teamNumCount;
     }
 
@@ -61,18 +61,18 @@ function createBracket(roundCount, rowCreation, teamNum, type) {
     for (let cb = 0; cb < roundCount; cb++) {
         if (cb === 0) {
             let deck = renderColumn(roundInc, rowCreation);
-            console.log("cc0: ", cardCount);
+            //console.log("cc0: ", cardCount);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderFirstContent(deck, cardCount);
         }
         else if (cb === roundCount-1) {
-            console.log("cc1: ", cardCount);
+            //console.log("cc1: ", cardCount);
             let deck = renderLastColumn(rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderLastContent(deck, cardCount);
         }
         else {
-            console.log("cc2: ", cardCount);
+            //console.log("cc2: ", cardCount);
             let deck = renderColumn(roundInc, rowCreation);
             cardCount = cardPerRound(type, gameNum, cardCount);
             renderMidContent(deck,cardCount);
@@ -150,12 +150,25 @@ function renderText() {
     nameInput.required = true;
     nameInput.type = "text";
     nameInput.placeholder = "Team Name";
-    nameInput.className = "form-control p-2 m-2";
+    nameInput.className = "form-control p-2 m-2 nameInput";
 
     return nameInput;
 }
 
-// Render score input
+// Render score input for first col
+function renderNumFirst() {
+    let scoreInput = document.createElement('input');
+
+    scoreInput.required = true;
+    scoreInput.type = "number";
+    scoreInput.min = 0;
+    scoreInput.placeholder = "Score";
+    scoreInput.className = "form-control p-2 m-2 scoreInput";
+
+    return scoreInput;
+}
+
+// Render score input for 2nd - last col
 function renderNum() {
     let scoreInput = document.createElement('input');
 
@@ -163,7 +176,7 @@ function renderNum() {
     scoreInput.type = "number";
     scoreInput.min = 0;
     scoreInput.placeholder = "Score";
-    scoreInput.className = "form-control p-2 m-2";
+    scoreInput.className = "form-control p-2 m-2 score";
 
     return scoreInput;
 }
@@ -199,19 +212,108 @@ function pickWinner(buttonId) {
     }
 }
 
-function renderSubmitButton(type = 0, roundNum = 0, teams = 0, scores = 0) {
+function renderSubmitButton() {
     let submitButton = document.createElement('button');
 
     submitButton.className = "btn btn-primary p-2 m-2";
-    submitButton.setAttribute("onclick", `rerenderNextRound("${type}", "${roundNum}", "${teams}", "${scores}")`); // TODO
+    //submitButton.setAttribute("onclick", rerenderNextRound(bracket)); // TODO
     submitButton.textContent = "Submit Column";
+
+    submitButton.onclick = () => {
+        rerenderNextRound();
+    }
 
     return submitButton;
 }
 
-function rerenderNextRound(type, roundNum, teams, scores) {
-    return;
+function rerenderNextRound() {
+    let names = document.getElementsByClassName("nameInput");
+    let scores = document.getElementsByClassName("scoreInput");
 
+    let bracket = {
+        seed: [],
+        name: [],
+        score: [],
+        roundNum: [],
+    };
+
+    // Only iterate over names/scores for first col
+
+    // Iterate over names
+    for (let i = 0; i < names.length; i++) {
+        let name = names[i].value;
+        bracket.name.push(name);
+    }
+
+    // Iterate over scores
+    for (let i = 0; i < scores.length; i++) {
+        //console.log("score::", scores[i].value);
+        let score = scores[i].value;
+        bracket.score.push(score);
+    }
+
+    // Store values in array
+    //console.log(bracket.name);
+    //console.log(bracket.score);
+
+    // Determine winner
+    let winners = matchWinners(bracket);
+    //console.log(winners);
+
+    // Update team names in next round
+    let teamName = document.getElementsByClassName("name");
+    
+    for (let i = 0; i < teamName.length; i++) {
+        teamName[i].textContent = winners[i];
+    }
+
+
+
+}
+
+// Returns winners of previous match (for col)
+function matchWinners(bracket) {
+    // seperate card array data from col array
+    let names = [];
+
+    for (let i = 0; i < bracket.score.length; i++) {      
+        if (i % 2 === 0) {
+            // Check current value and  next
+            let t1 = Number(bracket.score[i]);
+            let t2 = Number(bracket.score[i + 1]);
+            let winNum = gameWinner(t1, t2).toString();
+
+            // Set to blank str
+            if (winNum == -1) {
+                winningName = "";
+                names.push(winningName);
+            } else {
+                // wrong index
+                let indexPos = bracket.score.indexOf(winNum);
+                let winningName = bracket.name[indexPos];
+                names.push(winningName); 
+            }
+
+        }
+    }
+
+   return names;
+
+}
+
+// Returns winning scores of single game
+function gameWinner(t1, t2) {
+    //console.log("TEST", t1, t2);
+    if (t1 > t2) {
+        //console.log("greater num is:: ", t1);
+        return t1;
+    } else if (t2 > t1) {
+        //console.log("greater num is::", t2);
+        return t2;
+    } else if (t1 === t2) {
+        console.log("EZ");
+        return -1;
+    }
 }
 
 ///////////////////////////
@@ -226,7 +328,7 @@ function cardPerRound (type,gameNum, cardCount) {
         cardCount = teamNum;
     }
 
-    console.log("cards per round:: ", cardCount);
+    //console.log("cards per round:: ", cardCount);
     return cardCount;
 }
 /////////////////////////////
@@ -236,8 +338,8 @@ function generateFirstCard() {
     // Set items
     let team1 = renderText();
     let team2 = renderText();
-    let score1 = renderNum();
-    let score2 = renderNum();
+    let score1 = renderNumFirst();
+    let score2 = renderNumFirst();
     let seedLabel1 = renderSeed();
     let seedLabel2 = renderSeed();
     let pickWinnerButton = renderPickWinnerButton();
@@ -276,8 +378,8 @@ function generateSecondCard() {
     let team1 = document.createElement('h6');
     let team2 = document.createElement('h6');
     
-    team1.className = "text-nowrap p-2 m-2";
-    team2.className = "text-nowrap p-2 m-2";
+    team1.className = "text-nowrap p-2 m-2 name";
+    team2.className = "text-nowrap p-2 m-2 name";
 
     team1.textContent = "TEAM 1";
     team2.textContent = "TEAM 2";
@@ -333,7 +435,7 @@ function renderFirstContent(deck,cardCount) {
 //** account for multiple columns */
 function renderMidContent(deck, cardCount) {
     let submitButton = renderSubmitButton();
-    console.log(cardCount);
+    //console.log(cardCount);
     // Generate x cards
     for (let i = 0; i < cardCount; i++) {
         let card = generateSecondCard();

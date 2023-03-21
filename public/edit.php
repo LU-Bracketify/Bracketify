@@ -121,14 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<script>
         function upload(bracketData) {
             //let id = generateId();
-
-            console.log(bracketData.name);
-            console.log(bracketData.size);
-            console.log(bracketData.bType);
-            console.log(bracketData.seedType);
-            console.log(bracketData.scored);
-            console.log(bracketData.author);
-            console.log(bracketData.desc);
             
             dbConnect(bracketData.id, bracketData.name, bracketData.size, bracketData.bType, bracketData.seedType, bracketData.scored, bracketData.author, bracketData.desc);
             //retrieveRecord(bracketData.id);

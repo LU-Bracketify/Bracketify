@@ -11,9 +11,9 @@ function getCurrentDate() {
 }
 
 function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
-    console.log("clicked");
-    console.log(name);
-    console.log(size);
+    //console.log("clicked");
+    //console.log(name);
+    //console.log(size);
     const indexedDB =
         window.indexedDB ||
         window.mozIndexedDB ||
