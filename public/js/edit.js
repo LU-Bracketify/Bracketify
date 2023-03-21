@@ -15,12 +15,12 @@ async function generatePage(id) {
     let teamNum = teamNumSeed = teamNumCount;
     let seedType = record.seed;
 
-    let bracket = {
-        seed: [],
-        name: [],
-        score: [],
-        roundNum: [],
-    };
+    // let bracket = {
+    //     seed: [],
+    //     name: [],
+    //     score: [],
+    //     roundNum: [],
+    // };
 
     let saveDiv = document.createElement("div");
     saveDiv.className = "container text-center pb-3";
@@ -69,7 +69,7 @@ function countingRounds(type, teamNumCount) {
     return roundCount;
 }
 
-function createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket) {
+function createBracket(roundCount, rowCreation, teamNum, type, seedType) {
     let roundInc = 1;
     let cardCount = 0;
     let gameNum = teamNum/2;
@@ -77,20 +77,14 @@ function createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket
     if (seedType === "normal") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
-            bracket.seed.push(s+1);
         }
     }
     else if (seedType === "randomized") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
-            bracket.seed.push(s+1)
         }
         let randArr = shuffle(seedArr);
         seedArr = randArr;
-        bracket.seed = randArr;
-    }
-    for (let s = 0; s < teamNumSeed; s++) {
-        console.log(bracket.seed[s])
     }
     var index = 0;
     for (let cb = 0; cb < roundCount; cb++) {
@@ -118,7 +112,7 @@ function createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket
 
 function renderColumn(roundInc, rowCreation) {
     let colCreation = document.createElement("div");
-    colCreation.className = `col mb-4 col-width bg-danger`;
+    colCreation.className = `col mb-4 col-width`;
     rowCreation.appendChild(colCreation);
     let round = renderRound(roundInc);
     colCreation.appendChild(round);
@@ -140,7 +134,7 @@ function renderRound(roundInc) {
 
 function renderLastColumn(rowCreation) {
     let colCreation = document.createElement("div");
-    colCreation.className = `col mb-4 col-width bg-danger`;
+    colCreation.className = `col mb-4 col-width`;
     rowCreation.appendChild(colCreation);
     let round = renderLastRound();
     colCreation.appendChild(round);
