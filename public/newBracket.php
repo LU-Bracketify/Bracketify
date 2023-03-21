@@ -76,9 +76,7 @@ $_SESSION['id'] = uniqid();
                     <label class="form-label" for="typeInput">Bracket Type:</label>
                     <select class="form-select" name="bType" id="typeInput" required>
                         <option value="single" selected>Single Elimination</option>
-                        <option value="double">Double Elimination</option>
                         <option value="robin">Round Robin</option>
-                        <option value="group">Group Stage</option>
                     </select>
                 </div>
 
