@@ -9,7 +9,7 @@ async function generatePage(id) {
     let title = record.name;
     let type = record.type;
     let teamNumCount = record.size;
-    let teamNumEval = teamNum = teamNumSeed = teamNumCount;
+    let teamNum = teamNumSeed = teamNumCount;
     let isSeeded = record.seed;
 
     let bracket = {
