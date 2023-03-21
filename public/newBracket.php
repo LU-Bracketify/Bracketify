@@ -64,9 +64,9 @@ $_SESSION['id'] = uniqid();
                     <select class="form-select" name="size" id="sizeInput" required>
                         <option value="2">2</option>
                         <option value="4">4</option>
-                        <option value="8">8</option>
+                        <option value="8" selected>8</option>
                         <option value="16">16</option>
-                        <option value="32" selected>32</option>
+                        <option value="32">32</option>
                         <option value="64">64</option>
                         <option value="128">128</option>
                     </select>
