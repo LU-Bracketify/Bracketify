@@ -114,7 +114,7 @@ function createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket
 
 function renderColumn(roundInc, rowCreation) {
     let colCreation = document.createElement("div");
-    colCreation.className = `col mb-4 col-width bg-danger`;
+    colCreation.className = `col mb-4 col-width`;
     rowCreation.appendChild(colCreation);
     let round = renderRound(roundInc);
     colCreation.appendChild(round);
@@ -135,7 +135,7 @@ function renderRound(roundInc) {
 
 function renderLastColumn(rowCreation) {
     let colCreation = document.createElement("div");
-    colCreation.className = `col mb-4 col-width bg-danger`;
+    colCreation.className = `col mb-4 col-width`;
     rowCreation.appendChild(colCreation);
     let round = renderLastRound();
     colCreation.appendChild(round);
