@@ -34,7 +34,7 @@ async function generatePage(id) {
     
     // Driver
     let roundCount = countingRounds(type, teamNumCount);
-    let columns = createBracket(roundCount, rowCreation, teamNum, type, seedType);
+    let columns = createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket);
 
 
 
@@ -60,7 +60,7 @@ function countingRounds(type, teamNumCount) {
     return roundCount;
 }
 
-function createBracket(roundCount, rowCreation, teamNum, type, seedType) {
+function createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket) {
     let roundInc = 1;
     let cardCount = 0;
     let gameNum = teamNum/2;
@@ -68,17 +68,20 @@ function createBracket(roundCount, rowCreation, teamNum, type, seedType) {
     if (seedType === "normal") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
+            bracket.seed.push(s+1);
         }
     }
     else if (seedType === "randomized") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
+            bracket.seed.push(s+1)
         }
         let randArr = shuffle(seedArr);
         seedArr = randArr;
+        bracket.seed = randArr;
     }
     for (let s = 0; s < teamNumSeed; s++) {
-        console.log(seedArr[s])
+        console.log(bracket.seed[s])
     }
     var index = 0;
     for (let cb = 0; cb < roundCount; cb++) {
