@@ -10,7 +10,7 @@ async function generatePage(id) {
     let type = record.type;
     let teamNumCount = record.size;
     let teamNum = teamNumSeed = teamNumCount;
-    let seedType = record.seedType;
+    let seedType = record.seed;
 
     let bracket = {
         seed: [],
@@ -34,7 +34,7 @@ async function generatePage(id) {
     
     // Driver
     let roundCount = countingRounds(type, teamNumCount);
-    let columns = createBracket(roundCount, rowCreation, teamNum, type, isSeeded);
+    let columns = createBracket(roundCount, rowCreation, teamNum, type, seedType);
 
 
 
@@ -60,17 +60,17 @@ function countingRounds(type, teamNumCount) {
     return roundCount;
 }
 
-function createBracket(roundCount, rowCreation, teamNum, type, isSeeded) {
+function createBracket(roundCount, rowCreation, teamNum, type, seedType) {
     let roundInc = 1;
     let cardCount = 0;
     let gameNum = teamNum/2;
     let seedArr = [];
-    if (isSeeded === "normal") {
+    if (seedType === "normal") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
         }
     }
-    else if (isSeeded === "randomized") {
+    else if (seedType === "randomized") {
         for (let s = 0; s < teamNumSeed; s++) {
             seedArr.push(s+1);
         }
@@ -237,7 +237,7 @@ function rerenderNextRound(type, roundNum, teams, scores) {
 }
 
 ///////////////////////////
-function cardPerRound (type,gameNum, cardCount) {
+function cardPerRound (type, gameNum, cardCount) {
     cardCount = 0;
     if (type === "single") {
         for (let cc = 0; cc < gameNum; cc++) {
@@ -245,7 +245,7 @@ function cardPerRound (type,gameNum, cardCount) {
         }
     }
     else if (type === "robin") {
-        cardCount = teamNum/2;
+        cardCount = gameNum;
     }
 
     return cardCount;
