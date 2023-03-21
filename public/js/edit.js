@@ -19,11 +19,16 @@ async function generatePage(id) {
         roundNum: [],
     };
 
+    let saveDiv = document.createElement("div");
+    saveDiv.className = "container text-center pb-3";
+
     let saveButton = document.createElement("button");
-    saveButton.className = "btn btn-primary mt-2";
+    saveButton.className = "btn btn-primary";
     saveButton.textContent = "Save Bracket";
     saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
-    document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveButton);
+    
+    saveDiv.appendChild(saveButton);
+    document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveDiv);
 
     let rowCreation = document.createElement("div");
     rowCreation.className = `row row-cols-1`;
