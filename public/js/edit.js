@@ -15,12 +15,12 @@ async function generatePage(id) {
     let teamNum = teamNumSeed = teamNumCount;
     let seedType = record.seed;
 
-    // let bracket = {
-    //     seed: [],
-    //     name: [],
-    //     score: [],
-    //     roundNum: [],
-    // };
+     let bracket = {
+         seed: [],
+         name: [],
+         score: [],
+         roundNum: [],
+    };
 
     let saveDiv = document.createElement("div");
     saveDiv.className = "container text-center pb-3";
