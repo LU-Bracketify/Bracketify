@@ -1,16 +1,12 @@
 // Auto load input and text content
 async function renderContent(id) {
-    console.log("rendering data");
     // Get DB record
     let record = await retrieveRecord(id);
-
-    console.log("record", record);
 
     let nameHeadersR = record.bracket.nameHeaders;
     let nameInputsR = record.bracket.nameInputs;
     let scoresR = record.bracket.scores;
     let winnerR = record.bracket.winnerName;
-    //console.log(scores);
 
     let nameInputs = document.getElementsByClassName("nameInput");
     let nameHeaders = document.getElementsByClassName("name");

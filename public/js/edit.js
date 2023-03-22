@@ -219,7 +219,7 @@ function renderNum() {
 function renderSeed(seedValue) {
     let seed = document.createElement('p');
     seed.textContent = seedValue;
-    seed.className = "text-danger justify-content-center align-items-center pt-2 pb-2 mt-2 mb-2 ms-1 me-1";
+    seed.className = "text-danger justify-content-center align-items-center pt-2 pb-2 mt-2 mb-2 ms-1 me-1 seed";
     return seed;
 }
 
@@ -622,7 +622,6 @@ function updateDataStore(record) {
     let nameHeaders = document.getElementsByClassName("name");
     let scores = document.getElementsByClassName("scoreInput");
 
-    // add seeds if present
     // add winner
     let bracketR = {
         nameInputs: [],
@@ -639,22 +638,14 @@ function updateDataStore(record) {
         bracketR.nameHeaders.push(nameHeaders[i].textContent);
     }
 
-    console.log(bracketR.names);
-
     for (let i = 0; i < scores.length; i++) {
         bracketR.scores.push(scores[i].value);
     }
 
-    console.log(bracketR.scores);
-    console.log(record);
-
-    // add winner
+    // Add winner
     bracketR.winnerName = winner;
 
     // Update db record -- insert bracket obj
     dbUpdate(record, bracketR);
-
-    
-
 
 }
