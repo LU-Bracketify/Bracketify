@@ -237,6 +237,12 @@ function pickWinner(card) {
     let teams = card.getElementsByClassName("nameInput");
     let scores = card.getElementsByClassName("scoreInput");
     let button = card.getElementsByClassName("btn");
+    let firstRound = true;
+
+    if (teams.length == 0) {
+        teams = card.getElementsByClassName("name");
+        firstRound = false;
+    }
 
     if (scores[0].hidden == false) {
         scores[0].hidden = true;
@@ -245,10 +251,21 @@ function pickWinner(card) {
 
         let pick = Math.floor(Math.random() * 2);
         if (pick == 0) {
-            return teams[0].value;
+            if (firstRound == true)
+            {
+                return teams[0].value;
+            }
+            else {
+                return teams[0].textContent;
+            }
         }
         else {
-            return teams[1].value;
+            if (firstRound == true) {
+                return teams[1].value;
+            }
+            else {
+                return teams[1].textContent;
+            }
         }
     }
     else {
@@ -531,7 +548,7 @@ function generateSecondCard() {
     // Append team info to parent div
     card.appendChild(teamDiv1);
     card.appendChild(teamDiv2);
-    card.appendChild(pickWinnerButton)
+    card.appendChild(pickWinnerButton);
 
     return card;
 }
@@ -569,7 +586,7 @@ function renderLastContent(deck) {
     let winningTeam = document.createElement('h3');
 
     // Set items
-    winningTeam.textContent = "TEAM 1"; // TODO
+    //winningTeam.textContent = "TEAM 1"; // TODO
     winningTeam.className = "p-2 m-2";
 
     let seedLabel = renderSeed();
