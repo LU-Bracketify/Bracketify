@@ -183,7 +183,7 @@ function renderText() {
 
     nameInput.required = true;
     nameInput.type = "text";
-    nameInput.placeholder = "Team Name";
+    nameInput.placeholder = "";
     nameInput.className = "form-control p-2 m-2 nameInput";
 
     return nameInput;
@@ -500,8 +500,8 @@ function generateSecondCard() {
     team1.className = "text-nowrap p-2 m-2 name";
     team2.className = "text-nowrap p-2 m-2 name";
 
-    team1.textContent = "TEAM 1";
-    team2.textContent = "TEAM 2";
+    //team1.textContent = "TEAM 1";
+    //team2.textContent = "TEAM 2";
 
     let score1 = renderNum();
     let score2 = renderNum();
