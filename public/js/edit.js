@@ -183,7 +183,7 @@ function renderText() {
 
     nameInput.required = true;
     nameInput.type = "text";
-    nameInput.placeholder = "";
+    nameInput.placeholder = "Team Name";
     nameInput.className = "form-control p-2 m-2 nameInput";
 
     return nameInput;
