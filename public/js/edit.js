@@ -227,23 +227,36 @@ function renderSeed(seedValue) {
 function renderPickWinnerButton() {
     let pickWinnerButton = document.createElement('button');
     pickWinnerButton.className = "btn btn-primary";
-    pickWinnerButton.setAttribute("onclick", `let newValue = pickWinner(); this.setAttribute("value", newValue)`);
+    pickWinnerButton.setAttribute("onclick", `let newValue = pickWinner(this.parentElement); this.setAttribute("value", newValue)`);
     pickWinnerButton.textContent = "Pick a Winner";
 
     return pickWinnerButton;
 }
 
-function pickWinner(buttonId) {
-    let team1 = "TEAM 1";
-    let team2 = "TEAM 2";
+function pickWinner(card) {
+    let teams = card.getElementsByClassName("nameInput");
+    let scores = card.getElementsByClassName("scoreInput");
+    let button = card.getElementsByClassName("btn");
 
-    let pick = Math.floor(Math.random() * 2);
-    if (pick == 0) {
-        return team1;
+    if (scores[0].hidden == false) {
+        scores[0].hidden = true;
+        scores[1].hidden = true;
+        button[0].className = "btn btn-primary active";
+
+        let pick = Math.floor(Math.random() * 2);
+        if (pick == 0) {
+            return teams[0].value;
+        }
+        else {
+            return teams[1].value;
+        }
     }
     else {
-        return team2;
+        scores[0].hidden = false;
+        scores[1].hidden = false;
+        button[0].className = "btn btn-primary";
     }
+    return "";
 }
 
 function renderSubmitButton() {
@@ -300,7 +313,7 @@ function renderSubmitButton() {
                 bracket.score.push(score);
             }
 
-            rerenderNextRound(bracket, colNum);
+            rerenderNextRound(bracket, colNum, col);
 
         // Otherwise get name headers/ two team names/scores per card && Number(colNum) !== lastRoundNum
         } else if (present === false) {
@@ -322,7 +335,7 @@ function renderSubmitButton() {
 
             // if not last
             if (Number(colNum) !== lastRoundNum) {
-                rerenderNextRound(bracket, colNum);
+                rerenderNextRound(bracket, colNum, col);
             }
 
             // Else if last round just update header
@@ -332,6 +345,7 @@ function renderSubmitButton() {
 
             // Determine winner of match
             winner = matchWinners(bracket);
+            let winner = matchWinners(bracket, col);
 
             // Set label to winner
             winLabel[0].textContent = winner;
@@ -351,13 +365,13 @@ function classPresent(elem) {
     }
 }
 
-function rerenderNextRound(bracket, colNum) {
+function rerenderNextRound(bracket, colNum, col) {
     // Store values in array
     console.log(bracket.name);
     console.log(bracket.score);
 
     // Determine winner
-    let winners = matchWinners(bracket);
+    let winners = matchWinners(bracket, col);
     //console.log(winners);
 
     // Update team names in next round !!!
@@ -375,24 +389,30 @@ function rerenderNextRound(bracket, colNum) {
 }
 
 // Returns winners of previous match (for col)
-function matchWinners(bracket) {
+function matchWinners(bracket, col) {
     let names = [];
 
     for (let i = 0; i < bracket.score.length; i++) {      
         if (i % 2 === 0) {
-            // Check current value and  next
-            let t1Name = bracket.name[i];
-            let t1Score = Number(bracket.score[i]);
+            let winName;
 
-            let t2Name = bracket.name[i + 1];
-            let t2Score = Number(bracket.score[i + 1]);
+            if (col.getElementsByClassName("scoreInput")[i].hidden == true) {
+                winName = col.getElementsByClassName("btn")[i/2].value;
+            }
+            else {
+                // Check current value and  next
+                let t1Name = bracket.name[i];
+                let t1Score = Number(bracket.score[i]);
 
-            let winName = gameWinner(t1Name, t1Score, t2Name, t2Score);
+                let t2Name = bracket.name[i + 1];
+                let t2Score = Number(bracket.score[i + 1]);
+
+                winName = gameWinner(t1Name, t1Score, t2Name, t2Score);
+            }
 
             // Set to blank str
             if (winName == -1) {
-                winningName = "";
-                names.push(winningName);
+                names.push("");
             } else {
                 names.push(winName); 
             }
