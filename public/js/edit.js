@@ -344,8 +344,8 @@ function renderSubmitButton() {
             let winLabel = nextDeck.getElementsByTagName("h3");
 
             // Determine winner of match
-            winner = matchWinners(bracket);
-            let winner = matchWinners(bracket, col);
+            winner = matchWinners(bracket, col);
+            //let winner = matchWinners(bracket, col);
 
             // Set label to winner
             winLabel[0].textContent = winner;
