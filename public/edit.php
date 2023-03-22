@@ -76,15 +76,6 @@ session_start();
 
 <?php 
 
-// IF SERVER REQUEST === POST
-    // conn to db using generated id
-    // store record in database
-    // retrieve stored record using id
-
-// IF SERVER REQUEST === GET
-    // get id from search params
-    // retrieve stored record using id
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_SESSION["id"];
     $name = $_POST["name"];

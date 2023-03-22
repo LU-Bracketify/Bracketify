@@ -1,8 +1,5 @@
-//window.onload = generatePage();
-//////
 var lastRoundNum = 0;
 var winner = "";
-/////
 
 async function generatePage(id) {
 
@@ -29,12 +26,10 @@ async function generatePage(id) {
     let saveButton = document.createElement("button");
     saveButton.className = "btn btn-primary";
     saveButton.textContent = "Save Bracket";
-    //saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
     saveButton.onclick = () => {
         updateDataStore(record);
     }
     
-
     saveDiv.appendChild(saveButton);
     document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveDiv);
 
@@ -49,10 +44,6 @@ async function generatePage(id) {
     let roundCount = countingRounds(type, teamNumCount);
     lastRoundNum = roundCount - 1;
     let columns = createBracket(roundCount, rowCreation, teamNum, type, seedType, bracket);
-
-
-
-
 }
 
 function countingRounds(type, teamNumCount) {
@@ -282,28 +273,16 @@ function renderSubmitButton() {
     submitButton.className = "btn btn-primary p-2 m-2";
     submitButton.textContent = "Submit Column";
 
-    // add round/col number to deck class
-    // to get next round #:: increment current class # by 1
-    // last round num
     submitButton.onclick = () => {
         // Get all data from column
         let col = submitButton.parentElement;
-        //console.log("cool", col);
-        // Get current column
         let colClassName = col.className;
-        //console.log("name::", colClassName);
         let colList = colClassName.split(" ");
         let colNum = colList[1];
-        //console.log(colNum);
-
-        // convert to next round
-        //console.log(colList[1]);
 
         // Get nameInput if present else get team Name headers
         let names = col.getElementsByClassName("nameInput");
         let scores = col.getElementsByClassName("scoreInput");
-
-        //console.log(names);
 
         let nameInputClass = col.getElementsByClassName("nameInput");
         let present = classPresent(nameInputClass);
@@ -315,7 +294,6 @@ function renderSubmitButton() {
             roundNum: [],
         };
     
-
         // If present get name inputs
         if (present === true) {
             // Iterate over names
@@ -332,15 +310,12 @@ function renderSubmitButton() {
 
             rerenderNextRound(bracket, colNum, col);
 
-        // Otherwise get name headers/ two team names/scores per card && Number(colNum) !== lastRoundNum
         } else if (present === false) {
-            console.log("not first round");
             let names = col.getElementsByClassName("name");
 
             // Iterate over names
             for (let i = 0; i < names.length; i++) {
                 let name = names[i].textContent;
-                //console.log("name::",name);
                 bracket.name.push(name);
             }
 
@@ -355,7 +330,7 @@ function renderSubmitButton() {
                 rerenderNextRound(bracket, colNum, col);
             }
 
-            // Else if last round just update header
+            // Else if last round update header
         } if (Number(colNum) === lastRoundNum) {
             let nextDeck = document.getElementsByClassName(Number(colNum) + 1)[0];
             let winLabel = nextDeck.getElementsByTagName("h3");
@@ -383,19 +358,11 @@ function classPresent(elem) {
 }
 
 function rerenderNextRound(bracket, colNum, col) {
-    // Store values in array
-    console.log(bracket.name);
-    console.log(bracket.score);
-
     // Determine winner
     let winners = matchWinners(bracket, col);
-    //console.log(winners);
 
-    // Update team names in next round !!!
+    // Update team names in next round
     let nextDeck = document.getElementsByClassName(Number(colNum) + 1)[0];
-    console.log(nextDeck);
-    // then get name headers inside next deck
-    
     let teamName = nextDeck.getElementsByClassName("name");
     
     for (let i = 0; i < teamName.length; i++) {
@@ -452,7 +419,6 @@ function gameWinner(t1Name, t1Score, t2Name, t2Score) {
     }
 }
 
-///////////////////////////
 function cardPerRound (type, gameNum, cardCount) {
     cardCount = 0;
     if (type === "single") {
@@ -484,8 +450,6 @@ function generateFirstCard(seedArr, highest, lowest) {
     let teamDiv1 = renderTeamDiv();
     let teamDiv2 = renderTeamDiv();
 
-
-    
     // Append seeds
     teamDiv1.appendChild(seedLabel1);
     teamDiv2.appendChild(seedLabel2);
@@ -502,7 +466,6 @@ function generateFirstCard(seedArr, highest, lowest) {
     card.appendChild(teamDiv1);
     card.appendChild(teamDiv2);
     card.appendChild(pickWinnerButton)
-    //deck.appendChild(card);
 
     return card;
 }
@@ -513,17 +476,11 @@ function generateSecondCard() {
     let team1 = document.createElement('h6');
     let team2 = document.createElement('h6');
     
-    // CHANGE CLASS NAME FOR HEADER === name
     team1.className = "text-nowrap p-2 m-2 name";
     team2.className = "text-nowrap p-2 m-2 name";
 
-    //team1.textContent = "TEAM 1";
-    //team2.textContent = "TEAM 2";
-
     let score1 = renderNum();
     let score2 = renderNum();
-    // let seedLabel1 = renderSeed();
-    // let seedLabel2 = renderSeed();
     let pickWinnerButton = renderPickWinnerButton();
 
     let card = renderCard();
@@ -531,11 +488,6 @@ function generateSecondCard() {
     // Render team div (2 in each card)
     let teamDiv1 = renderTeamDiv();
     let teamDiv2 = renderTeamDiv();
-
-    
-    // Append seeds
-    // teamDiv1.appendChild(seedLabel1);
-    // teamDiv2.appendChild(seedLabel2);
 
     // Append team names to team div
     teamDiv1.appendChild(team1);
@@ -569,7 +521,6 @@ function renderFirstContent(deck, cardCount, seedArr) {
 }
 
 // Render team names as headers and scores as inputs
-//** account for multiple columns */
 function renderMidContent(deck, cardCount) {
     let submitButton = renderSubmitButton();
     // Generate x cards
@@ -586,7 +537,6 @@ function renderLastContent(deck) {
     let winningTeam = document.createElement('h3');
 
     // Set items
-    //winningTeam.textContent = "TEAM 1"; // TODO
     winningTeam.className = "p-2 m-2";
 
     let seedLabel = renderSeed();
@@ -633,13 +583,12 @@ function shuffle(array) {
     return array;
   }
 
-// Get new bracket data and add to current data store (params::bracketID)
+// Get new bracket data and add to current data store
 function updateDataStore(record) {
     let nameInputs = document.getElementsByClassName("nameInput");
     let nameHeaders = document.getElementsByClassName("name");
     let scores = document.getElementsByClassName("scoreInput");
 
-    // add winner
     let bracketR = {
         nameInputs: [],
         nameHeaders: [],
@@ -662,7 +611,6 @@ function updateDataStore(record) {
     // Add winner
     bracketR.winnerName = winner;
 
-    // Update db record -- insert bracket obj
+    // Update db record and insert bracket
     dbUpdate(record, bracketR);
-
 }

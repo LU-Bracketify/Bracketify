@@ -76,7 +76,6 @@ $_SESSION['id'] = uniqid();
                     <label class="form-label" for="typeInput">Bracket Type:</label>
                     <select class="form-select" name="bType" id="typeInput" required>
                         <option value="single" selected>Single Elimination</option>
-                        <option value="robin">Round Robin</option>
                     </select>
                 </div>
 
@@ -100,7 +99,6 @@ $_SESSION['id'] = uniqid();
                     <label class="form-label" for="descriptionInput">Description (optional):</label>
                     <textarea class="form-control" name="desc" id="descriptionInput" rows="4" cols="30"></textarea>
                 </div>
-                <!---dbConnect()-->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -108,7 +106,6 @@ $_SESSION['id'] = uniqid();
     <script>
         window.onload =() => {
             readPreferencesCache();
-            //generateId();
         }
     </script>
 </body>
