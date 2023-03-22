@@ -1,6 +1,7 @@
 //window.onload = generatePage();
 //////
 var lastRoundNum = 0;
+var winner = "";
 /////
 
 async function generatePage(id) {
@@ -28,8 +29,12 @@ async function generatePage(id) {
     let saveButton = document.createElement("button");
     saveButton.className = "btn btn-primary";
     saveButton.textContent = "Save Bracket";
-    saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
+    //saveButton.setAttribute("onclick", `dbUpdate("${title}", "${type}", "${id}", "${record.author}", "${record.desc}", "${seedType}", "${teamNumCount}", "true", "${bracket.name}", "${bracket.score}", "${bracket.seed}")`);
+    saveButton.onclick = () => {
+        updateDataStore(record);
+    }
     
+
     saveDiv.appendChild(saveButton);
     document.getElementsByClassName('mainContainerForEdit')[0].appendChild(saveDiv);
 
@@ -326,7 +331,7 @@ function renderSubmitButton() {
             let winLabel = nextDeck.getElementsByTagName("h3");
 
             // Determine winner of match
-            let winner = matchWinners(bracket);
+            winner = matchWinners(bracket);
 
             // Set label to winner
             winLabel[0].textContent = winner;
@@ -590,3 +595,46 @@ function shuffle(array) {
   
     return array;
   }
+
+// Get new bracket data and add to current data store (params::bracketID)
+function updateDataStore(record) {
+    let nameInputs = document.getElementsByClassName("nameInput");
+    let nameHeaders = document.getElementsByClassName("name");
+    let scores = document.getElementsByClassName("scoreInput");
+
+    // add seeds if present
+    // add winner
+    let bracketR = {
+        nameInputs: [],
+        nameHeaders: [],
+        scores: [],
+        winnerName: "",
+    }
+
+    for (let i = 0; i < nameInputs.length; i++) {
+        bracketR.nameInputs.push(nameInputs[i].value);
+    }
+
+    for (let i = 0; i < nameHeaders.length; i++) {
+        bracketR.nameHeaders.push(nameHeaders[i].textContent);
+    }
+
+    console.log(bracketR.names);
+
+    for (let i = 0; i < scores.length; i++) {
+        bracketR.scores.push(scores[i].value);
+    }
+
+    console.log(bracketR.scores);
+    console.log(record);
+
+    // add winner
+    bracketR.winnerName = winner;
+
+    // Update db record -- insert bracket obj
+    dbUpdate(record, bracketR);
+
+    
+
+
+}

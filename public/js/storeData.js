@@ -96,7 +96,8 @@ function dbConnect(id, name, size, type, seed, author, desc, teams, scores) {
 
 }
 
-function dbUpdate(name, type, id, author, desc, seed, size, teams, scores, seeds) {
+//name, type, id, author, desc, seed, size, teams, scores, seeds
+function dbUpdate(record, bracketR) {
     const request = indexedDB.open("BracketDB", 1);
 
     request.onerror = function() {
@@ -118,7 +119,8 @@ function dbUpdate(name, type, id, author, desc, seed, size, teams, scores, seeds
         const bracketTransaction = bracketDb.transaction("brackets", "readwrite");
         const bracketStore = bracketTransaction.objectStore("brackets");
 
-        bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true", teams: teams, scores: scores, seeds: seeds});
+        //bracketStore.put({id: id, name: name, size: size, type: type, seed: seed, author: author, desc: desc, date: new Date().toLocaleString(), modified: "true", teams: teams, scores: scores, seeds: seeds});
+        bracketStore.put({id: record.id, name: record.name, size: record.size, type: record.type, seed: record.seed, author: record.author, desc: record.desc, date: new Date().toLocaleString(), modified: "true", bracket: bracketR});
 
         bracketTransaction.oncomplete = function() {
             bracketDb.close();

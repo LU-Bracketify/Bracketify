@@ -25,6 +25,7 @@ session_start();
     <script src="js/storeData.js"></script>
     <script src="js/preferences.js"></script>
     <script src="js/editDB.js"></script>
+    <script src="js/editRender.js"></script>
     <title>Bracketify | Edit</title>
 </head>
 
@@ -124,6 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<script>
         //retrieveRecord($formID.id);
         generatePage($formID.id);
+        renderContent($formID.id);
         </script>";
 
 } else {
